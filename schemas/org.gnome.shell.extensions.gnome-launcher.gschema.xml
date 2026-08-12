@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.gnome-launcher"
+          path="/org/gnome/shell/extensions/gnome-launcher/">
+    <key name="toggle-launcher" type="as">
+      <default>['&lt;Control&gt;&lt;Alt&gt;space']</default>
+      <summary>Toggle the launcher</summary>
+      <description>
+        Keybinding to open/close the launcher popup. Defaults to
+        Ctrl+Alt+Space to avoid colliding with GNOME's own Super+Space
+        (input source switcher).
+      </description>
+    </key>
+    <key name="layout" type="s">
+      <default>'list'</default>
+      <summary>Which layout to render</summary>
+    </key>
+  </schema>
+</schemalist>

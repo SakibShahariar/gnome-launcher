@@ -1,0 +1,14 @@
+/* Loaded automatically by GNOME Shell when this extension is enabled.
+ *
+ * ModalDialog ships its own default background/border/padding via the
+ * Shell theme's .modal-dialog class - that's the frame around the whole
+ * popup that has nothing to do with our Matugen theming (the inner card
+ * is styled directly in each layout's buildUI() from theme.js instead).
+ * Strip it here so only our own styled card is visible.
+ */
+.modal-dialog.launcher-dialog {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}

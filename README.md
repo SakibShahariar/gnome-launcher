@@ -97,12 +97,39 @@ looks for).
 If the configured path is missing or unparseable, `theme.js` falls back
 to a hardcoded M3 baseline purple scheme rather than crashing.
 
+## Search
+
+Two things worth knowing about how search results are produced:
+
+1. **First attempt**: `Shell.AppSystem.initial_search(terms)` - this method
+   existed in gnome-shell's source as far back as 2012, but is **confirmed
+   not present** on current GNOME (`TypeError: appSystem.initial_search is
+   not a function`, verified via journalctl on a real GNOME 50/51 session).
+   Reverted.
+2. **Current attempt**: importing `AppSearchProvider` directly from
+   `resource:///org/gnome/shell/ui/appDisplay.js` - the actual class
+   Activities' own search uses, called via its real async
+   `getInitialResultSet(terms, cancellable)` method. **Not verified against
+   a live Shell session at the time of writing.** Every step (module
+   import, class instantiation, the per-query async call) is wrapped in
+   try/catch with logging (`journalctl -f -o cat /usr/bin/gnome-shell |
+   grep gnome-launcher`), falling back to the hand-rolled fuzzy matcher on
+   any failure - so a problem here should degrade gracefully rather than
+   break search outright, but that's the intent, not a guarantee.
+
+If this second attempt also turns out not to work, the honest fallback is
+the fuzzy matcher already proven reliable - it's not a stopgap, it's a
+fully supported code path (`fuzzySearch()` in `appSearch.js`), not
+something that needs "finishing" later.
+
 ## Architecture
 
 ```
 extension.js              entry point: registers keybinding, toggles LauncherDialog
 lib/
-  appSearch.js              Shell.AppSystem enumeration + fuzzy search
+  appSearch.js              Shell.AppSystem enumeration + search (tries
+                              GNOME's real AppSearchProvider first, falls
+                              back to a fuzzy matcher - see Search below)
   theme.js                   Live Matugen color loader (see Theming above)
   launcherDialog.js           ModalDialog subclass: hosts the active layout,
                                key handling, edge-anchor positioning (see below)

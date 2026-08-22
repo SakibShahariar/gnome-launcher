@@ -7,11 +7,14 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 import {LauncherDialog} from './lib/launcherDialog.js';
+import * as ClipboardHistory from './lib/clipboardHistory.js';
 
 export default class GnomeLauncherExtension extends Extension {
     enable() {
         this._settings = this.getSettings();
         this._dialog = null;
+
+        ClipboardHistory.startTracking();
 
         Main.wm.addKeybinding(
             'toggle-launcher',
@@ -24,6 +27,7 @@ export default class GnomeLauncherExtension extends Extension {
 
     disable() {
         Main.wm.removeKeybinding('toggle-launcher');
+        ClipboardHistory.stopTracking();
         this._dialog?.close();
         this._dialog = null;
         this._settings = null;

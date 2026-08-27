@@ -96,6 +96,46 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         sizeGroup.add(scaleRow);
         page.add(sizeGroup);
 
+        // -- Background opacity (global transparency for Blur My Shell) --
+
+        const opacityGroup = new Adw.PreferencesGroup({
+            title: 'Transparency',
+            description: 'Lower opacity lets Blur My Shell blur show through. '
+                + '1.0 is opaque, 0.0 is fully transparent. Applies to all layouts.',
+        });
+        const opacityRow = new Adw.ActionRow({
+            title: 'Background opacity',
+            subtitle: 'Global — all layouts share this value',
+        });
+        const opacityScale = new Gtk.Scale({
+            orientation: Gtk.Orientation.HORIZONTAL,
+            adjustment: new Gtk.Adjustment({
+                lower: 0.0,
+                upper: 1.0,
+                step_increment: 0.05,
+                page_increment: 0.1,
+                value: settings.get_double('background-opacity'),
+            }),
+            digits: 2,
+            hexpand: true,
+            draw_value: true,
+            value_pos: Gtk.PositionType.RIGHT,
+            width_request: 220,
+        });
+        opacityScale.set_size_request(220, -1);
+        opacityScale.connect('value-changed', () => {
+            settings.set_double('background-opacity', opacityScale.get_value());
+        });
+        // Keep slider in sync if changed elsewhere
+        settings.connect('changed::background-opacity', () => {
+            const v = settings.get_double('background-opacity');
+            if (Math.abs(opacityScale.get_value() - v) > 0.001)
+                opacityScale.set_value(v);
+        });
+        opacityRow.add_suffix(opacityScale);
+        opacityGroup.add(opacityRow);
+        page.add(opacityGroup);
+
         window.add(page);
     }
 

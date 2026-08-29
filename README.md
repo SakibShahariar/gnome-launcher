@@ -39,7 +39,7 @@ gnome-extensions enable gnome-launcher@sakib.dev
 
 Toggle with **Ctrl+Alt+Space** (the default keybinding - chosen to avoid
 colliding with GNOME's own Super+Space input-source switcher). Switch
-between all 14 layouts via:
+between all 15 layouts via:
 
 ```bash
 gnome-extensions prefs gnome-launcher@sakib.dev
@@ -53,8 +53,8 @@ gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher layo
 
 Available layout names: `list`, `grid`, `hotkey`, `sidebar`,
 `split-preview`, `dock`, `fullscreen`, `top-dropdown`, `corner`,
-`full-edge`, `adaptive-width`, `krunner`, `split-tabs`, `hero-banner` -
-matching archetypes #1-14 in `launcher-layout-ideas.md`.
+`full-edge`, `adaptive-width`, `krunner`, `split-tabs`, `hero-banner`,
+`notch`.
 
 Escape closes the launcher. Enter launches the selected app. Arrow keys
 move selection (grid-style layouts jump a full row on Up/Down instead of
@@ -74,28 +74,24 @@ Watch that in one terminal while triggering the keybinding in another.
 
 ## Theming
 
-`lib/theme.js` reads directly from `/home/sakib/.zen/ke09ovgb.myuser/chrome/colors.css`
-(Zen Browser's live Matugen-generated chrome theming file), pulling every
-color role out of that file's CSS custom properties (`--role_name: #hex;`).
-No intermediate `colors.json`, no separate template - whatever's in that
-file at the moment the launcher opens is what renders. (An earlier version
-of this pointed at `matugen-colors.toml`, which turned out to be a static
-snapshot rather than something that actually regenerates per wallpaper -
-this file is confirmed live.)
+`lib/theme.js` reads Material 3 color roles from a CSS file whose path is
+set in preferences (`theme-file-path` GSettings key). The file should
+define custom properties such as `--surface: #hex;`, `--primary: #hex;`,
+etc. (the same format Matugen / Zen Browser chrome themes use).
 
-The launcher re-reads this file fresh every time the dialog opens, so
-whatever regenerates it - your existing Matugen pipeline - is picked up
-automatically the next time you press the keybinding.
+Configure it via:
 
-**This exact path is hardcoded to the original author's machine.** If
-you're not Sakib, edit `THEME_FILE_PATH` at the top of `lib/theme.js` to
-point at wherever your own color pipeline writes CSS custom properties
-using Material 3 role names (`--surface`, `--primary`,
-`--primary_container`, etc. - see the file for the full list `theme.js`
-looks for).
+```bash
+gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher theme-file-path "/path/to/colors.css"
+```
 
-If the configured path is missing or unparseable, `theme.js` falls back
-to a hardcoded M3 baseline purple scheme rather than crashing.
+Or in **gnome-extensions prefs → Theming → Theme CSS file**.
+
+Leave empty to use the built-in purple M3 fallback. The file is re-read
+every time the launcher opens.
+
+Wallpaper for hero-banner / split-tabs is configured the same way
+(`wallpaper-path`), defaulting to `~/.config/background.jpg` when empty.
 
 ## Search
 
@@ -149,11 +145,12 @@ lib/
     krunner.js                             #12 dense flush top bar
     splitTabs.js                            #13 split panel + mode tabs
     heroBanner.js                            #14 gradient banner + mode icons
+    notch.js                                 #15 top-center notch panel
 prefs.js                  Adw.PreferencesWindow: layout dropdown
 schemas/                  GSettings schema (keybinding + layout selection)
 ```
 
-All fourteen archetypes from `launcher-layout-ideas.md` are now implemented.
+All fifteen layouts (14 original archetypes + notch) from `launcher-layout-ideas.md` are now implemented.
 
 ### Edge-anchor positioning
 
@@ -170,7 +167,7 @@ height`, `set_position`) that are used elsewhere in Shell's own source,
 but the exact pixel results should be checked on first real run. If a
 layout appears in the wrong spot, that's the first place to look.
 
-### Adding a new layout beyond these 14
+### Adding a new layout beyond these 15
 
 1. Create `lib/layouts/<name>.js` exporting a class with:
    - `constructor(dialog, theme)` - stash both, you'll need `theme.<role>`

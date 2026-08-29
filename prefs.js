@@ -31,7 +31,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const layoutGroup = new Adw.PreferencesGroup({title: 'Layout'});
         const layoutRow = new Adw.ComboRow({
             title: 'Launcher layout',
-            subtitle: 'More layouts are added the same way - see the README',
+            subtitle: `${LAYOUT_NAMES.length} layouts available`,
             model: Gtk.StringList.new(LAYOUT_NAMES),
         });
         const current = settings.get_string('layout');
@@ -45,11 +45,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
 
         // -- Keybinding ----------------------------------------------------
 
-        const keybindGroup = new Adw.PreferencesGroup({
-            title: 'Keyboard shortcut',
-            description: 'Default is Ctrl+Alt+Space, chosen to avoid colliding with '
-                + "GNOME's own Super+Space input-source switcher.",
-        });
+        const keybindGroup = new Adw.PreferencesGroup({title: 'Keyboard shortcut'});
         const keybindRow = new Adw.ActionRow({title: 'Toggle launcher'});
 
         const shortcutLabel = new Gtk.ShortcutLabel({valign: Gtk.Align.CENTER});
@@ -74,13 +70,10 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
 
         // -- Icon scale --------------------------------------------------
 
-        const sizeGroup = new Adw.PreferencesGroup({
-            title: 'Appearance',
-            description: 'Applies to every layout. Font-size scaling isn\'t implemented yet.',
-        });
+        const sizeGroup = new Adw.PreferencesGroup({title: 'Appearance'});
         const scaleRow = new Adw.SpinRow({
             title: 'Icon size',
-            subtitle: '1.0 is the default size',
+            subtitle: '1.0 = default',
             adjustment: new Gtk.Adjustment({
                 lower: 0.7,
                 upper: 1.6,
@@ -98,14 +91,11 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
 
         // -- Background opacity (global transparency for Blur My Shell) --
 
-        const opacityGroup = new Adw.PreferencesGroup({
-            title: 'Transparency',
-            description: 'Lower opacity lets Blur My Shell blur show through. '
-                + '1.0 is opaque, 0.0 is fully transparent. Applies to all layouts.',
-        });
+        const opacityGroup = new Adw.PreferencesGroup({title: 'Transparency'});
+
         const opacityRow = new Adw.ActionRow({
             title: 'Background opacity',
-            subtitle: 'Global — all layouts share this value',
+            subtitle: 'Lower = more blur',
         });
         const opacityScale = new Gtk.Scale({
             orientation: Gtk.Orientation.HORIZONTAL,
@@ -126,7 +116,6 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         opacityScale.connect('value-changed', () => {
             settings.set_double('background-opacity', opacityScale.get_value());
         });
-        // Keep slider in sync if changed elsewhere
         settings.connect('changed::background-opacity', () => {
             const v = settings.get_double('background-opacity');
             if (Math.abs(opacityScale.get_value() - v) > 0.001)
@@ -134,7 +123,50 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         opacityRow.add_suffix(opacityScale);
         opacityGroup.add(opacityRow);
+
+        const dimRow = new Adw.ActionRow({
+            title: 'Dim background',
+            subtitle: 'Darken the screen behind the launcher',
+        });
+        const dimSwitch = new Gtk.Switch({
+            active: settings.get_boolean('dim-background'),
+            valign: Gtk.Align.CENTER,
+        });
+        dimSwitch.connect('notify::active', () => {
+            settings.set_boolean('dim-background', dimSwitch.active);
+        });
+        dimRow.add_suffix(dimSwitch);
+        dimRow.activatable_widget = dimSwitch;
+        opacityGroup.add(dimRow);
+
         page.add(opacityGroup);
+
+        // -- Theme / wallpaper paths ------------------------------------
+
+        const themeGroup = new Adw.PreferencesGroup({
+            title: 'Theming',
+            description: 'Optional paths for Matugen colors and wallpaper. Leave empty for built-in defaults.',
+        });
+
+        const themePathRow = new Adw.EntryRow({
+            title: 'Theme CSS file',
+            text: settings.get_string('theme-file-path') || '',
+        });
+        themePathRow.connect('changed', () => {
+            settings.set_string('theme-file-path', themePathRow.get_text().trim());
+        });
+        themeGroup.add(themePathRow);
+
+        const wallpaperPathRow = new Adw.EntryRow({
+            title: 'Wallpaper image',
+            text: settings.get_string('wallpaper-path') || '',
+        });
+        wallpaperPathRow.connect('changed', () => {
+            settings.set_string('wallpaper-path', wallpaperPathRow.get_text().trim());
+        });
+        themeGroup.add(wallpaperPathRow);
+
+        page.add(themeGroup);
 
         window.add(page);
     }

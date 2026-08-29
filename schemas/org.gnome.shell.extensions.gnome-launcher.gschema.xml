@@ -33,5 +33,30 @@
         Lower values let Blur My Shell blur show through. Applies to all layouts.
       </description>
     </key>
+    <key name="dim-background" type="b">
+      <default>true</default>
+      <summary>Dim background</summary>
+      <description>
+        Whether to dim the screen behind the launcher.
+      </description>
+    </key>
+    <key name="theme-file-path" type="s">
+      <default>'/home/sakib/.config/matugen/matugen-colors.css'</default>
+      <summary>Matugen / MD3 theme CSS file</summary>
+      <description>
+        Absolute path to a CSS file containing Material 3 color roles as
+        custom properties (--surface: #hex;, --primary: #hex;, etc.).
+        Leave empty to use the built-in purple fallback scheme.
+      </description>
+    </key>
+    <key name="wallpaper-path" type="s">
+      <default>''</default>
+      <summary>Wallpaper image path</summary>
+      <description>
+        Absolute path to a wallpaper image used by hero-banner and
+        split-tabs layouts. Leave empty to try ~/.config/background.jpg
+        automatically, or skip wallpaper if none is found.
+      </description>
+    </key>
   </schema>
 </schemalist>

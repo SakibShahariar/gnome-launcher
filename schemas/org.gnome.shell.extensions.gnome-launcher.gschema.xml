@@ -41,7 +41,7 @@
       </description>
     </key>
     <key name="theme-file-path" type="s">
-      <default>'/home/sakib/.config/matugen/matugen-colors.css'</default>
+      <default>''</default>
       <summary>Matugen / MD3 theme CSS file</summary>
       <description>
         Absolute path to a CSS file containing Material 3 color roles as

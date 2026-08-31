@@ -6,9 +6,7 @@ import Gdk from 'gi://Gdk';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-import {LAYOUTS} from './lib/layouts/registry.js';
-
-const LAYOUT_NAMES = Object.keys(LAYOUTS);
+import {LAYOUT_NAMES} from './lib/layoutNames.js';
 
 const MODIFIER_KEYVALS = new Set([
     Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,

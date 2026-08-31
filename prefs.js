@@ -6,11 +6,9 @@ import Gdk from 'gi://Gdk';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-const LAYOUT_NAMES = [
-    'list', 'grid', 'hotkey', 'sidebar', 'split-preview', 'dock',
-    'fullscreen', 'top-dropdown', 'corner', 'full-edge', 'adaptive-width',
-    'krunner', 'split-tabs', 'hero-banner', 'notch',
-];
+import {LAYOUTS} from './lib/layouts/registry.js';
+
+const LAYOUT_NAMES = Object.keys(LAYOUTS);
 
 const MODIFIER_KEYVALS = new Set([
     Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,

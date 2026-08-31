@@ -20,7 +20,15 @@ const MODIFIER_KEYVALS = new Set([
 export default class GnomeLauncherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
-        const page = new Adw.PreferencesPage();
+
+        // -- General page: layout + keybinding -----------------------------
+
+        const generalPage = new Adw.PreferencesPage({
+            title: 'General',
+            icon_name: 'preferences-system-symbolic',
+        });
+
+        const page = generalPage;
 
         // -- Layout ------------------------------------------------------
 
@@ -64,6 +72,15 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         keybindGroup.add(keybindRow);
         page.add(keybindGroup);
 
+        window.add(generalPage);
+
+        // -- Appearance page: icon scale + transparency + theming ---------
+
+        const appearancePage = new Adw.PreferencesPage({
+            title: 'Appearance',
+            icon_name: 'preferences-desktop-appearance-symbolic',
+        });
+
         // -- Icon scale --------------------------------------------------
 
         const sizeGroup = new Adw.PreferencesGroup({title: 'Appearance'});
@@ -83,7 +100,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             settings.set_double('icon-scale', scaleRow.value);
         });
         sizeGroup.add(scaleRow);
-        page.add(sizeGroup);
+        appearancePage.add(sizeGroup);
 
         // -- Background opacity (global transparency for Blur My Shell) --
 
@@ -135,7 +152,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         dimRow.activatable_widget = dimSwitch;
         opacityGroup.add(dimRow);
 
-        page.add(opacityGroup);
+        appearancePage.add(opacityGroup);
 
         // -- Theme / wallpaper paths ------------------------------------
 
@@ -162,9 +179,9 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         themeGroup.add(wallpaperPathRow);
 
-        page.add(themeGroup);
+        appearancePage.add(themeGroup);
 
-        window.add(page);
+        window.add(appearancePage);
     }
 
     _openRecorder(parentWindow, settings, updateLabel) {

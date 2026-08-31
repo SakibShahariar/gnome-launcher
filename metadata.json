@@ -2,7 +2,7 @@
   "uuid": "gnome-launcher@sakib.dev",
   "name": "GNOME Launcher",
   "description": "Custom app launcher popup with swappable layouts, Matugen-themed.",
-  "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
+  "shell-version": ["48", "49", "50", "51"],
   "settings-schema": "org.gnome.shell.extensions.gnome-launcher",
   "url": "https://github.com/SakibShahariar/gnome-launcher"
 }

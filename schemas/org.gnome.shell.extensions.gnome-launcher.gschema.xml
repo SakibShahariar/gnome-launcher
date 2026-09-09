@@ -40,6 +40,15 @@
         Whether to dim the screen behind the launcher.
       </description>
     </key>
+    <key name="app-icon-plates" type="b">
+      <default>true</default>
+      <summary>App icon plates</summary>
+      <description>
+        Wrap app icons in a small rounded surface-colored plate so they stay
+        legible when the focused tile background becomes the accent (primary)
+        chip. Disable to draw the raw icon directly.
+      </description>
+    </key>
     <key name="theme-file-path" type="s">
       <default>''</default>
       <summary>Matugen / MD3 theme CSS file</summary>

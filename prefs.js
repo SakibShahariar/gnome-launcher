@@ -100,6 +100,21 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             settings.set_double('icon-scale', scaleRow.value);
         });
         sizeGroup.add(scaleRow);
+
+        const plateRow = new Adw.ActionRow({
+            title: 'App icon plates',
+            subtitle: 'Rounded surface plate behind each app icon',
+        });
+        const plateSwitch = new Gtk.Switch({
+            active: settings.get_boolean('app-icon-plates'),
+            valign: Gtk.Align.CENTER,
+        });
+        plateSwitch.connect('notify::active', () => {
+            settings.set_boolean('app-icon-plates', plateSwitch.active);
+        });
+        plateRow.add_suffix(plateSwitch);
+        plateRow.activatable_widget = plateSwitch;
+        sizeGroup.add(plateRow);
         appearancePage.add(sizeGroup);
 
         // -- Background opacity (global transparency for Blur My Shell) --

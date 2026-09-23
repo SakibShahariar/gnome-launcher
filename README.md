@@ -9,7 +9,7 @@ mechanism GNOME provides for this kind of overlay UI.
 
 ## Contents
 
-[Status](#status) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [Known issues found during real testing](#known-issues-found-during-real-testing) · [Known differences from the GTK4 prototype](#known-differences-from-the-gtk4-prototype) · [License](#license)
+[Status](#status) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [License](#license)
 
 ## Features
 
@@ -210,37 +210,6 @@ layout appears in the wrong spot, that's the first place to look.
 2. Register it in `lib/layouts/registry.js`'s `LAYOUTS` object.
 3. Add its name to `LAYOUT_NAMES` in `prefs.js` so it shows up in the
    preferences dropdown.
-
-## Known issues found during real testing
-
-- **Pink/colored frame around the dialog**: `ModalDialog` applies its own
-  default `.modal-dialog` background/border from your active Shell theme -
-  unrelated to Matugen, since we only style the inner card, not the
-  dialog's own outer box. Fixed by `stylesheet.css`, which GNOME Shell
-  loads automatically from the extension root and which strips that
-  default chrome for dialogs carrying our `launcher-dialog` style class.
-  Requires a Shell reload (log out/in) to pick up if you already had the
-  extension enabled without this file.
-
-## Known differences from the GTK4 prototype
-
-- **No CLI `--layout` flag** - extensions don't run as an invoked process,
-  they load into the `gnome-shell` process and stay resident. Layout is a
-  persistent setting instead (`gnome-extensions prefs`), not a per-invocation
-  argument.
-- **St's CSS is more limited than GTK4's** - no custom properties/variables,
-  so `theme.js` colors are interpolated directly into `style:` strings per
-  widget rather than defined once and referenced. More repetitive, but
-  functionally equivalent.
-- **Edge-anchoring, fullscreen, and dock-style layouts (archetypes #6-#14)
-  are straightforward here** - Shell's `Main.layoutManager` gives real
-  monitor geometry and `ModalDialog`/custom `St.Widget` positioning isn't
-  blocked by any missing protocol, unlike the GTK4 version. These are good
-  candidates for the next porting batch since they're actually easier here
-  than they were in the GTK4 prototype.
-- **App launch uses `Shell.App.open_new_window(-1)`** instead of
-  `Gio.AppInfo.launch()` - GNOME's own preferred method, matches what the
-  Activities overview itself does.
 
 ## License
 

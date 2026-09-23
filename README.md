@@ -21,7 +21,7 @@ All 15 layouts:
 
 ## Contents
 
-[Screenshots](#screenshots) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [License](#license)
+[Screenshots](#screenshots) · [Features](#features) · [Install](#install) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [License](#license)
 
 ## Features
 
@@ -92,17 +92,6 @@ move selection (grid-style layouts jump a full row on Up/Down instead of
 one item, via each layout's `columns` property). The hotkey layout also
 accepts 1-9 directly.
 
-## Debugging
-
-Extension errors show up in the systemd journal, not a normal terminal
-(the code runs inside the `gnome-shell` process itself):
-
-```bash
-journalctl -f -o cat /usr/bin/gnome-shell
-```
-
-Watch that in one terminal while triggering the keybinding in another.
-
 ## Theming
 
 `lib/theme.js` reads Material 3 color roles from a CSS file whose path is
@@ -159,7 +148,7 @@ lib/
                             back to a fuzzy matcher - see Search below)
   theme.js                  Live Matugen color loader (see Theming above)
   launcherDialog.js         ModalDialog subclass: hosts the active layout,
-                            key handling, edge-anchor positioning (see below)
+                            key handling, edge-anchor positioning
   layouts/
     registry.js             maps the 'layout' setting to layout classes
     grid.js                 #1  icon grid
@@ -182,21 +171,6 @@ schemas/                    GSettings schema (keybinding + layout selection)
 ```
 
 All fifteen layouts (14 original archetypes + notch) from `launcher-layout-ideas.md` are now implemented.
-
-### Edge-anchor positioning
-
-Six layouts (`dock`, `fullscreen`, `top-dropdown`, `corner`, `full-edge`,
-`krunner`) set a `this.position` property in their constructor -
-`launcherDialog.js`'s `_applyPosition()` reads that and repositions
-`dialogLayout` against real monitor geometry (`Main.layoutManager.
-primaryMonitor`) instead of `ModalDialog`'s default centered placement.
-Layouts that don't set `position` keep the default centered behavior.
-
-**This positioning code has not been verified against a live Shell
-session** - written using standard Clutter APIs (`get_preferred_width/
-height`, `set_position`) that are used elsewhere in Shell's own source,
-but the exact pixel results should be checked on first real run. If a
-layout appears in the wrong spot, that's the first place to look.
 
 ### Adding a new layout beyond these 15
 

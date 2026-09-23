@@ -21,7 +21,7 @@ All 15 layouts:
 
 ## Contents
 
-[Screenshots](#screenshots) · [Status](#status) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [License](#license)
+[Screenshots](#screenshots) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [License](#license)
 
 ## Features
 
@@ -37,14 +37,6 @@ All 15 layouts:
   open time.
 * **Native overlay**: built on Shell's `ModalDialog`, so it works on stock
   GNOME (X11 and Wayland) without relying on `wlr-layer-shell`.
-
-## Status
-
-Written and syntax-checked (`node --check` on every file, XML/JSON
-validated) in a headless container with no running GNOME Shell, so it has
-**not** been loaded into a real Shell session yet. Expect some real
-debugging on first load - GJS/Shell API mistakes often only surface at
-runtime, not at parse time.
 
 ## Install
 

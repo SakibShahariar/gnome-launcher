@@ -7,9 +7,21 @@ never work on stock GNOME regardless of code correctness. This extension
 uses Shell's own `ModalDialog` instead, which is the actual native
 mechanism GNOME provides for this kind of overlay UI.
 
+## Screenshots
+
+All 15 layouts:
+
+| | | |
+|---|---|---|
+| ![grid](screenshots/grid.png) | ![list](screenshots/list.png) | ![hotkey](screenshots/hotkey.png) |
+| ![sidebar](screenshots/sidebar.png) | ![split-preview](screenshots/splitPreview.png) | ![dock](screenshots/dock.png) |
+| ![fullscreen](screenshots/fullscreen.png) | ![top-dropdown](screenshots/topDropdown.png) | ![corner](screenshots/corner.png) |
+| ![full-edge](screenshots/fullEdge.png) | ![adaptive-width](screenshots/adaptiveWidth.png) | ![krunner](screenshots/krunner.png) |
+| ![split-tabs](screenshots/splitTabs.png) | ![hero-banner](screenshots/heroBanner.png) | ![notch](screenshots/notch.png) |
+
 ## Contents
 
-[Status](#status) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [License](#license)
+[Screenshots](#screenshots) · [Status](#status) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [License](#license)
 
 ## Features
 
@@ -22,7 +34,7 @@ mechanism GNOME provides for this kind of overlay UI.
   Activities overview (via its async `getInitialResultSet`), with a
   hand-rolled fuzzy matcher as a graceful fallback.
 * **Matugen-aware theming**: reads Material 3 color roles from a CSS file at
-  open time — the same format Matugen / Zen Browser chrome themes use.
+  open time.
 * **Native overlay**: built on Shell's `ModalDialog`, so it works on stock
   GNOME (X11 and Wayland) without relying on `wlr-layer-shell`.
 
@@ -104,7 +116,7 @@ Watch that in one terminal while triggering the keybinding in another.
 `lib/theme.js` reads Material 3 color roles from a CSS file whose path is
 set in preferences (`theme-file-path` GSettings key). The file should
 define custom properties such as `--surface: #hex;`, `--primary: #hex;`,
-etc. (the same format Matugen / Zen Browser chrome themes use).
+etc.
 
 Configure it via:
 

@@ -7,6 +7,25 @@ never work on stock GNOME regardless of code correctness. This extension
 uses Shell's own `ModalDialog` instead, which is the actual native
 mechanism GNOME provides for this kind of overlay UI.
 
+## Contents
+
+[Status](#status) · [Features](#features) · [Install](#install) · [Debugging](#debugging) · [Theming](#theming) · [Search](#search) · [Architecture](#architecture) · [Known issues found during real testing](#known-issues-found-during-real-testing) · [Known differences from the GTK4 prototype](#known-differences-from-the-gtk4-prototype) · [License](#license)
+
+## Features
+
+* **15 layouts**: list, grid, dock, fullscreen, top-dropdown, corner,
+  sidebar, krunner-style, hero banner, notch, and more — switch via prefs or
+  a single `gsettings` call.
+* **Fast keyboard workflow**: toggle with `Ctrl+Alt+Space`, type to filter,
+  arrows/hotkeys to move, `Enter` to launch, `Escape` to close.
+* **Real GNOME search**: uses the same `AppSearchProvider` class as the
+  Activities overview (via its async `getInitialResultSet`), with a
+  hand-rolled fuzzy matcher as a graceful fallback.
+* **Matugen-aware theming**: reads Material 3 color roles from a CSS file at
+  open time — the same format Matugen / Zen Browser chrome themes use.
+* **Native overlay**: built on Shell's `ModalDialog`, so it works on stock
+  GNOME (X11 and Wayland) without relying on `wlr-layer-shell`.
+
 ## Status
 
 Written and syntax-checked (`node --check` on every file, XML/JSON
@@ -55,6 +74,14 @@ Available layout names: `list`, `grid`, `hotkey`, `sidebar`,
 `split-preview`, `dock`, `fullscreen`, `top-dropdown`, `corner`,
 `full-edge`, `adaptive-width`, `krunner`, `split-tabs`, `hero-banner`,
 `notch`.
+
+### Uninstall
+
+```bash
+gnome-extensions disable gnome-launcher@sakib.dev
+rm ~/.local/share/gnome-shell/extensions/gnome-launcher@sakib.dev
+dconf reset -f /org/gnome/shell/extensions/gnome-launcher/
+```
 
 Escape closes the launcher. Enter launches the selected app. Arrow keys
 move selection (grid-style layouts jump a full row on Up/Down instead of
@@ -121,33 +148,33 @@ something that needs "finishing" later.
 ## Architecture
 
 ```
-extension.js              entry point: registers keybinding, toggles LauncherDialog
+extension.js                entry point: registers keybinding, toggles LauncherDialog
 lib/
   appSearch.js              Shell.AppSystem enumeration + search (tries
-                              GNOME's real AppSearchProvider first, falls
-                              back to a fuzzy matcher - see Search below)
-  theme.js                   Live Matugen color loader (see Theming above)
-  launcherDialog.js           ModalDialog subclass: hosts the active layout,
-                               key handling, edge-anchor positioning (see below)
+                            GNOME's real AppSearchProvider first, falls
+                            back to a fuzzy matcher - see Search below)
+  theme.js                  Live Matugen color loader (see Theming above)
+  launcherDialog.js         ModalDialog subclass: hosts the active layout,
+                            key handling, edge-anchor positioning (see below)
   layouts/
-    registry.js                maps the 'layout' setting to layout classes
-    list.js                     #2  minimal list
-    grid.js                      #1  icon grid
-    hotkey.js                     #3  numbered hotkeys
-    sidebar.js                     #4  category rail + list
-    splitPreview.js                 #5  list + detail pane
-    dock.js                          #6  bottom-anchored dock
-    fullscreen.js                     #7  fullscreen takeover
-    topDropdown.js                     #8  top-edge dropdown shade
-    corner.js                           #9  corner-anchored panel
-    fullEdge.js                          #10 full-height edge strip
-    adaptiveWidth.js                      #11 width follows result count
-    krunner.js                             #12 dense flush top bar
-    splitTabs.js                            #13 split panel + mode tabs
-    heroBanner.js                            #14 gradient banner + mode icons
-    notch.js                                 #15 top-center notch panel
-prefs.js                  Adw.PreferencesWindow: layout dropdown
-schemas/                  GSettings schema (keybinding + layout selection)
+    registry.js             maps the 'layout' setting to layout classes
+    grid.js                 #1  icon grid
+    list.js                 #2  minimal list
+    hotkey.js               #3  numbered hotkeys
+    sidebar.js              #4  category rail + list
+    splitPreview.js         #5  list + detail pane
+    dock.js                 #6  bottom-anchored dock
+    fullscreen.js           #7  fullscreen takeover
+    topDropdown.js          #8  top-edge dropdown shade
+    corner.js               #9  corner-anchored panel
+    fullEdge.js             #10 full-height edge strip
+    adaptiveWidth.js        #11 width follows result count
+    krunner.js              #12 dense flush top bar
+    splitTabs.js            #13 split panel + mode tabs
+    heroBanner.js           #14 gradient banner + mode icons
+    notch.js                #15 top-center notch panel
+prefs.js                    Adw.PreferencesWindow: layout dropdown
+schemas/                    GSettings schema (keybinding + layout selection)
 ```
 
 All fifteen layouts (14 original archetypes + notch) from `launcher-layout-ideas.md` are now implemented.

@@ -13,11 +13,11 @@ All 15 layouts:
 
 | | | |
 |---|---|---|
-| ![grid](screenshots/grid.png) | ![list](screenshots/list.png) | ![hotkey](screenshots/hotkey.png) |
-| ![sidebar](screenshots/sidebar.png) | ![split-preview](screenshots/splitPreview.png) | ![dock](screenshots/dock.png) |
-| ![fullscreen](screenshots/fullscreen.png) | ![top-dropdown](screenshots/topDropdown.png) | ![corner](screenshots/corner.png) |
-| ![full-edge](screenshots/fullEdge.png) | ![adaptive-width](screenshots/adaptiveWidth.png) | ![krunner](screenshots/krunner.png) |
-| ![split-tabs](screenshots/splitTabs.png) | ![hero-banner](screenshots/heroBanner.png) | ![notch](screenshots/notch.png) |
+| ![grid](screenshots/grid.png)<br>`grid` | ![list](screenshots/list.png)<br>`list` | ![hotkey](screenshots/hotkey.png)<br>`hotkey` |
+| ![sidebar](screenshots/sidebar.png)<br>`sidebar` | ![split-preview](screenshots/splitPreview.png)<br>`split-preview` | ![dock](screenshots/dock.png)<br>`dock` |
+| ![fullscreen](screenshots/fullscreen.png)<br>`fullscreen` | ![top-dropdown](screenshots/topDropdown.png)<br>`top-dropdown` | ![corner](screenshots/corner.png)<br>`corner` |
+| ![full-edge](screenshots/fullEdge.png)<br>`full-edge` | ![adaptive-width](screenshots/adaptiveWidth.png)<br>`adaptive-width` | ![krunner](screenshots/krunner.png)<br>`krunner` |
+| ![split-tabs](screenshots/splitTabs.png)<br>`split-tabs` | ![hero-banner](screenshots/heroBanner.png)<br>`hero-banner` | ![notch](screenshots/notch.png)<br>`notch` |
 
 ## Contents
 

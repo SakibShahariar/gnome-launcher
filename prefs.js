@@ -3,6 +3,8 @@
 import Adw from 'gi://Adw';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
@@ -16,6 +18,46 @@ const MODIFIER_KEYVALS = new Set([
     Gdk.KEY_Meta_L, Gdk.KEY_Meta_R,
     Gdk.KEY_ISO_Level3_Shift,
 ]);
+
+const DEFAULT_SHORTCUT = '<Control><Alt>space';
+
+function expandHomePath(path) {
+    const trimmed = path.trim();
+    if (trimmed === '~')
+        return GLib.get_home_dir();
+    if (trimmed.startsWith('~/'))
+        return GLib.build_filenamev([GLib.get_home_dir(), trimmed.slice(2)]);
+    return trimmed;
+}
+
+function savePathSetting(row, settings, key) {
+    const value = row.get_text().trim();
+    if (!value) {
+        settings.set_string(key, '');
+        row.remove_css_class('error');
+        row.set_tooltip_text(null);
+        return;
+    }
+
+    try {
+        const file = Gio.File.new_for_path(expandHomePath(value));
+        const info = file.query_info('standard::type', Gio.FileQueryInfoFlags.NONE, null);
+        if (info.get_file_type() !== Gio.FileType.REGULAR)
+            throw new Error('Path is not a regular file');
+        settings.set_string(key, value);
+        row.remove_css_class('error');
+        row.set_tooltip_text(null);
+    } catch (e) {
+        row.add_css_class('error');
+        row.set_tooltip_text('File does not exist or is not accessible; the saved path was not changed.');
+    }
+}
+
+function commitPathOnFocusLeave(row, callback) {
+    const controller = new Gtk.EventControllerFocus();
+    controller.connect('leave', callback);
+    row.add_controller(controller);
+}
 
 export default class GnomeLauncherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
@@ -67,7 +109,30 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         editButton.connect('clicked', () => this._openRecorder(window, settings, updateLabel));
 
+        const resetButton = new Gtk.Button({
+            label: 'Reset',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['flat'],
+            tooltip_text: 'Restore the default shortcut',
+        });
+        resetButton.connect('clicked', () => {
+            settings.set_strv('toggle-launcher', [DEFAULT_SHORTCUT]);
+            updateLabel();
+        });
+        const clearButton = new Gtk.Button({
+            label: 'Clear',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['flat'],
+            tooltip_text: 'Disable the launcher shortcut',
+        });
+        clearButton.connect('clicked', () => {
+            settings.set_strv('toggle-launcher', []);
+            updateLabel();
+        });
+
         keybindRow.add_suffix(editButton);
+        keybindRow.add_suffix(resetButton);
+        keybindRow.add_suffix(clearButton);
         keybindRow.activatable_widget = editButton;
         keybindGroup.add(keybindRow);
         page.add(keybindGroup);
@@ -203,19 +268,23 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             title: 'Theme CSS file',
             text: settings.get_string('theme-file-path') || '',
         });
-        themePathRow.connect('changed', () => {
-            settings.set_string('theme-file-path', themePathRow.get_text().trim());
-        });
+        const saveThemePath = () => savePathSetting(themePathRow, settings, 'theme-file-path');
+        commitPathOnFocusLeave(themePathRow, saveThemePath);
         themeGroup.add(themePathRow);
 
         const wallpaperPathRow = new Adw.EntryRow({
             title: 'Wallpaper image',
             text: settings.get_string('wallpaper-path') || '',
         });
-        wallpaperPathRow.connect('changed', () => {
-            settings.set_string('wallpaper-path', wallpaperPathRow.get_text().trim());
-        });
+        const saveWallpaperPath = () => savePathSetting(wallpaperPathRow, settings, 'wallpaper-path');
+        commitPathOnFocusLeave(wallpaperPathRow, saveWallpaperPath);
         themeGroup.add(wallpaperPathRow);
+
+        window.connect('close-request', () => {
+            saveThemePath();
+            saveWallpaperPath();
+            return false;
+        });
 
         appearancePage.add(themeGroup);
 

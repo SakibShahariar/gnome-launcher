@@ -37,3 +37,8 @@ test('grid window moves upward by rows and includes a partial final row', () => 
 test('grid window clamps to the last valid row-aligned page', () => {
     assert.equal(windowStart(24, 36, 37, 16, 4), 24);
 });
+test('grid window still exposes a selected row when window is smaller than a row', () => {
+    assert.equal(windowStart(0, 3, 12, 2, 4), 0);
+    assert.equal(windowStart(0, 7, 12, 2, 4), 4);
+    assert.equal(windowStart(8, 3, 12, 2, 4), 0);
+});

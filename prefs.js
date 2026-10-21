@@ -144,10 +144,14 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         opacityScale.connect('value-changed', () => {
             settings.set_double('background-opacity', opacityScale.get_value());
         });
-        settings.connect('changed::background-opacity', () => {
+        const opacitySettingsSignalId = settings.connect('changed::background-opacity', () => {
             const v = settings.get_double('background-opacity');
             if (Math.abs(opacityScale.get_value() - v) > 0.001)
                 opacityScale.set_value(v);
+        });
+        window.connect('close-request', () => {
+            settings.disconnect(opacitySettingsSignalId);
+            return false;
         });
         opacityRow.add_suffix(opacityScale);
         opacityGroup.add(opacityRow);

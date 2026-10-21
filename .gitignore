@@ -5,3 +5,5 @@ schemas/gschemas.compiled
 *.swp
 *.swo
 .DS_Store
+# Generated extension packages
+/dist/

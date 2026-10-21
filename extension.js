@@ -14,7 +14,11 @@ export default class GnomeLauncherExtension extends Extension {
         this._settings = this.getSettings();
         this._dialog = null;
 
-        ClipboardHistory.startTracking();
+        this._clipboardHistorySignalId = this._settings.connect(
+            'changed::clipboard-history-enabled',
+            () => this._syncClipboardHistory()
+        );
+        this._syncClipboardHistory();
 
         Main.wm.addKeybinding(
             'toggle-launcher',
@@ -27,10 +31,21 @@ export default class GnomeLauncherExtension extends Extension {
 
     disable() {
         Main.wm.removeKeybinding('toggle-launcher');
+        if (this._clipboardHistorySignalId) {
+            this._settings.disconnect(this._clipboardHistorySignalId);
+            this._clipboardHistorySignalId = 0;
+        }
         ClipboardHistory.stopTracking();
         this._dialog?.close();
         this._dialog = null;
         this._settings = null;
+    }
+
+    _syncClipboardHistory() {
+        if (this._settings?.get_boolean('clipboard-history-enabled'))
+            ClipboardHistory.startTracking();
+        else
+            ClipboardHistory.stopTracking();
     }
 
     _toggle() {

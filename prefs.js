@@ -72,6 +72,25 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         keybindGroup.add(keybindRow);
         page.add(keybindGroup);
 
+        // -- Clipboard history privacy -----------------------------------
+
+        const privacyGroup = new Adw.PreferencesGroup({title: 'Privacy'});
+        const clipboardRow = new Adw.ActionRow({
+            title: 'Clipboard history',
+            subtitle: 'Opt in to collecting up to 20 recent text entries in memory',
+        });
+        const clipboardSwitch = new Gtk.Switch({
+            active: settings.get_boolean('clipboard-history-enabled'),
+            valign: Gtk.Align.CENTER,
+        });
+        clipboardSwitch.connect('notify::active', () => {
+            settings.set_boolean('clipboard-history-enabled', clipboardSwitch.active);
+        });
+        clipboardRow.add_suffix(clipboardSwitch);
+        clipboardRow.activatable_widget = clipboardSwitch;
+        privacyGroup.add(clipboardRow);
+        page.add(privacyGroup);
+
         window.add(generalPage);
 
         // -- Appearance page: icon scale + transparency + theming ---------

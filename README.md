@@ -23,6 +23,7 @@ All 15 layouts:
 - **Application search** using GNOME's app-search provider with fuzzy matching as a fallback.
 - **Matugen-compatible theming** using Material 3 color roles from a CSS file.
 - **Custom wallpapers** for layouts that display a banner or split panel.
+- **Optional clipboard history** with an explicit opt-in setting; collection is off by default.
 - **Native GNOME Shell overlay** using `ModalDialog`.
 
 ## Installation
@@ -56,6 +57,10 @@ gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher layo
 
 Available layouts: `list`, `grid`, `hotkey`, `sidebar`, `split-preview`, `dock`, `fullscreen`, `top-dropdown`, `corner`, `full-edge`, `adaptive-width`, `krunner`, `split-tabs`, `hero-banner`, and `notch`.
 
+## Clipboard history
+
+Clipboard history is **off by default**. To enable it, open the extension preferences and turn on **General → Privacy → Clipboard history**. While enabled, the extension polls the text clipboard once per second and keeps up to 20 recent, non-empty text entries **in memory only**; it does not write them to disk. Clipboard contents can include passwords, authentication codes, or private messages, so enable this only if you want the feature. Turning it off stops polling and immediately clears the retained history. Disabling the extension also stops polling and clears the history.
+
 ## Theming
 
 In the extension preferences, open **Theming → Theme CSS file** and select a CSS file containing Material 3 color roles, for example:
@@ -73,7 +78,7 @@ gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher them
 
 The file is read whenever the launcher opens. Leave the path empty to use the built-in purple theme.
 
-Layouts with a banner or split panel can also use a custom wallpaper. Set **Wallpaper path** in preferences, or configure the `wallpaper-path` GSettings key. When left empty, the extension uses `~/.config/background.jpg`.
+Layouts with a banner or split panel can also use a custom wallpaper. Set **Wallpaper path** in preferences, or configure the `wallpaper-path` GSettings key. When left empty, the extension first uses GNOME's configured desktop wallpaper, then checks legacy fallback paths.
 
 ## Uninstallation
 

@@ -40,6 +40,14 @@
         Whether to dim the screen behind the launcher.
       </description>
     </key>
+    <key name="clipboard-history-enabled" type="b">
+      <default>false</default>
+      <summary>Enable clipboard history</summary>
+      <description>
+        Poll the clipboard for recent text while enabled. Disabling this
+        setting stops polling and clears the in-memory history.
+      </description>
+    </key>
     <key name="app-icon-plates" type="b">
       <default>true</default>
       <summary>App icon plates</summary>

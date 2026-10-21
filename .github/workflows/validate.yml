@@ -1,0 +1,65 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          while IFS= read -r -d '' file; do
+            node --experimental-default-type=module --check "$file"
+          done < <(find . -type f -name '*.js' -not -path './.git/*' -print0)
+      - name: Validate metadata JSON
+        run: python3 -m json.tool metadata.json >/dev/null
+      - name: Validate GSettings schema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglib2.0-bin
+          glib-compile-schemas --strict --dry-run schemas
+      - name: Check metadata and GSettings references
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import re
+          import xml.etree.ElementTree as ET
+
+          metadata = json.loads(pathlib.Path("metadata.json").read_text())
+          required = ("uuid", "name", "description", "shell-version", "settings-schema")
+          missing = [key for key in required if not metadata.get(key)]
+          assert not missing, f"Missing metadata fields: {missing}"
+          assert metadata["shell-version"], "shell-version must not be empty"
+
+          root = ET.parse("schemas/org.gnome.shell.extensions.gnome-launcher.gschema.xml").getroot()
+          schema = next(node for node in root.findall("schema")
+                        if node.attrib.get("id") == metadata["settings-schema"])
+          declared = {key.attrib["name"] for key in schema.findall("key")}
+          used = set()
+          patterns = (
+              r"\.(?:get_string|get_boolean|get_double|get_int|get_strv|set_string|set_boolean|set_double|set_int|set_strv)\(['\"]([^'\"]+)['\"]",
+              r"changed::([a-z][a-z0-9-]*)",
+          )
+          for path in pathlib.Path(".").rglob("*.js"):
+              if ".git" in path.parts:
+                  continue
+              source = path.read_text()
+              for pattern in patterns:
+                  used.update(re.findall(pattern, source))
+          unknown = sorted(used - declared)
+          assert not unknown, f"Undeclared GSettings keys used in JavaScript: {unknown}"
+          print(f"Validated {len(declared)} settings keys and metadata for {metadata['uuid']}")
+          PY

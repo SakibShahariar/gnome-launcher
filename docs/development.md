@@ -10,7 +10,7 @@ The project is a GNOME Shell extension. The main pieces are:
 - `prefs.js` — extension preferences UI.
 - `schemas/` — GSettings schema and defaults.
 - `lib/` — launcher dialog, search, clipboard history, and supporting behavior.
-- `layouts/` — individual launcher layout implementations.
+- `lib/layouts/` — individual launcher layout implementations.
 - `stylesheet.css` — shared styling.
 - `metadata.json` — GNOME Shell extension metadata.
 
@@ -46,9 +46,15 @@ After changing extension code, restart the GNOME Shell session as appropriate fo
 2. Implement the layout in the `layouts/` directory, following the project's existing layout interface and lifecycle.
 3. Register the layout in the same places as the existing layouts, including the layout selector/settings if required.
 4. Reuse shared launcher behavior for search, keyboard navigation, app launching, and dismissal.
-5. Add or update styling in `stylesheet.css` where possible; avoid scattering duplicate styles across layout files.
+5. Prefer shared rules in `stylesheet.css` for reusable styling. Layout-specific inline styles are currently common in this codebase, so avoid broad style migrations unless they can be verified visually.
 6. Add a screenshot and update the README's layout gallery if the new layout is intended for users.
 7. Compile schemas if settings changed, then test opening, searching, navigating, launching an app, and closing the launcher.
+
+## Keyboard behavior
+
+- All layouts support typing to filter apps, arrow-key navigation, `Enter` to launch the selected result, and `Escape` to close.
+- In Hotkey layout, `Ctrl+1` through `Ctrl+9` launch the corresponding visible result. The number row and numeric keypad are both supported; ordinary digits without `Ctrl` remain available for searching.
+- Layouts with mode controls use `Ctrl+1` through `Ctrl+4` to switch modes. This mode shortcut takes precedence over Hotkey layout's direct-launch shortcut only in layouts that expose mode switching.
 
 ## Search behavior
 

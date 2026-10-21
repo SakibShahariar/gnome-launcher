@@ -29,5 +29,5 @@ test('fuzzySearch filters non-matches and ranks prefix matches first', () => {
 
 test('fuzzySearch uses alphabetical order to break equal-score ties', () => {
     const results = fuzzySearch([app('Figma'), app('Files'), app('Firefox')], 'fi');
-    assert.deepEqual(results.map(item => item.get_name()), ['Files', 'Figma', 'Firefox']);
+    assert.deepEqual(results.map(item => item.get_name()), ['Figma', 'Files', 'Firefox']);
 });

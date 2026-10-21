@@ -8,9 +8,11 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 import {LauncherDialog} from './lib/launcherDialog.js';
 import * as ClipboardHistory from './lib/clipboardHistory.js';
+import {cleanupSearchProvider, initializeSearchProvider} from './lib/appSearch.js';
 
 export default class GnomeLauncherExtension extends Extension {
     enable() {
+        initializeSearchProvider();
         this._settings = this.getSettings();
         this._dialog = null;
 
@@ -36,6 +38,7 @@ export default class GnomeLauncherExtension extends Extension {
             this._clipboardHistorySignalId = 0;
         }
         ClipboardHistory.stopTracking();
+        cleanupSearchProvider();
         this._dialog?.close();
         this._dialog = null;
         this._settings = null;

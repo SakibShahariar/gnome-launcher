@@ -48,6 +48,14 @@
         setting stops polling and clears the in-memory history.
       </description>
     </key>
+    <key name="windows-all-workspaces" type="b">
+      <default>false</default>
+      <summary>Search windows across all workspaces</summary>
+      <description>
+        When enabled, window mode includes windows from every workspace;
+        otherwise it shows only the active workspace and sticky windows.
+      </description>
+    </key>
     <key name="app-icon-plates" type="b">
       <default>true</default>
       <summary>App icon plates</summary>

@@ -156,6 +156,23 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         privacyGroup.add(clipboardRow);
         page.add(privacyGroup);
 
+        const windowGroup = new Adw.PreferencesGroup({title: 'Window search'});
+        const allWorkspacesRow = new Adw.ActionRow({
+            title: 'Search all workspaces',
+            subtitle: 'Include windows from workspaces other than the current one',
+        });
+        const allWorkspacesSwitch = new Gtk.Switch({
+            active: settings.get_boolean('windows-all-workspaces'),
+            valign: Gtk.Align.CENTER,
+        });
+        allWorkspacesSwitch.connect('notify::active', () => {
+            settings.set_boolean('windows-all-workspaces', allWorkspacesSwitch.active);
+        });
+        allWorkspacesRow.add_suffix(allWorkspacesSwitch);
+        allWorkspacesRow.activatable_widget = allWorkspacesSwitch;
+        windowGroup.add(allWorkspacesRow);
+        page.add(windowGroup);
+
         window.add(generalPage);
 
         // -- Appearance page: icon scale + transparency + theming ---------

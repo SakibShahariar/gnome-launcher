@@ -50,3 +50,23 @@ test('rankAppsByUsage sorts apps without usage data alphabetically', async () =>
         ['Calculator', 'Files', 'Terminal']
     );
 });
+
+
+test('resolveSearchResults excludes apps outside the launchable list', async () => {
+    const {resolveSearchResults} = await import('../lib/fuzzySearch.js');
+    const visible = app('Visible');
+    const hidden = app('Hidden');
+    const results = resolveSearchResults([visible], ['Hidden.desktop', 'Visible.desktop', 'missing.desktop']);
+    assert.deepEqual(results, [visible]);
+});
+
+test('resolveSearchResults preserves native provider ranking', async () => {
+    const {resolveSearchResults} = await import('../lib/fuzzySearch.js');
+    const firefox = app('Firefox');
+    const files = app('Files');
+    const terminal = app('Terminal');
+    assert.deepEqual(
+        resolveSearchResults([files, terminal, firefox], ['Terminal.desktop', 'Firefox.desktop']),
+        [terminal, firefox]
+    );
+});

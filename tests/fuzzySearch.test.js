@@ -31,3 +31,22 @@ test('fuzzySearch uses alphabetical order to break equal-score ties', () => {
     const results = fuzzySearch([app('Figma'), app('Files'), app('Firefox')], 'fi');
     assert.deepEqual(results.map(item => item.get_name()), ['Figma', 'Files', 'Firefox']);
 });
+
+test('rankAppsByUsage puts frequent apps first in usage order', async () => {
+    const {rankAppsByUsage} = await import('../lib/fuzzySearch.js');
+    const apps = [app('Terminal'), app('Firefox'), app('Files'), app('Calculator')];
+    const mostUsed = [apps[1], apps[2]];
+    assert.deepEqual(
+        rankAppsByUsage(apps, mostUsed).map(item => item.get_name()),
+        ['Firefox', 'Files', 'Calculator', 'Terminal']
+    );
+});
+
+test('rankAppsByUsage sorts apps without usage data alphabetically', async () => {
+    const {rankAppsByUsage} = await import('../lib/fuzzySearch.js');
+    const apps = [app('Terminal'), app('Files'), app('Calculator')];
+    assert.deepEqual(
+        rankAppsByUsage(apps, []).map(item => item.get_name()),
+        ['Calculator', 'Files', 'Terminal']
+    );
+});

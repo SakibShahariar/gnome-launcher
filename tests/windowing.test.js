@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {windowStart} from '../lib/layouts/windowing.js';
+import {gridSelectionIndex, windowStart} from '../lib/layouts/windowing.js';
 
 test('empty results always reset the visible window to zero', () => {
     assert.equal(windowStart(8, 0, 0, 8), 0);
@@ -41,4 +41,15 @@ test('grid window still exposes a selected row when window is smaller than a row
     assert.equal(windowStart(0, 3, 12, 2, 4), 0);
     assert.equal(windowStart(0, 7, 12, 2, 4), 4);
     assert.equal(windowStart(8, 3, 12, 2, 4), 0);
+});
+
+test('vertical grid movement clamps to the nearest item in a partial row', () => {
+    assert.equal(gridSelectionIndex(3, 1, 5, 4), 4);
+    assert.equal(gridSelectionIndex(1, 1, 5, 4), 4);
+    assert.equal(gridSelectionIndex(4, -1, 5, 4), 0);
+});
+
+test('vertical grid movement wraps rows while preserving the column when possible', () => {
+    assert.equal(gridSelectionIndex(1, 1, 12, 4), 5);
+    assert.equal(gridSelectionIndex(9, 1, 12, 4), 1);
 });

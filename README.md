@@ -19,7 +19,7 @@ All 15 layouts:
 ## Features
 
 - **15 layouts** to choose from, including grid, list, dock, fullscreen, sidebar, KRunner-style, and notch.
-- **Keyboard-first workflow:** open with `Ctrl+Alt+Space`, type to search, navigate with arrow keys, press `Enter` to launch, or `Escape` to close.
+- **Keyboard-first workflow:** open with `Ctrl+Alt+Space`, type to search, navigate with arrow keys, press `Enter` to launch, or `Escape` to close. In Hotkey layout, use `Ctrl+1`–`Ctrl+9` to launch a visible result.
 - **Application search** using GNOME's app-search provider with fuzzy matching as a fallback.
 - **Matugen-compatible theming** using Material 3 color roles from a CSS file.
 - **Custom wallpapers** for layouts that display a banner or split panel.

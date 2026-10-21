@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 
 import {fuzzyScore, fuzzySearch} from '../lib/fuzzySearch.js';
 
-const app = name => ({get_name: () => name});
+const app = name => ({get_name: () => name, get_id: () => `${name}.desktop`});
 
 test('fuzzyScore is case-insensitive and gives prefixes the best score', () => {
     assert.equal(fuzzyScore('fire', 'Firefox'), 0);

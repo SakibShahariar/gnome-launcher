@@ -26,7 +26,7 @@ jobs:
         run: |
           while IFS= read -r -d '' file; do
             node --experimental-default-type=module --check "$file"
-          done < <(find . -type f -name '*.js' -not -path './.git/*' -print0)
+          done < <(find . -type f -name '*.js' -not -path './.git/*' -not -path './node_modules/*' -print0)
       - name: Run unit tests
         run: node --experimental-default-type=module --test tests/*.test.js
       - name: Validate metadata JSON

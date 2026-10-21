@@ -1,3 +1,6 @@
+.SHELLFLAGS := -eu -o pipefail -c
+SHELL := /bin/bash
+
 .PHONY: check pack clean
 
 check:

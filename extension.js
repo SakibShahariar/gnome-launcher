@@ -54,10 +54,14 @@ export default class GnomeLauncherExtension extends Extension {
             this._dialog = null;
             return;
         }
-        this._dialog = new LauncherDialog(this._settings);
-        this._dialog.connect('closed', () => {
-            this._dialog = null;
+        const dialog = new LauncherDialog(this._settings);
+        this._dialog = dialog;
+        dialog.connect('closed', () => {
+            // Closing animations may finish after a newer dialog has opened.
+            // A stale close signal must not clear the current dialog reference.
+            if (this._dialog === dialog)
+                this._dialog = null;
         });
-        this._dialog.open();
+        dialog.open();
     }
 }

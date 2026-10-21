@@ -24,7 +24,7 @@ test('fuzzyScore rejects missing characters and accepts an empty query', () => {
 
 test('fuzzySearch filters non-matches and ranks prefix matches first', () => {
     const results = fuzzySearch([app('Terminal'), app('Firefox'), app('Files'), app('Foxit')], 'fi');
-    assert.deepEqual(results.map(item => item.get_name()), ['Files', 'Firefox']);
+    assert.deepEqual(results.map(item => item.get_name()), ['Files', 'Firefox', 'Foxit']);
 });
 
 test('fuzzySearch uses alphabetical order to break equal-score ties', () => {

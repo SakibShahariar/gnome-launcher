@@ -47,7 +47,7 @@ function savePathSetting(row, settings, key) {
         settings.set_string(key, value);
         row.remove_css_class('error');
         row.set_tooltip_text(null);
-    } catch (e) {
+    } catch {
         row.add_css_class('error');
         row.set_tooltip_text('File does not exist or is not accessible; the saved path was not changed.');
     }

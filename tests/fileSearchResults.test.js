@@ -17,3 +17,16 @@ test('parseFindOutput ignores empty records and applies the result limit', () =>
 test('parseFindOutput handles empty output', () => {
     assert.deepEqual(parseFindOutput('', 20), []);
 });
+
+test('parseFindOutput returns no results for non-positive limits', () => {
+    const output = '/one\0/two\0';
+    for (const limit of [0, -1, -20])
+        assert.deepEqual(parseFindOutput(output, limit), []);
+});
+
+test('parseFindOutput floors fractional limits and rejects non-finite limits', () => {
+    const output = '/one\0/two\0/three\0';
+    assert.deepEqual(parseFindOutput(output, 1.9), ['/one']);
+    for (const limit of [NaN, Infinity, -Infinity, undefined])
+        assert.deepEqual(parseFindOutput(output, limit), []);
+});

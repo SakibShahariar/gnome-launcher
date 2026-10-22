@@ -46,7 +46,7 @@ After changing extension code, restart the GNOME Shell session as appropriate fo
 2. Implement the layout in the `layouts/` directory, following the project's existing layout interface and lifecycle.
 3. Register the layout in the same places as the existing layouts, including the layout selector/settings if required.
 4. Reuse shared launcher behavior for search, keyboard navigation, app launching, and dismissal.
-5. Prefer shared rules in `stylesheet.css` for reusable styling. Layout-specific inline styles are currently common in this codebase, so avoid broad style migrations unless they can be verified visually.
+5. Put layout geometry and reusable typography in `stylesheet.css`, using layout-specific classes where needed. Keep inline styles for values that genuinely depend on the active theme, opacity, selection state, or runtime-computed dimensions. After changing styling, run the CI checks and verify the affected layout in a real GNOME Shell session when possible.
 6. Add a screenshot and update the README's layout gallery if the new layout is intended for users.
 7. Compile schemas if settings changed, then test opening, searching, navigating, launching an app, and closing the launcher.
 

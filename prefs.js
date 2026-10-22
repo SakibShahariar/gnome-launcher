@@ -173,6 +173,26 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         windowGroup.add(allWorkspacesRow);
         page.add(windowGroup);
 
+        const webSearchGroup = new Adw.PreferencesGroup({title: 'Web search'});
+        const searchTemplateRow = new Adw.EntryRow({
+            title: 'Search URL template',
+            text: settings.get_string('search-url-template'),
+        });
+        searchTemplateRow.set_show_apply_button(true);
+        searchTemplateRow.connect('apply', () => {
+            const value = searchTemplateRow.text.trim();
+            if (/^https?:\/\//i.test(value) && value.includes('{query}') && !/[\r\n]/.test(value)) {
+                settings.set_string('search-url-template', value);
+                searchTemplateRow.remove_css_class('error');
+                searchTemplateRow.set_tooltip_text(null);
+            } else {
+                searchTemplateRow.add_css_class('error');
+                searchTemplateRow.set_tooltip_text('Use an HTTP(S) URL containing {query}.');
+            }
+        });
+        webSearchGroup.add(searchTemplateRow);
+        page.add(webSearchGroup);
+
         window.add(generalPage);
 
         // -- Appearance page: icon scale + transparency + theming ---------

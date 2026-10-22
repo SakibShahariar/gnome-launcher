@@ -44,8 +44,8 @@
       <default>false</default>
       <summary>Enable clipboard history</summary>
       <description>
-        Poll the clipboard for recent text while enabled. Disabling this
-        setting stops polling and clears the in-memory history.
+        Track clipboard changes for recent text while enabled. Disabling this
+        setting stops tracking and clears the in-memory history.
       </description>
     </key>
     <key name="clipboard-history-clear-request" type="i">

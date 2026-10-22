@@ -9,6 +9,7 @@ import GLib from 'gi://GLib';
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 import {LAYOUT_NAMES} from './lib/layoutNames.js';
+import {isValidTerminalTemplateArgs} from './lib/terminalTemplate.js';
 
 const MODIFIER_KEYVALS = new Set([
     Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,
@@ -209,6 +210,39 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         webSearchGroup.add(searchTemplateRow);
         page.add(webSearchGroup);
+
+        const terminalGroup = new Adw.PreferencesGroup({
+            title: 'Run in terminal',
+            description: 'Optional command template. Use {command} as a standalone argument; leave empty for automatic terminal detection.',
+        });
+        const terminalTemplateRow = new Adw.EntryRow({
+            title: 'Terminal command template',
+            text: settings.get_string('terminal-command-template'),
+        });
+        terminalTemplateRow.set_show_apply_button(true);
+        terminalTemplateRow.connect('apply', () => {
+            const value = terminalTemplateRow.text.trim();
+            if (!value) {
+                settings.set_string('terminal-command-template', '');
+                terminalTemplateRow.remove_css_class('error');
+                terminalTemplateRow.set_tooltip_text(null);
+                return;
+            }
+
+            try {
+                const [success, argv] = GLib.shell_parse_argv(value);
+                if (!success || !isValidTerminalTemplateArgs(argv))
+                    throw new Error('invalid template');
+                settings.set_string('terminal-command-template', value);
+                terminalTemplateRow.remove_css_class('error');
+                terminalTemplateRow.set_tooltip_text(null);
+            } catch {
+                terminalTemplateRow.add_css_class('error');
+                terminalTemplateRow.set_tooltip_text('Use a valid command with exactly one standalone {command} placeholder, e.g. ptyxis -- {command}.');
+            }
+        });
+        terminalGroup.add(terminalTemplateRow);
+        page.add(terminalGroup);
 
         window.add(generalPage);
 

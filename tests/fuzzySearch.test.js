@@ -83,3 +83,12 @@ test('resolveSearchResults preserves native provider ranking', async () => {
         [terminal, firefox]
     );
 });
+
+
+test('createSearchResultResolver preserves provider order and skips unknown IDs', async () => {
+    const {createSearchResultResolver} = await import('../lib/fuzzySearch.js');
+    const visible = app('Visible');
+    const other = app('Other');
+    const resolve = createSearchResultResolver([visible, other]);
+    assert.deepEqual(resolve(['Other.desktop', 'missing.desktop', 'Visible.desktop']), [other, visible]);
+});

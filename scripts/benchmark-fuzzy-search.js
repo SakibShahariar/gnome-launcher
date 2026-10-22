@@ -5,7 +5,7 @@
 // query normalization and repeated get_name() calls for comparison.
 import {performance} from 'node:perf_hooks';
 
-import {fuzzySearch} from '../lib/fuzzySearch.js';
+import {createSearchResultResolver, fuzzySearch, resolveSearchResults} from '../lib/fuzzySearch.js';
 
 const SIZES = [100, 500, 1000, 5000];
 const QUERIES = ['fi', 'settings', 'term', 'firefox'];
@@ -61,7 +61,7 @@ function makeApps(size) {
     const prefixes = ['Firefox Utility', 'File Manager', 'System Settings', 'Terminal', 'Text Editor'];
     return Array.from({length: size}, (_, index) => {
         const name = `${prefixes[index % prefixes.length]} ${String(index).padStart(5, '0')}`;
-        return {get_name: () => name};
+        return {get_name: () => name, get_id: () => `app-${index}.desktop`};
     });
 }
 
@@ -98,5 +98,38 @@ for (const size of SIZES) {
         baseline.median.toFixed(3),
         optimized.median.toFixed(3),
         (baseline.median / Math.max(optimized.median, 0.001)).toFixed(2),
+    ].join(','));
+}
+
+function measureMapping(operation) {
+    const iterations = 100;
+    const run = () => {
+        for (let i = 0; i < iterations; i++)
+            operation();
+    };
+    for (let i = 0; i < WARMUP_RUNS; i++)
+        run();
+    const samples = [];
+    for (let i = 0; i < MEASURED_RUNS; i++) {
+        const start = performance.now();
+        run();
+        samples.push((performance.now() - start) / iterations);
+    }
+    return median(samples);
+}
+
+console.log('apps,result_ids,baseline_mapping_median_ms,cached_mapping_median_ms,speedup');
+for (const size of SIZES) {
+    const apps = makeApps(size);
+    const resultIds = apps.slice(0, Math.min(20, size)).map(app => app.get_id());
+    const resolver = createSearchResultResolver(apps);
+    const baseline = measureMapping(() => resolveSearchResults(apps, resultIds));
+    const optimized = measureMapping(() => resolver(resultIds));
+    console.log([
+        size,
+        resultIds.length,
+        baseline.toFixed(4),
+        optimized.toFixed(4),
+        (baseline / Math.max(optimized, 0.0001)).toFixed(2),
     ].join(','));
 }

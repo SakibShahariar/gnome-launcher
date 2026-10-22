@@ -58,11 +58,9 @@ function median(values) {
 }
 
 function makeApps(size) {
-    const fixed = ['Firefox', 'Files', 'Settings', 'Terminal', 'Text Editor'];
+    const prefixes = ['Firefox Utility', 'File Manager', 'System Settings', 'Terminal', 'Text Editor'];
     return Array.from({length: size}, (_, index) => {
-        const name = index < fixed.length
-            ? fixed[index]
-            : `Application ${String(index).padStart(5, '0')}`;
+        const name = `${prefixes[index % prefixes.length]} ${String(index).padStart(5, '0')}`;
         return {get_name: () => name};
     });
 }

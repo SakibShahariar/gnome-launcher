@@ -10,6 +10,8 @@ test('parses run, files, and clipboard prefixes', () => {
     assert.deepEqual(parseFinderPrefix('/ report'), {mode: 'files', query: 'report'});
     assert.deepEqual(parseFinderPrefix('; copied text'), {mode: 'clipboard', query: 'copied text'});
     assert.deepEqual(parseFinderPrefix('= 2 + 2'), {mode: 'calculator', query: '2 + 2'});
+    assert.deepEqual(parseFinderPrefix('recent report'), {mode: 'recent', query: 'report'});
+    assert.deepEqual(parseFinderPrefix('RECENT report'), {mode: 'recent', query: 'report'});
 });
 
 test('parses the window prefix case-insensitively', () => {
@@ -22,6 +24,7 @@ test('allows a prefix with an empty query', () => {
     assert.deepEqual(parseFinderPrefix('/'), {mode: 'files', query: ''});
     assert.deepEqual(parseFinderPrefix(';'), {mode: 'clipboard', query: ''});
     assert.deepEqual(parseFinderPrefix('='), {mode: 'calculator', query: ''});
+    assert.deepEqual(parseFinderPrefix('recent'), {mode: 'recent', query: ''});
     assert.deepEqual(parseFinderPrefix('w '), {mode: 'window', query: ''});
 });
 

@@ -30,3 +30,8 @@ test('parseFindOutput floors fractional limits and rejects non-finite limits', (
     for (const limit of [NaN, Infinity, -Infinity, undefined])
         assert.deepEqual(parseFindOutput(output, limit), []);
 });
+
+test('parseFindOutput handles missing or non-string process output', () => {
+    for (const output of [undefined, null, 42, {}, []])
+        assert.deepEqual(parseFindOutput(output, 20), []);
+});

@@ -331,3 +331,69 @@
     text-align: center;
     font-weight: bold;
 }
+
+/* Top-dropdown shade geometry; monitor width and theme colors stay dynamic. */
+.launcher-top-dropdown-card {
+    border-radius: 0 0 28px 28px;
+    border-width: 1px;
+    border-style: solid;
+    border-top-width: 0;
+    padding: 16px 28px 22px;
+}
+
+.launcher-top-dropdown-search-row {
+    border-radius: 14px;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+}
+
+.launcher-top-dropdown-entry {
+    background: none;
+    border: none;
+    font-size: 15px;
+}
+
+.launcher-top-dropdown-grid {
+    spacing: 10px;
+}
+
+.launcher-top-dropdown-grid-row {
+    spacing: 8px;
+}
+
+.launcher-top-dropdown-tile {
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.launcher-top-dropdown-label {
+    font-size: 11px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Split-preview panel geometry; pane contents remain runtime-generated. */
+.launcher-split-preview-card {
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.launcher-split-preview-search-row {
+    padding: 14px 18px;
+}
+
+.launcher-split-preview-entry {
+    background: none;
+    border: none;
+    font-size: 15px;
+}
+
+.launcher-split-preview-results {
+    padding: 4px 4px 10px 10px;
+}
+
+.launcher-split-preview-pane {
+    spacing: 10px;
+    padding: 20px;
+}

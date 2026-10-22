@@ -90,6 +90,11 @@
     padding: 8px;
 }
 
+.launcher-dock-result-row {
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+
 .launcher-dock-search-row {
     border-radius: 24px;
     border-width: 1px;

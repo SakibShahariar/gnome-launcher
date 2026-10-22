@@ -29,6 +29,8 @@ jobs:
           done < <(find . -type f -name '*.js' -not -path './.git/*' -not -path './node_modules/*' -print0)
       - name: Run unit tests
         run: node --experimental-default-type=module --test tests/*.test.js
+      - name: Benchmark fuzzy search (informational)
+        run: npm run benchmark:search
       - name: Validate metadata JSON
         run: python3 -m json.tool metadata.json >/dev/null
       - name: Validate GSettings schema

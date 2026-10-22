@@ -439,3 +439,92 @@
     font-size: 13px;
     font-weight: bold;
 }
+
+/* Hero-banner layout geometry; wallpaper and theme colors remain dynamic. */
+.launcher-hero-banner-card {
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.launcher-hero-banner {
+    border-radius: 20px 20px 0 0;
+    padding: 14px 16px 20px;
+    spacing: 14px;
+}
+
+.launcher-hero-search-row {
+    border-radius: 16px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 14px;
+}
+
+.launcher-hero-entry {
+    background: none;
+    border: none;
+    font-size: 14px;
+}
+
+.launcher-hero-icons-row {
+    spacing: 10px;
+}
+
+.launcher-hero-mode-circle {
+    border-radius: 999px;
+    padding: 10px;
+}
+
+.launcher-hero-banner-spacer {
+    height: 14px;
+    background-color: transparent;
+}
+
+.launcher-hero-results {
+    padding: 8px 8px 10px;
+    spacing: 2px;
+}
+
+/* Split-tabs layout geometry; pane and selected colors remain dynamic. */
+.launcher-split-tabs-card {
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 14px;
+    spacing: 14px;
+}
+
+.launcher-split-tabs-left {
+    spacing: 10px;
+}
+
+.launcher-split-tabs-search-row {
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+
+.launcher-split-tabs-entry {
+    background: none;
+    border: none;
+    font-size: 14px;
+}
+
+.launcher-split-tabs-pills {
+    spacing: 6px;
+}
+
+.launcher-split-tabs-pill {
+    border-radius: 10px;
+    padding: 8px 4px;
+}
+
+.launcher-split-tabs-pill-label {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.launcher-split-tabs-results {
+    border-radius: 14px;
+    padding: 8px;
+    spacing: 2px;
+}

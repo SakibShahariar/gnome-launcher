@@ -615,3 +615,7 @@
     border-radius: 12px;
     padding: 8px 10px;
 }
+
+.launcher-split-preview-result-label { font-size: 13px; font-weight: bold; }
+.launcher-split-preview-detail-title { font-size: 15px; font-weight: bold; }
+.launcher-split-preview-detail-footer { font-size: 12px; text-align: center; }

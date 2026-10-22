@@ -56,3 +56,26 @@
     border-radius: 16px;
     padding: 12px 4px;
 }
+
+/* Fullscreen layout geometry; monitor-sized dimensions and theme colors are
+ * still computed by the layout at runtime. */
+.launcher-fullscreen-root {
+    padding: 48px 64px;
+}
+
+.launcher-fullscreen-search-row {
+    spacing: 10px;
+}
+
+.launcher-fullscreen-grid {
+    spacing: 20px;
+}
+
+.launcher-fullscreen-scroll {
+    margin-top: 24px;
+}
+
+.launcher-fullscreen-tile {
+    border-radius: 14px;
+    padding: 10px;
+}

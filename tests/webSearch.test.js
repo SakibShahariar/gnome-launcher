@@ -21,6 +21,6 @@ test('rejects empty queries and unsafe or malformed templates', () => {
     assert.equal(buildSearchUrl('query', 'file:///tmp/{query}'), null);
     assert.equal(buildSearchUrl('query', 'javascript:alert({query})'), null);
     assert.equal(buildSearchUrl('query', 'https://example.com/search'), null);
-    assert.equal(buildSearchUrl('query', 'https://example.com/{query}', 'unused'), 'https://example.com/query');
+    assert.equal(buildSearchUrl('query', 'https://example.com/{query}'), 'https://example.com/query');
     assert.equal(buildSearchUrl(null), null);
 });

@@ -36,3 +36,20 @@ test('formats finite results without unnecessary trailing zeroes', () => {
     assert.equal(formatExpressionResult(1 / 3), '0.333333333333');
     assert.equal(formatExpressionResult(Infinity), null);
 });
+
+test('converts common units offline', async () => {
+    const {evaluateCalculatorInput} = await import('../lib/calculator.js');
+    assert.equal(evaluateCalculatorInput('100 km in mi').value, '62.137119 mi');
+    assert.equal(evaluateCalculatorInput('2 kg to g').value, '2000 g');
+    assert.equal(evaluateCalculatorInput('0 c in f').value, '32 f');
+    assert.equal(evaluateCalculatorInput('1 day in h').value, '24 h');
+});
+
+test('reports currency conversion as network-dependent without inventing rates', async () => {
+    const {evaluateCalculatorInput} = await import('../lib/calculator.js');
+    assert.deepEqual(evaluateCalculatorInput('10 usd in bdt'), {
+        display: 'Currency conversion needs a current network rate',
+        value: null,
+        copyable: false,
+    });
+});

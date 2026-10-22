@@ -164,3 +164,35 @@
     font-size: 13px;
     font-weight: bold;
 }
+
+/* Corner layout geometry; dynamic colors remain runtime-configurable. */
+.launcher-corner-card {
+    border-radius: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px;
+}
+
+.launcher-corner-search-row {
+    padding: 12px 14px;
+}
+
+.launcher-corner-entry {
+    background: none;
+    border: none;
+    font-size: 14px;
+}
+
+.launcher-corner-results {
+    padding: 0 6px 6px;
+}
+
+.launcher-corner-result-row {
+    border-radius: 12px;
+    padding: 7px 10px;
+}
+
+.launcher-corner-label {
+    font-size: 12px;
+    font-weight: bold;
+}

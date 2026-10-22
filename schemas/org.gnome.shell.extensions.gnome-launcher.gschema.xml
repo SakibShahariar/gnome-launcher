@@ -48,6 +48,14 @@
         setting stops polling and clears the in-memory history.
       </description>
     </key>
+    <key name="clipboard-history-clear-request" type="i">
+      <default>0</default>
+      <summary>Clipboard history clear request counter</summary>
+      <description>
+        Internal signal counter used by Preferences to request clearing
+        the extension process's in-memory clipboard history.
+      </description>
+    </key>
     <key name="search-url-template" type="s">
       <default>'https://www.google.com/search?q={query}'</default>
       <summary>Web search URL template</summary>

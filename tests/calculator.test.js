@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {evaluateExpression, formatExpressionResult} from '../lib/calculator.js';
+import {evaluateExpression, formatExpressionResult, evaluateCalculatorInput} from '../lib/calculator.js';
 
 test('evaluates arithmetic with precedence and parentheses', () => {
     assert.equal(evaluateExpression('2 + 3 * 4'), 14);
@@ -37,16 +37,14 @@ test('formats finite results without unnecessary trailing zeroes', () => {
     assert.equal(formatExpressionResult(Infinity), null);
 });
 
-test('converts common units offline', async () => {
-    const {evaluateCalculatorInput} = await import('../lib/calculator.js');
-    assert.equal(evaluateCalculatorInput('100 km in mi').value, '62.137119 mi');
+test('converts common units offline', () => {
+    assert.equal(evaluateCalculatorInput('100 km in mi').value, '62.1371192237 mi');
     assert.equal(evaluateCalculatorInput('2 kg to g').value, '2000 g');
     assert.equal(evaluateCalculatorInput('0 c in f').value, '32 f');
     assert.equal(evaluateCalculatorInput('1 day in h').value, '24 h');
 });
 
-test('reports currency conversion as network-dependent without inventing rates', async () => {
-    const {evaluateCalculatorInput} = await import('../lib/calculator.js');
+test('reports currency conversion as network-dependent without inventing rates', () => {
     assert.deepEqual(evaluateCalculatorInput('10 usd in bdt'), {
         display: 'Currency conversion needs a current network rate',
         value: null,

@@ -55,6 +55,7 @@ After changing extension code, restart the GNOME Shell session as appropriate fo
 - All layouts support typing to filter apps, arrow-key navigation, `Enter` to launch the selected result, and `Escape` to close.
 - In Hotkey layout, `Ctrl+1` through `Ctrl+9` launch the corresponding visible result. The number row and numeric keypad are both supported; ordinary digits without `Ctrl` remain available for searching.
 - Layouts with mode controls use `Ctrl+1` through `Ctrl+4` to switch modes. This mode shortcut takes precedence over Hotkey layout's direct-launch shortcut only in layouts that expose mode switching.
+- In Run mode, `Ctrl+Enter` requests a terminal launch for interactive commands. The launcher tries installed terminal emulators from a short compatibility list; normal `Enter` continues to use the existing non-terminal launch path. Commands are parsed into arguments and are not evaluated by a shell, so shell operators and variable expansion do not work.
 
 ## Search behavior
 

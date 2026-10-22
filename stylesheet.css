@@ -59,10 +59,6 @@
 
 /* Fullscreen layout geometry; monitor-sized dimensions and theme colors are
  * still computed by the layout at runtime. */
-.launcher-fullscreen-root {
-    padding: 48px 64px;
-}
-
 .launcher-fullscreen-search-row {
     spacing: 10px;
 }

@@ -61,6 +61,14 @@
       <summary>Web search URL template</summary>
       <description>HTTP(S) URL containing {query}, which is replaced with the encoded search text.</description>
     </key>
+    <key name="terminal-command-template" type="s">
+      <default>''</default>
+      <summary>Terminal command template</summary>
+      <description>
+        Optional terminal command line containing one standalone {command}
+        placeholder. Leave empty to automatically detect an installed terminal.
+      </description>
+    </key>
     <key name="windows-all-workspaces" type="b">
       <default>false</default>
       <summary>Search windows across all workspaces</summary>

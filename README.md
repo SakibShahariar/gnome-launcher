@@ -22,6 +22,7 @@ All 15 layouts:
 - **Keyboard-first workflow:** open with `Ctrl+Alt+Space`, type to search, navigate with arrow keys, press `Enter` to launch, or `Escape` to close. In Hotkey layout, use `Ctrl+1`–`Ctrl+9` (number row or numeric keypad) to launch the corresponding visible result; plain digits remain searchable.
 - **Application search** using GNOME's app-search provider with fuzzy matching as a fallback.
 - **Run and window modes** in Sidebar, Split Tabs, and Hero Banner. In Run mode, press `Enter` to launch normally or `Ctrl+Enter` to launch in an available terminal emulator for interactive CLI/TUI programs. Window mode respects the **Search all workspaces** preference. Shell operators and variable expansion are not interpreted.
+- **Finder prefixes** in Sidebar, Split Tabs, and Hero Banner: `> command` for Run, `/ name` for files, `w name` for windows, and `; text` for clipboard history.
 - **Matugen-compatible theming** using Material 3 color roles from a CSS file.
 - **Custom wallpapers** for layouts that display a banner or split panel.
 - **Optional clipboard history** with an explicit opt-in setting; collection is off by default. Search and re-copy recent text in Sidebar, Split Tabs, and Hero Banner clipboard mode.

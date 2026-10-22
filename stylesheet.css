@@ -604,3 +604,9 @@
 .launcher-mode-result-icon {
     margin-right: 10px;
 }
+
+/* Shared mode-result row geometry; selected fill stays theme-dependent. */
+.launcher-mode-result-row {
+    border-radius: 12px;
+    padding: 8px 12px;
+}

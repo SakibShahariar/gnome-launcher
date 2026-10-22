@@ -397,3 +397,45 @@
     spacing: 10px;
     padding: 20px;
 }
+
+/* Sidebar layout geometry; theme-dependent colors remain runtime-configurable. */
+.launcher-sidebar-card {
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.launcher-sidebar-rail {
+    border-radius: 20px 0 0 20px;
+    padding: 12px 8px;
+    spacing: 6px;
+}
+
+.launcher-sidebar-rail-icon {
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.launcher-sidebar-search-row {
+    padding: 14px 18px;
+}
+
+.launcher-sidebar-entry {
+    background: none;
+    border: none;
+    font-size: 15px;
+}
+
+.launcher-sidebar-results {
+    padding: 0 10px 10px;
+}
+
+.launcher-sidebar-result-row {
+    border-radius: 14px;
+    padding: 8px 12px;
+}
+
+.launcher-sidebar-result-label {
+    font-size: 13px;
+    font-weight: bold;
+}

@@ -27,3 +27,17 @@
     border-radius: 14px;
     padding: 8px 12px;
 }
+
+/* List layout structure; dynamic theme colors remain inline. */
+.launcher-list-search-row {
+    padding: 12px 14px;
+}
+
+.launcher-list-results {
+    padding: 0 6px 6px;
+}
+
+.launcher-list-result-row {
+    border-radius: 14px;
+    padding: 8px 12px;
+}

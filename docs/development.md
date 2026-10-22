@@ -67,7 +67,7 @@ The launcher integrates with GNOME Shell's application-search facilities and use
 
 ### Profiling search and result rendering
 
-The Node benchmark isolates pure JavaScript search and result-ID mapping; it does **not** measure GNOME Shell provider latency, Clutter actor creation, layout allocation, or frame pacing. Do not use its timings as an end-to-end launcher performance claim.
+The Node benchmark isolates pure JavaScript search and result-ID mapping; it does **not** measure GNOME Shell provider latency, Clutter actor creation, layout allocation, or frame pacing. The fuzzy fallback caches normalized app names by app object and rechecks the original display name on each query, so a changed app name invalidates its cache entry. Do not use its timings as an end-to-end launcher performance claim.
 
 For a representative in-session measurement:
 

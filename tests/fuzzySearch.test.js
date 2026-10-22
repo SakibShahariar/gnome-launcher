@@ -32,7 +32,7 @@ test('fuzzySearch uses alphabetical order to break equal-score ties', () => {
     assert.deepEqual(results.map(item => item.get_name()), ['Figma', 'Files', 'Firefox']);
 });
 
-test('fuzzySearch reads each app name once per query', () => {
+test('fuzzySearch reads each app name once and reuses normalization across queries', () => {
     const reads = new Map();
     const apps = ['Firefox', 'Files', 'Figma'].map(name => ({
         get_name() {
@@ -41,7 +41,17 @@ test('fuzzySearch reads each app name once per query', () => {
         },
     }));
     fuzzySearch(apps, 'fi');
-    assert.deepEqual([...reads.values()], [1, 1, 1]);
+    fuzzySearch(apps, 'fox');
+    assert.deepEqual([...reads.values()], [2, 2, 2]);
+});
+
+test('fuzzySearch refreshes normalized names when app metadata changes', () => {
+    let name = 'Firefox';
+    const firefox = {get_name: () => name};
+    assert.deepEqual(fuzzySearch([firefox], 'fire'), [firefox]);
+    name = 'Thunderbird';
+    assert.deepEqual(fuzzySearch([firefox], 'fire'), []);
+    assert.deepEqual(fuzzySearch([firefox], 'thun'), [firefox]);
 });
 
 test('rankAppsByUsage puts frequent apps first in usage order', async () => {

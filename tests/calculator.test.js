@@ -10,6 +10,8 @@ test('evaluates arithmetic with precedence and parentheses', () => {
     assert.equal(evaluateExpression('(2 + 3) * 4'), 20);
     assert.equal(evaluateExpression('18 / 3 - 2'), 4);
     assert.equal(evaluateExpression('2^3^2'), 512);
+    assert.equal(evaluateExpression('-2^2'), -4);
+    assert.equal(evaluateExpression('2^-2'), 0.25);
     assert.equal(evaluateExpression('-4 + +6'), 2);
     assert.equal(evaluateExpression('7 % 4'), 3);
 });

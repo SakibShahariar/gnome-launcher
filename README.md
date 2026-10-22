@@ -25,7 +25,7 @@ All 15 layouts:
 - **Finder prefixes** in Sidebar, Split Tabs, and Hero Banner: `> command` for Run, `/ name` for files, `w name` for windows, `; text` for clipboard history, `= expression` for arithmetic and offline unit conversions, `? query` for web search, `recent query` for recent documents, and `emoji query` to search emoji.
 - **Matugen-compatible theming** using Material 3 color roles from a CSS file.
 - **Custom wallpapers** for layouts that display a banner or split panel.
-- **Optional clipboard history** with an explicit opt-in setting; collection is off by default. Search and re-copy recent text in Sidebar, Split Tabs, and Hero Banner clipboard mode.
+- **Optional clipboard history** with an explicit opt-in setting; collection is off by default. Search and re-copy recent text in Sidebar, Split Tabs, and Hero Banner clipboard mode. Each text entry also has an explicit **QR** action that copies a generated PNG image to the clipboard using the optional `qrencode` utility; if it is missing, the launcher explains how to enable the feature.
 - **Native GNOME Shell overlay** using `ModalDialog`.
 
 ## Installation

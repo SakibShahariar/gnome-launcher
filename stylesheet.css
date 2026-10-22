@@ -610,3 +610,8 @@
     border-radius: 12px;
     padding: 8px 12px;
 }
+
+.launcher-mode-run-preview-row {
+    border-radius: 12px;
+    padding: 8px 10px;
+}

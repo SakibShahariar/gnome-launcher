@@ -55,6 +55,17 @@
 }
 
 /* Grid layout structure; selected/theme colors remain runtime-configurable. */
+.launcher-grid-card {
+    border-radius: 24px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px;
+}
+
+.launcher-grid-search-row {
+    padding: 14px 18px;
+}
+
 .launcher-grid-results {
     padding: 4px 14px 16px;
 }

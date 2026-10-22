@@ -37,7 +37,7 @@
     padding: 0 6px 6px;
 }
 
-.launcher-card:has(.launcher-list-search-row) {
+.launcher-list-card {
     border-radius: 20px;
     border-width: 1px;
     border-style: solid;

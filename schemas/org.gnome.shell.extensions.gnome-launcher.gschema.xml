@@ -11,6 +11,11 @@
         (input source switcher).
       </description>
     </key>
+    <key name="toggle-shortcuts-cheatsheet" type="as">
+      <default>['&lt;Super&gt;slash']</default>
+      <summary>Toggle the keyboard shortcuts cheatsheet</summary>
+      <description>Show the documented GNOME Launcher keyboard shortcuts. Press Escape to close it.</description>
+    </key>
     <key name="layout" type="s">
       <default>'list'</default>
       <summary>Which layout to render</summary>

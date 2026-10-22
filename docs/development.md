@@ -55,7 +55,7 @@ After changing extension code, restart the GNOME Shell session as appropriate fo
 - All layouts support typing to filter apps, arrow-key navigation, `Enter` to launch the selected result, and `Escape` to close.
 - In Hotkey layout, `Ctrl+1` through `Ctrl+9` launch the corresponding visible result. The number row and numeric keypad are both supported; ordinary digits without `Ctrl` remain available for searching.
 - Layouts with mode controls use `Ctrl+1` through `Ctrl+4` to switch modes. This mode shortcut takes precedence over Hotkey layout's direct-launch shortcut only in layouts that expose mode switching.
-- Sidebar, Split Tabs, and Hero Banner expose Run and Window modes. Window mode honors the `windows-all-workspaces` preference and filters titles as you type.
+- Sidebar, Split Tabs, and Hero Banner expose Run, Window, and Clipboard modes. Window mode honors the `windows-all-workspaces` preference and filters titles as you type. Clipboard mode only reads the in-memory history when the opt-in `clipboard-history-enabled` setting is enabled; typing filters the entries, and activating one copies it back to the clipboard.
 - In Run mode, `Ctrl+Enter` requests a terminal launch for interactive commands. The launcher tries installed terminal emulators from a short compatibility list; normal `Enter` continues to use the existing non-terminal launch path. Commands are parsed into arguments and are not evaluated by a shell, so shell operators and variable expansion do not work.
 - Mode-switching layouts expose their modes through `Ctrl+1` onward in the order shown by the UI; layouts with fewer modes simply ignore unavailable indices.
 

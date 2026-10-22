@@ -237,3 +237,26 @@
     text-align: center;
     font-weight: bold;
 }
+
+/* KRunner card and entry geometry; theme colors remain runtime-configurable. */
+.launcher-krunner-card {
+    border-width: 1px;
+    border-style: solid;
+    border-top-width: 0;
+    border-radius: 0 0 12px 12px;
+}
+
+.launcher-krunner-entry {
+    background: none;
+    border: none;
+    font-size: 16px;
+}
+
+.launcher-krunner-result-divider {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.launcher-krunner-label {
+    font-size: 13px;
+}

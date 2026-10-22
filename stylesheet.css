@@ -37,6 +37,18 @@
     padding: 0 6px 6px;
 }
 
+.launcher-card:has(.launcher-list-search-row) {
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px;
+}
+
+.launcher-list-footer {
+    font-size: 11px;
+    padding: 4px 16px 8px;
+}
+
 .launcher-list-result-row {
     border-radius: 14px;
     padding: 8px 12px;

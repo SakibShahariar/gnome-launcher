@@ -92,3 +92,21 @@ test('createSearchResultResolver preserves provider order and skips unknown IDs'
     const resolve = createSearchResultResolver([visible, other]);
     assert.deepEqual(resolve(['Other.desktop', 'missing.desktop', 'Visible.desktop']), [other, visible]);
 });
+
+
+test('createSearchResultResolver builds its app index once and reuses it', async () => {
+    const {createSearchResultResolver} = await import('../lib/fuzzySearch.js');
+    let idReads = 0;
+    const item = {
+        get_name: () => 'Cached app',
+        get_id() {
+            idReads++;
+            return 'cached.desktop';
+        },
+    };
+    const resolve = createSearchResultResolver([item]);
+    assert.equal(idReads, 1);
+    assert.deepEqual(resolve(['cached.desktop']), [item]);
+    assert.deepEqual(resolve(['cached.desktop', 'unknown.desktop']), [item]);
+    assert.equal(idReads, 1);
+});

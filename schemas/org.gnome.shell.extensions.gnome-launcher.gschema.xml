@@ -48,6 +48,11 @@
         setting stops polling and clears the in-memory history.
       </description>
     </key>
+    <key name="search-url-template" type="s">
+      <default>'https://www.google.com/search?q={query}'</default>
+      <summary>Web search URL template</summary>
+      <description>HTTP(S) URL containing {query}, which is replaced with the encoded search text.</description>
+    </key>
     <key name="windows-all-workspaces" type="b">
       <default>false</default>
       <summary>Search windows across all workspaces</summary>

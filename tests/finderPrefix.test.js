@@ -11,6 +11,7 @@ test('parses run, files, and clipboard prefixes', () => {
     assert.deepEqual(parseFinderPrefix('; copied text'), {mode: 'clipboard', query: 'copied text'});
     assert.deepEqual(parseFinderPrefix('= 2 + 2'), {mode: 'calculator', query: '2 + 2'});
     assert.deepEqual(parseFinderPrefix('recent report'), {mode: 'recent', query: 'report'});
+    assert.deepEqual(parseFinderPrefix('emoji smile'), {mode: 'emoji', query: 'smile'});
     assert.deepEqual(parseFinderPrefix('RECENT report'), {mode: 'recent', query: 'report'});
 });
 
@@ -25,6 +26,7 @@ test('allows a prefix with an empty query', () => {
     assert.deepEqual(parseFinderPrefix(';'), {mode: 'clipboard', query: ''});
     assert.deepEqual(parseFinderPrefix('='), {mode: 'calculator', query: ''});
     assert.deepEqual(parseFinderPrefix('recent'), {mode: 'recent', query: ''});
+    assert.deepEqual(parseFinderPrefix('emoji'), {mode: 'emoji', query: ''});
     assert.deepEqual(parseFinderPrefix('w '), {mode: 'window', query: ''});
 });
 

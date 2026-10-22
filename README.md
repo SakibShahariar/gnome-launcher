@@ -24,7 +24,7 @@ All 15 layouts:
 - **Run and window modes** in Sidebar, Split Tabs, and Hero Banner. In Run mode, press `Enter` to launch normally or `Ctrl+Enter` to launch in an available terminal emulator for interactive CLI/TUI programs. Window mode respects the **Search all workspaces** preference. Shell operators and variable expansion are not interpreted.
 - **Matugen-compatible theming** using Material 3 color roles from a CSS file.
 - **Custom wallpapers** for layouts that display a banner or split panel.
-- **Optional clipboard history** with an explicit opt-in setting; collection is off by default.
+- **Optional clipboard history** with an explicit opt-in setting; collection is off by default. Search and re-copy recent text in Sidebar, Split Tabs, and Hero Banner clipboard mode.
 - **Native GNOME Shell overlay** using `ModalDialog`.
 
 ## Installation

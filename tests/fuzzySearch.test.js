@@ -58,6 +58,7 @@ test('resolveSearchResults excludes apps outside the launchable list', async () 
     const hidden = app('Hidden');
     const results = resolveSearchResults([visible], ['Hidden.desktop', 'Visible.desktop', 'missing.desktop']);
     assert.deepEqual(results, [visible]);
+    assert.ok(!results.includes(hidden));
 });
 
 test('resolveSearchResults preserves native provider ranking', async () => {

@@ -154,6 +154,23 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         clipboardRow.add_suffix(clipboardSwitch);
         clipboardRow.activatable_widget = clipboardSwitch;
         privacyGroup.add(clipboardRow);
+
+        const clearHistoryRow = new Adw.ActionRow({
+            title: 'Clear clipboard history',
+            subtitle: 'Remove all retained entries from memory',
+        });
+        const clearHistoryButton = new Gtk.Button({
+            label: 'Clear',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['flat'],
+        });
+        clearHistoryButton.connect('clicked', () => {
+            const key = 'clipboard-history-clear-request';
+            const current = settings.get_int(key);
+            settings.set_int(key, current >= 2147483647 ? 0 : current + 1);
+        });
+        clearHistoryRow.add_suffix(clearHistoryButton);
+        privacyGroup.add(clearHistoryRow);
         page.add(privacyGroup);
 
         const windowGroup = new Adw.PreferencesGroup({title: 'Window search'});

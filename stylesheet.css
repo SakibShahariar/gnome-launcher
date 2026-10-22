@@ -100,3 +100,14 @@
     border-style: solid;
     padding: 10px 18px;
 }
+
+/* KRunner-style layout structure; divider and selection colors stay dynamic. */
+.launcher-krunner-search-row {
+    padding: 14px 18px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.launcher-krunner-result-row {
+    padding: 8px 18px;
+}

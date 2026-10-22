@@ -528,3 +528,59 @@
     padding: 8px;
     spacing: 2px;
 }
+
+/* Grid/list/dock text geometry; runtime colors remain theme-aware. */
+.launcher-grid-entry {
+    background: none;
+    border: none;
+    font-size: 16px;
+}
+
+.launcher-grid-label {
+    font-size: 11px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.launcher-list-entry {
+    background: none;
+    border: none;
+    font-size: 16px;
+}
+
+.launcher-list-result-label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.launcher-dock-entry {
+    background: none;
+    border: none;
+    font-size: 15px;
+}
+
+.launcher-dock-result-label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Fullscreen geometry is monitor-sized at runtime; spacing is static CSS. */
+.launcher-fullscreen-root {
+    padding: 48px 64px;
+}
+
+.launcher-fullscreen-entry {
+    background: none;
+    border: none;
+    font-size: 18px;
+}
+
+.launcher-fullscreen-grid-row {
+    spacing: 12px;
+}
+
+.launcher-fullscreen-label {
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+}

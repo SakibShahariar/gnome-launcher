@@ -135,3 +135,32 @@
 .launcher-krunner-result-row {
     padding: 8px 18px;
 }
+
+/* Hotkey layout card and text geometry; runtime colors remain theme-aware. */
+.launcher-hotkey-card {
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px;
+}
+
+.launcher-hotkey-entry {
+    background: none;
+    border: none;
+    font-size: 16px;
+}
+
+.launcher-hotkey-footer {
+    font-size: 11px;
+    padding: 4px 16px 8px;
+}
+
+.launcher-hotkey-number {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.launcher-hotkey-label {
+    font-size: 13px;
+    font-weight: bold;
+}

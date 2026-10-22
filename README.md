@@ -61,7 +61,7 @@ Available layouts: `list`, `grid`, `hotkey`, `sidebar`, `split-preview`, `dock`,
 
 ## Clipboard history
 
-Clipboard history is **off by default**. To enable it, open the extension preferences and turn on **General → Privacy → Clipboard history**. While enabled, the extension polls the text clipboard once per second and keeps up to 20 recent, non-empty text entries **in memory only**; it does not write them to disk. Clipboard contents can include passwords, authentication codes, or private messages, so enable this only if you want the feature. Use **Clear clipboard history** in Preferences to remove retained entries without disabling collection. Turning the feature off stops polling and immediately clears the retained history. Disabling the extension also stops polling and clears the history.
+Clipboard history is **off by default**. To enable it, open the extension preferences and turn on **General → Privacy → Clipboard history**. While enabled, the extension listens for clipboard-owner changes and reads text after a short debounce, keeping up to 20 recent, non-empty text entries **in memory only**; it does not write them to disk. A one-second polling fallback is used only if change-signal setup is unavailable. Clipboard contents can include passwords, authentication codes, or private messages, so enable this only if you want the feature. Use **Clear clipboard history** in Preferences to remove retained entries without disabling collection. Turning the feature off stops polling and immediately clears the retained history. Disabling the extension also stops polling and clears the history.
 
 ## Theming
 

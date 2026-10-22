@@ -64,6 +64,27 @@ After changing extension code, restart the GNOME Shell session as appropriate fo
 
 The launcher integrates with GNOME Shell's application-search facilities and uses a fuzzy-matching fallback where needed. Keep the search implementation compatible with the GNOME Shell version targeted by the project, and handle provider failures gracefully. Avoid documenting internal implementation details in the user-facing README unless users need them to configure or troubleshoot the feature.
 
+
+### Profiling search and result rendering
+
+The Node benchmark isolates pure JavaScript search and result-ID mapping; it does **not** measure GNOME Shell provider latency, Clutter actor creation, layout allocation, or frame pacing. Do not use its timings as an end-to-end launcher performance claim.
+
+For a representative in-session measurement:
+
+1. Install the current revision and restart the GNOME Shell session (on Wayland, log out and back in).
+2. Record the installed application count and GNOME Shell version. Use the same layout, display scale, and app set for each comparison.
+3. Temporarily instrument `LauncherDialog.onQueryChanged()` around `await search(...)` and `_rerender()` around `this._layout.renderResults()` using `GLib.get_monotonic_time()`. Log elapsed milliseconds and query length, not the query text, to avoid leaking what the user typed into the journal. Remove the instrumentation after testing; do not ship per-keystroke logging.
+4. Type a repeatable sequence of short, medium, and no-match queries, including rapid typing and clearing the field. Repeat each sequence several times after one warm-up pass. Compare medians and slow-tail samples, and check the journal for exceptions.
+5. Report search latency and render latency separately. If rendering dominates, profile actor creation/reuse and allocation in the affected layout before attempting result-actor caching; caching must account for changed app names, icon/theme changes, selection state, and layout destruction.
+
+Useful journal commands (the exact unit name can vary by distribution):
+
+```bash
+journalctl --user -b | grep -i 'gnome-shell\\|gnome-launcher'
+```
+
+Keep timings from the synthetic benchmark and from a live Shell session clearly labeled as different kinds of evidence. A performance issue should remain open until the live measurements are recorded or the remaining limitation is explicitly accepted.
+
 For debugging, inspect GNOME Shell logs after reproducing an issue:
 
 ```bash

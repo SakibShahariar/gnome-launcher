@@ -260,3 +260,74 @@
 .launcher-krunner-label {
     font-size: 13px;
 }
+
+/* Notch layout geometry; dynamic theme colors remain runtime-configurable. */
+.launcher-notch-card {
+    border-width: 1px;
+    border-style: solid;
+    border-top-width: 0;
+    border-radius: 0 0 20px 20px;
+}
+
+.launcher-notch-search-row {
+    padding: 12px 18px;
+    spacing: 10px;
+}
+
+.launcher-notch-entry {
+    background: none;
+    border: none;
+    font-size: 14px;
+}
+
+.launcher-notch-divider {
+    height: 1px;
+}
+
+.launcher-notch-results {
+    padding: 6px;
+}
+
+.launcher-notch-result-row {
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+
+.launcher-notch-label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Adaptive-width layout geometry; content width remains computed at runtime. */
+.launcher-adaptive-width-card {
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px;
+}
+
+.launcher-adaptive-width-search-row {
+    padding: 12px 14px;
+}
+
+.launcher-adaptive-width-entry {
+    background: none;
+    border: none;
+    font-size: 15px;
+}
+
+.launcher-adaptive-width-tiles-row {
+    spacing: 8px;
+    padding: 4px 14px 16px;
+}
+
+.launcher-adaptive-width-tile {
+    border-radius: 12px;
+    padding: 10px 6px;
+}
+
+.launcher-adaptive-width-label {
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
+}

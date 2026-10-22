@@ -20,6 +20,10 @@ export default class GnomeLauncherExtension extends Extension {
             'changed::clipboard-history-enabled',
             () => this._syncClipboardHistory()
         );
+        this._clipboardHistoryClearSignalId = this._settings.connect(
+            'changed::clipboard-history-clear-request',
+            () => ClipboardHistory.clearHistory()
+        );
         this._syncClipboardHistory();
 
         Main.wm.addKeybinding(
@@ -36,6 +40,10 @@ export default class GnomeLauncherExtension extends Extension {
         if (this._clipboardHistorySignalId) {
             this._settings.disconnect(this._clipboardHistorySignalId);
             this._clipboardHistorySignalId = 0;
+        }
+        if (this._clipboardHistoryClearSignalId) {
+            this._settings.disconnect(this._clipboardHistoryClearSignalId);
+            this._clipboardHistoryClearSignalId = 0;
         }
         ClipboardHistory.stopTracking();
         cleanupSearchProvider();

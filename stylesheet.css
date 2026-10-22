@@ -12,3 +12,18 @@
     box-shadow: none;
     padding: 0;
 }
+
+/* Hotkey layout structure; theme-dependent colors remain inline so they
+ * continue to follow the user's selected theme and opacity settings. */
+.launcher-hotkey-search-row {
+    padding: 12px 14px;
+}
+
+.launcher-hotkey-results {
+    padding: 0 6px 6px;
+}
+
+.launcher-hotkey-result-row {
+    border-radius: 14px;
+    padding: 8px 12px;
+}

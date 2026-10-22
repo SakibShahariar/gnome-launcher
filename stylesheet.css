@@ -79,3 +79,24 @@
     border-radius: 14px;
     padding: 10px;
 }
+
+/* Dock layout structure; theme-dependent surface and outline colors are
+ * supplied by the layout at runtime. */
+.launcher-dock-root {
+    spacing: 10px;
+    background-color: transparent;
+}
+
+.launcher-dock-results {
+    border-radius: 16px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px;
+}
+
+.launcher-dock-search-row {
+    border-radius: 24px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px 18px;
+}

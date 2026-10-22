@@ -196,3 +196,44 @@
     font-size: 12px;
     font-weight: bold;
 }
+
+/* Full-edge layout geometry; theme colors remain supplied at runtime. */
+.launcher-full-edge-root {
+    border-radius: 0 20px 20px 0;
+    border-width: 1px;
+    border-style: solid;
+    border-left-width: 0;
+    padding: 20px 16px;
+}
+
+.launcher-full-edge-search-row {
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+}
+
+.launcher-full-edge-entry {
+    background: none;
+    border: none;
+    font-size: 14px;
+}
+
+.launcher-full-edge-grid {
+    spacing: 10px;
+    margin-top: 14px;
+}
+
+.launcher-full-edge-grid-row {
+    spacing: 8px;
+}
+
+.launcher-full-edge-tile {
+    border-radius: 10px;
+    padding: 6px;
+}
+
+.launcher-full-edge-label {
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
+}

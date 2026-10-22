@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "node --test tests/*.test.js",
+    "benchmark:search": "node scripts/benchmark-fuzzy-search.js",
     "check": "make check"
   },
   "devDependencies": {

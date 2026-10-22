@@ -584,3 +584,23 @@
     text-align: center;
     font-weight: bold;
 }
+
+/* Shared result details for mode-based layouts. */
+.launcher-mode-result-emoji {
+    font-size: 20px;
+    margin-right: 12px;
+}
+
+.launcher-mode-result-label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.launcher-mode-result-footer {
+    font-size: 11px;
+    padding: 4px 8px 2px;
+}
+
+.launcher-mode-result-icon {
+    margin-right: 10px;
+}

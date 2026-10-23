@@ -45,7 +45,7 @@ function savePathSetting(row, settings, key) {
         const info = file.query_info('standard::type', Gio.FileQueryInfoFlags.NONE, null);
         if (info.get_file_type() !== Gio.FileType.REGULAR)
             throw new Error('Path is not a regular file');
-        settings.set_string(key, value);
+        settings.set_string(key, expandHomePath(value));
         row.remove_css_class('error');
         row.set_tooltip_text(null);
     } catch {

@@ -17,7 +17,7 @@ test('trims the command and returns parsed argv without shell execution', () => 
 });
 
 test('preserves shell metacharacters as ordinary parsed arguments', () => {
-    const result = parseCommandLine('echo hello; touch /tmp/pwned', line => [
+    const result = parseCommandLine('echo hello; touch /tmp/pwned', _line => [
         true, ['echo', 'hello;', 'touch', '/tmp/pwned'],
     ]);
 

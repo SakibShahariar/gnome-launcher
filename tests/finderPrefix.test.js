@@ -16,6 +16,9 @@ test('parses symbolic and word finder prefixes', () => {
     assert.deepEqual(parseFinderPrefix('RECENT report'), {mode: 'recent', query: 'report'});
     assert.deepEqual(parseFinderPrefix('w firefox'), {mode: 'window', query: 'firefox'});
     assert.deepEqual(parseFinderPrefix('W firefox'), {mode: 'window', query: 'firefox'});
+    assert.deepEqual(parseFinderPrefix('s network'), {mode: 'settings', query: 'network'});
+    assert.deepEqual(parseFinderPrefix('S network'), {mode: 'settings', query: 'network'});
+    assert.deepEqual(parseFinderPrefix('settings Displays'), {mode: 'settings', query: 'Displays'});
 });
 
 test('allows registered prefixes with an empty query', () => {
@@ -27,12 +30,14 @@ test('allows registered prefixes with an empty query', () => {
     assert.deepEqual(parseFinderPrefix('recent'), {mode: 'recent', query: ''});
     assert.deepEqual(parseFinderPrefix('emoji'), {mode: 'emoji', query: ''});
     assert.deepEqual(parseFinderPrefix('w '), {mode: 'window', query: ''});
+    assert.deepEqual(parseFinderPrefix('s '), {mode: 'settings', query: ''});
+    assert.deepEqual(parseFinderPrefix('settings'), {mode: 'settings', query: ''});
 });
 
 test('exposes finder metadata for layout and finder integration', () => {
     assert.equal(FINDERS.get('run').label, 'Run a command');
-    assert.equal(FINDERS.get('settings'), null);
-    assert.equal(FINDERS.list().length, 8);
+    assert.equal(FINDERS.get('settings').label, 'GNOME Settings');
+    assert.equal(FINDERS.list().length, 9);
 });
 
 test('does not parse ordinary text or non-string input as a prefix', () => {

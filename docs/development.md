@@ -18,6 +18,14 @@ Names can change as the project evolves; use the current tree as the source of t
 
 For the repeatable pre-release manual test matrix covering every supported layout and the checks that CI cannot perform, see the [release checklist](release-checklist.md).
 
+## Finder and mode architecture
+
+Finder prefixes are registered in `lib/finderPrefix.js`, backed by the pure `lib/finderRegistry.js` module. Word prefixes require a trailing separator so typing a word such as `recent` does not clear the search field before the user can finish the query. Keep prefix parsing free of GNOME Shell dependencies so it remains unit-testable.
+
+The Sidebar, Split Tabs, and Hero Banner layouts share prefix switching through `lib/finderPrefixController.js` and reset common mode state through `lib/modeController.js`. Query-backed modes that share behavior use `lib/modeSearch.js`; clipboard filtering lives in `lib/clipboardSearch.js`, and debounced file-search cancellation is handled by `lib/fileSearchLifecycle.js`. Add or change shared behavior in these helpers rather than copying another branch into each layout. Keep rendering and activation layout-specific where their interactions differ.
+
+The GNOME Settings finder uses the `s ` and `settings ` prefixes. Its searchable panel metadata is in `lib/settingsFinder.js`; activation is delegated to `gnome-control-center` through an argument array rather than a shell command string. Update the README finder-prefix list whenever a prefix changes.
+
 ## Development setup
 
 From the repository root, compile the settings schema:

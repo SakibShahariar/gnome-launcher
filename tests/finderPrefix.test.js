@@ -27,11 +27,11 @@ test('allows registered prefixes with an empty query', () => {
     assert.deepEqual(parseFinderPrefix(';'), {mode: 'clipboard', query: ''});
     assert.deepEqual(parseFinderPrefix('='), {mode: 'calculator', query: ''});
     assert.deepEqual(parseFinderPrefix('?'), {mode: 'web', query: ''});
-    assert.deepEqual(parseFinderPrefix('recent'), {mode: 'recent', query: ''});
-    assert.deepEqual(parseFinderPrefix('emoji'), {mode: 'emoji', query: ''});
+    assert.deepEqual(parseFinderPrefix('recent '), {mode: 'recent', query: ''});
+    assert.deepEqual(parseFinderPrefix('emoji '), {mode: 'emoji', query: ''});
     assert.deepEqual(parseFinderPrefix('w '), {mode: 'window', query: ''});
     assert.deepEqual(parseFinderPrefix('s '), {mode: 'settings', query: ''});
-    assert.deepEqual(parseFinderPrefix('settings'), {mode: 'settings', query: ''});
+    assert.deepEqual(parseFinderPrefix('settings '), {mode: 'settings', query: ''});
 });
 
 test('exposes finder metadata for layout and finder integration', () => {
@@ -45,6 +45,9 @@ test('exposes finder metadata for layout and finder integration', () => {
 test('does not parse ordinary text or non-string input as a prefix', () => {
     assert.equal(parseFinderPrefix('firefox'), null);
     assert.equal(parseFinderPrefix('window manager'), null);
+    assert.equal(parseFinderPrefix('recent'), null);
+    assert.equal(parseFinderPrefix('emoji'), null);
+    assert.equal(parseFinderPrefix('settings'), null);
     assert.equal(parseFinderPrefix(null), null);
     assert.equal(parseFinderPrefix(42), null);
 });

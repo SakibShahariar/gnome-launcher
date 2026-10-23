@@ -271,6 +271,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         scaleRow.connect('notify::value', () => {
             settings.set_double('icon-scale', scaleRow.value);
+            refreshLayoutAppearance();
         });
         sizeGroup.add(scaleRow);
 
@@ -432,6 +433,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         opacityScale.set_size_request(220, -1);
         opacityScale.connect('value-changed', () => {
             settings.set_double('background-opacity', opacityScale.get_value());
+            refreshLayoutAppearance();
         });
         const opacitySettingsSignalId = settings.connect('changed::background-opacity', () => {
             const v = settings.get_double('background-opacity');

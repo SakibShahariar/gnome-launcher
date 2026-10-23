@@ -16,6 +16,8 @@ The project is a GNOME Shell extension. The main pieces are:
 
 Names can change as the project evolves; use the current tree as the source of truth.
 
+For the repeatable pre-release manual test matrix covering every supported layout and the checks that CI cannot perform, see the [release checklist](release-checklist.md).
+
 ## Development setup
 
 From the repository root, compile the settings schema:

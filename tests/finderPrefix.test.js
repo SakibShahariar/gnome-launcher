@@ -35,9 +35,11 @@ test('allows registered prefixes with an empty query', () => {
 });
 
 test('exposes finder metadata for layout and finder integration', () => {
+    assert.equal(FINDERS.get('apps').default, true);
+    assert.equal(FINDERS.get('apps').label, 'Applications');
     assert.equal(FINDERS.get('run').label, 'Run a command');
     assert.equal(FINDERS.get('settings').label, 'GNOME Settings');
-    assert.equal(FINDERS.list().length, 9);
+    assert.equal(FINDERS.list().length, 10);
 });
 
 test('does not parse ordinary text or non-string input as a prefix', () => {

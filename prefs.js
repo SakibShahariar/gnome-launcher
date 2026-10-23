@@ -78,7 +78,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const layoutGroup = new Adw.PreferencesGroup({title: 'Layout'});
         const layoutRow = new Adw.ComboRow({
             title: 'Launcher layout',
-            subtitle: `${LAYOUT_NAMES.length} layouts available`,
+            subtitle: `${LAYOUT_NAMES.length} layouts available. Changes apply the next time you open the launcher.`,
             model: Gtk.StringList.new(LAYOUT_NAMES),
         });
         const current = settings.get_string('layout');

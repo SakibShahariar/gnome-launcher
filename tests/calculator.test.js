@@ -39,6 +39,7 @@ test('formats finite results without unnecessary trailing zeroes', () => {
 
 test('converts common units offline', () => {
     assert.equal(evaluateCalculatorInput('100 km in mi').value, '62.1371192237 mi');
+    assert.equal(evaluateCalculatorInput('100 km in mi').copyable, true);
     assert.equal(evaluateCalculatorInput('2 kg to g').value, '2000 g');
     assert.equal(evaluateCalculatorInput('0 c in f').value, '32 f');
     assert.equal(evaluateCalculatorInput('1 day in h').value, '24 h');

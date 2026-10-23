@@ -24,6 +24,7 @@ All 15 layouts:
 - **Run and window modes** in Sidebar, Split Tabs, and Hero Banner. In Run mode, press `Enter` to launch normally or `Ctrl+Enter` to launch in an available terminal emulator for interactive CLI/TUI programs. Configure a terminal command template in Preferences using one standalone `{command}` placeholder (for example, `ptyxis -- {command}`), or leave it empty for automatic detection. Window mode respects the **Search all workspaces** preference. Run commands are parsed into arguments and launched directly without a shell; shell operators, pipes, redirects, globbing, and variable expansion are not interpreted. Quote arguments containing spaces as needed. Invalid quoting produces an error instead of launching.
 - **Finder prefixes** in Sidebar, Split Tabs, and Hero Banner: `> command` for Run, `/ name` for files, `w name` for windows, `; text` for clipboard history, `= expression` for arithmetic and offline unit conversions, `? query` for web search, `recent query` for recent documents, and `emoji query` to search emoji.
 - **Matugen-compatible theming** using Material 3 color roles from a CSS file.
+- **Per-layout appearance overrides** for icon size and background opacity. Each layout can override either value independently; unset values inherit the global Appearance settings.
 - **Custom wallpapers** for layouts that display a banner or split panel.
 - **Optional clipboard history** with an explicit opt-in setting; collection is off by default. Search and re-copy recent text in Sidebar, Split Tabs, and Hero Banner clipboard mode. Each text entry also has an explicit **QR** action that copies a generated PNG image to the clipboard using the optional `qrencode` utility; if it is missing, the launcher explains how to enable the feature.
 - **Native GNOME Shell overlay** using `ModalDialog`.
@@ -79,6 +80,8 @@ gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher them
 ```
 
 The file is read whenever the launcher opens. Leave the path empty to use the built-in purple theme.
+
+Global icon size and background opacity are configured under **Appearance**. To customize a single layout without affecting the others, use **Layout-specific appearance** on the same page, select a layout, and adjust either override. Use **Reset layout overrides** to return both values to the global defaults for that layout.
 
 Layouts with a banner or split panel can also use a custom wallpaper. Set **Wallpaper path** in preferences, or configure the `wallpaper-path` GSettings key. When left empty, the extension first uses GNOME's configured desktop wallpaper, then checks legacy fallback paths.
 

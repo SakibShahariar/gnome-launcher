@@ -10,6 +10,8 @@ test('searches common GNOME Settings panels by name and keyword', () => {
     assert.ok(searchSettingsPanels('monitor').some(panel => panel.id === 'display'));
     assert.ok(searchSettingsPanels('wireless').some(panel => panel.id === 'wifi'));
     assert.ok(searchSettingsPanels('apps').some(panel => panel.id === 'applications'));
+    assert.ok(searchSettingsPanels('account').some(panel => panel.id === 'user-accounts'));
+    assert.ok(searchSettingsPanels('assistive').some(panel => panel.id === 'universal-access'));
 });
 
 test('empty settings query returns all panels without mutating the registry', () => {

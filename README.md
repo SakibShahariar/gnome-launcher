@@ -64,6 +64,8 @@ Available layouts: `list`, `grid`, `hotkey`, `sidebar`, `split-preview`, `dock`,
 
 Type normally to search applications. Prefix the query to use a finder: `> command` runs a command, `/ file` searches files, `; text` searches clipboard history, `= expression` calculates, `? query` searches the web, `recent query` searches recent documents, `emoji query` searches emoji, `w query` switches windows, and `s query` or `settings query` searches GNOME Settings panels. Settings panel availability depends on the installed GNOME Control Center version.
 
+Recent applications on the empty-query rest card come from GNOME Shell's usage data; the extension does not maintain a separate app-usage history.
+
 ## Clipboard history
 
 Clipboard history is **off by default**. To enable it, open the extension preferences and turn on **General → Privacy → Clipboard history**. While enabled, the extension listens for clipboard-owner changes and keeps up to 20 recent text and image entries **in memory only**; it does not write them to disk. Image entries support common PNG, JPEG, WebP, GIF, and BMP clipboard formats, show a small thumbnail in Sidebar, Split Tabs, and Hero Banner, and are limited to 8 MiB each. A one-second polling fallback is used only if change-signal setup is unavailable. Clipboard contents can include passwords, authentication codes, private messages, or sensitive images, so enable this only if you want the feature. Use **Clear clipboard history** in Preferences to remove retained entries without disabling collection. Turning the feature off immediately clears retained text and image data. Disabling the extension also stops tracking and clears the history.

@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {applyFinderPrefix} from '../lib/finderPrefixController.js';
+import {applyFinderPrefix, cancelAppSearch} from '../lib/finderPrefixController.js';
 
 function mockLayout(initialText = '') {
     return {
@@ -44,4 +44,15 @@ test('leaves unsupported prefixes and ordinary text untouched', () => {
     assert.equal(layout.entry.get_text(), '> echo hi');
     assert.deepEqual(layout.switched, []);
     assert.equal(applyFinderPrefix(layout, 'ordinary text', modes), false);
+});
+
+test('cancels an outstanding app search when switching to a finder', () => {
+    let cancelled = false;
+    const search = {cancel() { cancelled = true; }};
+    const dialog = {_searchCancellable: search};
+    cancelAppSearch(dialog);
+    assert.equal(cancelled, true);
+    assert.equal(dialog._searchCancellable, null);
+    cancelAppSearch(dialog);
+    assert.equal(cancelled, true);
 });

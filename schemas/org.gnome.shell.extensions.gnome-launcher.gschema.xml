@@ -38,6 +38,14 @@
         Lower values let Blur My Shell blur show through. Applies to all layouts.
       </description>
     </key>
+    <key name="layout-appearance-overrides" type="s">
+      <default>'{}'</default>
+      <summary>Per-layout appearance overrides</summary>
+      <description>
+        Optional JSON object mapping layout IDs to icon scale and background
+        opacity overrides. Missing properties inherit the global appearance settings.
+      </description>
+    </key>
     <key name="dim-background" type="b">
       <default>true</default>
       <summary>Dim background</summary>

@@ -9,6 +9,7 @@ import GLib from 'gi://GLib';
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 import {LAYOUT_NAMES} from './lib/layoutNames.js';
+import {setLayoutAppearanceOverride} from './lib/layoutAppearance.js';
 import {isValidTerminalTemplateArgs} from './lib/terminalTemplate.js';
 
 const MODIFIER_KEYVALS = new Set([
@@ -288,6 +289,122 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         plateRow.activatable_widget = plateSwitch;
         sizeGroup.add(plateRow);
         appearancePage.add(sizeGroup);
+
+        // -- Per-layout appearance overrides -----------------------------
+
+        const layoutAppearanceGroup = new Adw.PreferencesGroup({
+            title: 'Layout-specific appearance',
+            description: 'Optional icon size and background opacity for one layout. Unset values use the global Appearance settings.',
+        });
+        const layoutAppearanceRow = new Adw.ComboRow({
+            title: 'Layout',
+            model: Gtk.StringList.new(LAYOUT_NAMES),
+        });
+        const initialLayout = settings.get_string('layout') || 'list';
+        const initialLayoutIndex = LAYOUT_NAMES.indexOf(initialLayout);
+        layoutAppearanceRow.selected = initialLayoutIndex < 0 ? 0 : initialLayoutIndex;
+        layoutAppearanceGroup.add(layoutAppearanceRow);
+
+        let updatingLayoutAppearance = false;
+        const layoutScaleRow = new Adw.SpinRow({
+            title: 'Icon size override',
+            subtitle: 'Reset to inherit the global icon size',
+            adjustment: new Gtk.Adjustment({
+                lower: 0.7,
+                upper: 1.6,
+                step_increment: 0.1,
+                page_increment: 0.2,
+                value: settings.get_double('icon-scale'),
+            }),
+            digits: 1,
+        });
+        layoutAppearanceGroup.add(layoutScaleRow);
+
+        const layoutOpacityRow = new Adw.ActionRow({
+            title: 'Background opacity override',
+            subtitle: 'Reset to inherit the global opacity',
+        });
+        const layoutOpacityScale = new Gtk.Scale({
+            orientation: Gtk.Orientation.HORIZONTAL,
+            adjustment: new Gtk.Adjustment({
+                lower: 0.0,
+                upper: 1.0,
+                step_increment: 0.05,
+                page_increment: 0.1,
+                value: settings.get_double('background-opacity'),
+            }),
+            digits: 2,
+            hexpand: true,
+            draw_value: true,
+            value_pos: Gtk.PositionType.RIGHT,
+            width_request: 220,
+        });
+        layoutOpacityScale.set_size_request(220, -1);
+        layoutOpacityRow.add_suffix(layoutOpacityScale);
+        layoutAppearanceGroup.add(layoutOpacityRow);
+
+        const refreshLayoutAppearance = () => {
+            const layout = LAYOUT_NAMES[layoutAppearanceRow.selected] || 'list';
+            let overrides = {};
+            try {
+                overrides = JSON.parse(settings.get_string('layout-appearance-overrides') || '{}');
+            } catch {
+                // Invalid stored data falls back to global values in the runtime resolver.
+            }
+            const entry = overrides?.[layout] ?? {};
+            updatingLayoutAppearance = true;
+            layoutScaleRow.value = typeof entry.scale === 'number'
+                ? entry.scale : settings.get_double('icon-scale');
+            layoutOpacityScale.set_value(typeof entry.opacity === 'number'
+                ? entry.opacity : settings.get_double('background-opacity'));
+            layoutScaleRow.subtitle = typeof entry.scale === 'number'
+                ? 'Custom value; reset to inherit the global icon size'
+                : 'Using global icon size';
+            layoutOpacityRow.subtitle = typeof entry.opacity === 'number'
+                ? 'Custom value; reset to inherit the global opacity'
+                : 'Using global opacity';
+            updatingLayoutAppearance = false;
+        };
+
+        const saveLayoutOverride = (property, value) => {
+            if (updatingLayoutAppearance)
+                return;
+            const layout = LAYOUT_NAMES[layoutAppearanceRow.selected] || 'list';
+            const serialized = setLayoutAppearanceOverride(
+                settings.get_string('layout-appearance-overrides'),
+                layout,
+                property,
+                value
+            );
+            settings.set_string('layout-appearance-overrides', serialized);
+            refreshLayoutAppearance();
+        };
+
+        layoutAppearanceRow.connect('notify::selected', refreshLayoutAppearance);
+        layoutScaleRow.connect('notify::value', () => saveLayoutOverride('scale', layoutScaleRow.value));
+        layoutOpacityScale.connect('value-changed', () => saveLayoutOverride('opacity', layoutOpacityScale.get_value()));
+
+        const resetLayoutRow = new Adw.ActionRow({
+            title: 'Reset layout overrides',
+            subtitle: 'Use the global icon size and opacity for this layout',
+        });
+        const resetLayoutButton = new Gtk.Button({
+            label: 'Reset',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['flat'],
+        });
+        resetLayoutButton.connect('clicked', () => {
+            const layout = LAYOUT_NAMES[layoutAppearanceRow.selected] || 'list';
+            let serialized = settings.get_string('layout-appearance-overrides');
+            serialized = setLayoutAppearanceOverride(serialized, layout, 'scale', null);
+            serialized = setLayoutAppearanceOverride(serialized, layout, 'opacity', null);
+            settings.set_string('layout-appearance-overrides', serialized);
+            refreshLayoutAppearance();
+        });
+        resetLayoutRow.add_suffix(resetLayoutButton);
+        layoutAppearanceGroup.add(resetLayoutRow);
+        refreshLayoutAppearance();
+        appearancePage.add(layoutAppearanceGroup);
 
         // -- Background opacity (global transparency for Blur My Shell) --
 

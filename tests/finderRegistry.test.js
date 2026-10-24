@@ -40,3 +40,18 @@ test('rejects invalid and duplicate finder definitions', () => {
         {mode: 'apps', prefix: 'a'},
     ]), /Duplicate finder mode/);
 });
+
+test('rejects empty prefixes and keywords that would match ambiguously', () => {
+    assert.throws(
+        () => createFinderRegistry([{mode: 'run', prefix: ''}]),
+        /prefix must not be empty/
+    );
+    assert.throws(
+        () => createFinderRegistry([{mode: 'settings', keyword: '   '}]),
+        /keyword must not be empty/
+    );
+    assert.throws(
+        () => createFinderRegistry([{mode: 'settings', keyword: ''}]),
+        /keyword must not be empty/
+    );
+});

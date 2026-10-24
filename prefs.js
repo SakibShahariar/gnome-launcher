@@ -3,6 +3,7 @@
 import Adw from 'gi://Adw';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
+import GdkPixbuf from 'gi://GdkPixbuf';
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
@@ -114,12 +115,17 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
                 this.path, 'screenshots', item.screenshot,
             ]);
             let preview;
-            if (Gio.File.new_for_path(screenshotPath).query_exists(null)) {
-                preview = Gtk.Picture.new_for_filename(screenshotPath);
+            try {
+                // Decode a thumbnail rather than retaining each full-resolution
+                // screenshot texture in Preferences.
+                const pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                    screenshotPath, 144, 81, true
+                );
+                preview = Gtk.Picture.new_for_paintable(Gdk.Texture.new_for_pixbuf(pixbuf));
                 preview.set_size_request(144, 81);
                 preview.set_can_shrink(true);
                 preview.set_valign(Gtk.Align.CENTER);
-            } else {
+            } catch {
                 preview = new Gtk.Image({
                     icon_name: 'image-missing-symbolic',
                     pixel_size: 48,

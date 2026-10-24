@@ -47,6 +47,10 @@ test('rejects duplicate prefixes and keywords, including case-only duplicates', 
         {mode: 'other', prefix: '>'},
     ]), /Duplicate finder prefix/);
     assert.throws(() => createFinderRegistry([
+        {mode: 'run', prefix: '>'},
+        {mode: 'other', prefix: '>>'},
+    ]), /Duplicate finder prefix/);
+    assert.throws(() => createFinderRegistry([
         {mode: 'settings', keyword: 'settings', caseInsensitive: true},
         {mode: 'other', keyword: 'SETTINGS'},
     ]), /Duplicate finder keyword/);

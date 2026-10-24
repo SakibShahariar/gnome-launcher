@@ -39,3 +39,12 @@ test('skips an app whose ID lookup throws and continues with valid apps', () => 
     const visible = app('visible.desktop');
     assert.deepEqual(resolveRecentApps([broken, visible]), [visible]);
 });
+
+test('a hidden duplicate does not mask a later visible app with the same ID', () => {
+    const hidden = {
+        ...app('shared.desktop'),
+        get_app_info: () => ({get_nodisplay: () => true}),
+    };
+    const visible = app('shared.desktop');
+    assert.deepEqual(resolveRecentApps([hidden, visible]), [visible]);
+});

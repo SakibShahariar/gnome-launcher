@@ -58,5 +58,6 @@ test('rejects temperatures below absolute zero', () => {
     assert.equal(evaluateCalculatorInput('-460 f in c'), null);
     assert.equal(evaluateCalculatorInput('-1 k in c'), null);
     assert.equal(evaluateCalculatorInput('-273.15 c in k').value, '0 k');
-    assert.equal(evaluateCalculatorInput('-459.67 f in c').value, '0 c');
+    assert.equal(evaluateCalculatorInput('-459.67 f in c').value, '-273.15 c');
+    assert.equal(evaluateCalculatorInput('-459.67 f in k').value, '0 k');
 });

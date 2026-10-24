@@ -60,6 +60,17 @@ test('rejects duplicate prefixes and keywords, including case-only duplicates', 
     ]));
 });
 
+test('rejects prefixes and keywords that can claim the same input', () => {
+    assert.throws(() => createFinderRegistry([
+        {mode: 'short', prefix: 's'},
+        {mode: 'settings', keyword: 'settings'},
+    ]), /Ambiguous finder prefix and keyword/);
+    assert.doesNotThrow(() => createFinderRegistry([
+        {mode: 'window', prefix: 'w '},
+        {mode: 'settings', keyword: 'settings'},
+    ]));
+});
+
 test('rejects empty prefixes and keywords that would match ambiguously', () => {
     assert.throws(
         () => createFinderRegistry([{mode: 'run', prefix: ''}]),

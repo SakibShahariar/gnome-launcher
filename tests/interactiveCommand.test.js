@@ -33,3 +33,30 @@ test('handles missing and malformed argv safely', () => {
     assert.equal(requiresTerminal([null]), false);
     assert.equal(requiresTerminal(['   ']), false);
 });
+
+test('recognizes terminal commands behind common command wrappers', () => {
+    for (const argv of [
+        ['sudo', 'vim', 'file.txt'],
+        ['sudo', '-u', 'root', '--', '/usr/bin/nano'],
+        ['doas', '-u', 'root', 'nvim'],
+        ['env', 'TERM=xterm-256color', 'htop'],
+        ['env', '-i', 'PATH=/usr/bin', '--', 'less', 'file.txt'],
+        ['command', '--', 'tmux'],
+        ['command', '-p', 'man'],
+    ]) {
+        assert.equal(requiresTerminal(argv), true, argv.join(' '));
+    }
+});
+
+test('does not guess through unsupported wrapper options or malformed wrappers', () => {
+    for (const argv of [
+        ['sudo', '-D', '/tmp', 'vim'],
+        ['sudo', '-u'],
+        ['env', '--unset'],
+        ['env', '--unknown-option', 'vim'],
+        ['env', 'EDITOR=vim'],
+        ['sudo', 'git', 'status'],
+    ]) {
+        assert.equal(requiresTerminal(argv), false, argv.join(' '));
+    }
+});

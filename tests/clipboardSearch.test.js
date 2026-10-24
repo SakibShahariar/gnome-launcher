@@ -24,3 +24,23 @@ test('empty query returns all normalized entries and disabled history returns no
     assert.deepEqual(searchClipboardEntries(entries, '', false), []);
     assert.deepEqual(searchClipboardEntries(entries, 'meeting', false), []);
 });
+
+test('ignores malformed history containers and entries safely', () => {
+    assert.deepEqual(searchClipboardEntries(null), []);
+    assert.deepEqual(searchClipboardEntries({name: 'not an array'}), []);
+    assert.deepEqual(searchClipboardEntries([
+        null,
+        undefined,
+        'plain text',
+        {name: 42, kind: 'text'},
+        {name: 'Meeting notes', kind: 'text'},
+    ], 'meeting'), [
+        {name: 'Meeting notes', kind: 'clipboard'},
+    ]);
+    assert.deepEqual(searchClipboardEntries([
+        {name: 42, kind: 'text'},
+        {kind: 'image'},
+    ]), [
+        {kind: 'clipboard-image'},
+    ]);
+});

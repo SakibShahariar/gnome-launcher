@@ -25,3 +25,12 @@ test('unknown settings queries return no matches', () => {
     assert.deepEqual(searchSettingsPanels('definitely-not-a-panel'), []);
     assert.deepEqual(searchSettingsPanels(null), searchSettingsPanels(''));
 });
+
+test('returned keyword arrays cannot mutate the settings registry', () => {
+    const results = searchSettingsPanels('wifi');
+    const wifi = results.find(panel => panel.id === 'wifi');
+    assert.ok(wifi);
+    wifi.keywords.push('injected keyword');
+    assert.equal(searchSettingsPanels('injected keyword').some(panel => panel.id === 'wifi'), false);
+    assert.ok(searchSettingsPanels('wireless').some(panel => panel.id === 'wifi'));
+});

@@ -40,7 +40,10 @@ test('ignores malformed history containers and entries safely', () => {
     assert.deepEqual(searchClipboardEntries([
         {name: 42, kind: 'text'},
         {kind: 'image'},
+    ]), []);
+    assert.deepEqual(searchClipboardEntries([
+        {name: 'Image from clipboard', kind: 'image'},
     ]), [
-        {kind: 'clipboard-image'},
+        {name: 'Image from clipboard', kind: 'clipboard-image'},
     ]);
 });

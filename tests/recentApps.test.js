@@ -33,3 +33,9 @@ test('handles invalid input and unavailable metadata defensively', () => {
     const unavailable = {...app('unavailable.desktop'), get_app_info: () => { throw new Error('metadata unavailable'); }};
     assert.deepEqual(resolveRecentApps([unavailable]), [unavailable]);
 });
+
+test('skips an app whose ID lookup throws and continues with valid apps', () => {
+    const broken = {get_id: () => { throw new Error('broken desktop entry'); }};
+    const visible = app('visible.desktop');
+    assert.deepEqual(resolveRecentApps([broken, visible]), [visible]);
+});

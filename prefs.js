@@ -9,6 +9,7 @@ import GLib from 'gi://GLib';
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 import {LAYOUT_NAMES} from './lib/layoutNames.js';
+import {LAYOUT_GALLERY} from './lib/layoutGallery.js';
 import {setLayoutAppearanceOverride} from './lib/layoutAppearance.js';
 import {isValidTerminalTemplateArgs} from './lib/terminalTemplate.js';
 
@@ -90,6 +91,69 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         layoutGroup.add(layoutRow);
         page.add(layoutGroup);
+
+        // -- Layout gallery ------------------------------------------------
+        // Keep the dropdown for quick selection while also offering visual previews.
+        const galleryGroup = new Adw.PreferencesGroup({
+            title: 'Layout gallery',
+            description: 'Preview all 15 layouts. Selecting one applies it the next time you open the launcher.',
+        });
+        const galleryButtons = new Map();
+        const updateGallerySelection = () => {
+            const selectedLayout = settings.get_string('layout');
+            for (const [layout, button] of galleryButtons) {
+                const selected = layout === selectedLayout;
+                button.label = selected ? 'Selected' : 'Select';
+                button.sensitive = !selected;
+            }
+        };
+
+        for (const item of LAYOUT_GALLERY) {
+            const row = new Adw.ActionRow({
+                title: item.title,
+                subtitle: item.description,
+            });
+            const screenshotPath = GLib.build_filenamev([
+                this.path, 'screenshots', item.screenshot,
+            ]);
+            let preview;
+            if (Gio.File.new_for_path(screenshotPath).query_exists(null)) {
+                preview = Gtk.Picture.new_for_filename(screenshotPath);
+                preview.set_size_request(144, 81);
+                preview.set_can_shrink(true);
+                preview.set_valign(Gtk.Align.CENTER);
+            } else {
+                preview = new Gtk.Image({
+                    icon_name: 'image-missing-symbolic',
+                    pixel_size: 48,
+                    valign: Gtk.Align.CENTER,
+                    tooltip_text: 'Preview image is unavailable',
+                });
+                preview.set_size_request(144, 81);
+            }
+            row.add_prefix(preview);
+
+            const selectButton = new Gtk.Button({
+                label: 'Select',
+                valign: Gtk.Align.CENTER,
+                tooltip_text: `Use the ${item.title} layout the next time the launcher opens`,
+            });
+            selectButton.connect('clicked', () => {
+                settings.set_string('layout', item.id);
+                layoutRow.selected = LAYOUT_NAMES.indexOf(item.id);
+                updateGallerySelection();
+            });
+            row.add_suffix(selectButton);
+            row.activatable_widget = selectButton;
+            galleryButtons.set(item.id, selectButton);
+            galleryGroup.add(row);
+        }
+        layoutRow.connect('notify::selected', () => {
+            settings.set_string('layout', LAYOUT_NAMES[layoutRow.selected]);
+            updateGallerySelection();
+        });
+        updateGallerySelection();
+        page.add(galleryGroup);
 
         // -- Keybinding ----------------------------------------------------
 

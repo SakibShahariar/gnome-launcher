@@ -34,3 +34,14 @@ test('returned keyword arrays cannot mutate the settings registry', () => {
     assert.equal(searchSettingsPanels('injected keyword').some(panel => panel.id === 'wifi'), false);
     assert.ok(searchSettingsPanels('wireless').some(panel => panel.id === 'wifi'));
 });
+
+test('settings registry entries and keywords are immutable', () => {
+    const panel = SETTINGS_PANELS.find(entry => entry.id === 'wifi');
+    assert.ok(Object.isFrozen(SETTINGS_PANELS));
+    assert.ok(Object.isFrozen(panel));
+    assert.ok(Object.isFrozen(panel.keywords));
+    assert.throws(() => panel.keywords.push('injected keyword'), TypeError);
+    assert.throws(() => { panel.name = 'Changed'; }, TypeError);
+    assert.ok(searchSettingsPanels('wireless').some(entry => entry.id === 'wifi'));
+    assert.equal(searchSettingsPanels('injected keyword').some(entry => entry.id === 'wifi'), false);
+});

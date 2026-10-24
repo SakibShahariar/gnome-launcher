@@ -23,3 +23,9 @@ test('explains clipboard history disabled separately from an empty history', () 
 test('falls back to the generic empty state for unknown modes', () => {
     assert.equal(getModeEmptyMessage('unknown'), 'No matches');
 });
+
+test('does not treat inherited object properties as empty-state messages', () => {
+    assert.equal(getModeEmptyMessage('toString'), 'No matches');
+    assert.equal(getModeEmptyMessage('constructor'), 'No matches');
+    assert.equal(getModeEmptyMessage('__proto__'), 'No matches');
+});

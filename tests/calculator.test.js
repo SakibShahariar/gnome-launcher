@@ -28,6 +28,7 @@ test('rejects malformed, incomplete, and unsafe expressions', () => {
     ])
         assert.equal(evaluateExpression(input), null, input);
     assert.equal(evaluateExpression('1'.repeat(257)), null);
+    assert.equal(evaluateCalculatorInput('1'.repeat(257) + ' km in mi'), null);
     assert.equal(evaluateExpression('('.repeat(130) + '1' + ')'.repeat(130)), null);
 });
 

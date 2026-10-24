@@ -50,6 +50,10 @@ test('rejects duplicate prefixes and keywords, including case-only duplicates', 
         {mode: 'settings', keyword: 'settings', caseInsensitive: true},
         {mode: 'other', keyword: 'SETTINGS'},
     ]), /Duplicate finder keyword/);
+    assert.doesNotThrow(() => createFinderRegistry([
+        {mode: 'lower', keyword: 'settings'},
+        {mode: 'upper', keyword: 'SETTINGS'},
+    ]));
 });
 
 test('rejects empty prefixes and keywords that would match ambiguously', () => {

@@ -2,9 +2,14 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {existsSync} from 'node:fs';
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 import {LAYOUT_NAMES} from '../lib/layoutNames.js';
 import {LAYOUT_GALLERY} from '../lib/layoutGallery.js';
+
+const repositoryRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 test('layout gallery covers every registered layout exactly once', () => {
     assert.deepEqual(LAYOUT_GALLERY.map(entry => entry.id), LAYOUT_NAMES);
@@ -24,4 +29,13 @@ test('mode-control descriptions identify only the three mode layouts', () => {
         .filter(entry => entry.description.includes('Mode controls: yes'))
         .map(entry => entry.id);
     assert.deepEqual(modeLayouts, ['sidebar', 'split-tabs', 'hero-banner']);
+});
+
+test('every layout gallery preview points to an existing screenshot', () => {
+    for (const entry of LAYOUT_GALLERY) {
+        assert.ok(
+            existsSync(join(repositoryRoot, 'screenshots', entry.screenshot)),
+            `missing preview for ${entry.id}: ${entry.screenshot}`
+        );
+    }
 });

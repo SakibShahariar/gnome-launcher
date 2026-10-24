@@ -86,9 +86,6 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const current = settings.get_string('layout');
         const currentIndex = LAYOUT_NAMES.indexOf(current);
         layoutRow.selected = currentIndex === -1 ? 0 : currentIndex;
-        layoutRow.connect('notify::selected', () => {
-            settings.set_string('layout', LAYOUT_NAMES[layoutRow.selected]);
-        });
         layoutGroup.add(layoutRow);
         page.add(layoutGroup);
 

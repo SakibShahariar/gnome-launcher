@@ -26,4 +26,5 @@ test('rejects empty queries and unsafe or malformed templates', () => {
     assert.ok(longTemplate.length <= 2048);
     assert.equal(buildSearchUrl('q'.repeat(256), longTemplate), null);
     assert.equal(buildSearchUrl(null), null);
+    assert.equal(buildSearchUrl('\uD800'), null);
 });

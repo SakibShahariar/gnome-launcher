@@ -3,6 +3,7 @@
 // Informational microbenchmark; intentionally has no timing threshold because
 // shared CI runners are noisy. The baseline mirrors the previous per-app
 // query normalization and repeated get_name() calls for comparison.
+import assert from 'node:assert/strict';
 import {performance} from 'node:perf_hooks';
 
 import {createSearchResultResolver, fuzzySearch, resolveSearchResults} from '../lib/fuzzySearch.js';
@@ -90,6 +91,13 @@ function measure(search, apps) {
 console.log('apps,queries,baseline_median_ms,optimized_median_ms,speedup');
 for (const size of SIZES) {
     const apps = makeApps(size);
+    for (const query of QUERIES) {
+        assert.deepEqual(
+            fuzzySearch(apps, query).map(app => app.get_id()),
+            legacyFuzzySearch(apps, query).map(app => app.get_id()),
+            `search ranking changed for ${size} apps and query "${query}"`
+        );
+    }
     const baseline = measure(legacyFuzzySearch, apps);
     const optimized = measure(fuzzySearch, apps);
     console.log([
@@ -123,6 +131,11 @@ for (const size of SIZES) {
     const apps = makeApps(size);
     const resultIds = apps.slice(0, Math.min(20, size)).map(app => app.get_id());
     const resolver = createSearchResultResolver(apps);
+    assert.deepEqual(
+        resolver(resultIds).map(app => app.get_id()),
+        resolveSearchResults(apps, resultIds).map(app => app.get_id()),
+        `cached result mapping changed order for ${size} apps`
+    );
     const baseline = measureMapping(() => resolveSearchResults(apps, resultIds));
     const optimized = measureMapping(() => resolver(resultIds));
     console.log([

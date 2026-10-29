@@ -7,16 +7,16 @@ import {readFileSync} from 'node:fs';
 const source = readFileSync(new URL('../lib/modes.js', import.meta.url), 'utf8');
 
 test('power actions wait for process completion and notify only on failure', () => {
-    assert.match(source, /process\\.wait_check_async\\(null, \\(source, result\\) =>/);
-    assert.match(source, /source\\.wait_check_finish\\(result\\)/);
-    assert.match(source, /reportFailure\\(e\\)/);
-    assert.match(source, /Main\\.notify\\('GNOME Launcher', \\`Could not complete/);
-    assert.doesNotMatch(source, /GLib\\.spawn_command_line_async\\(command\\)/);
+    assert.ok(source.includes('process.wait_check_async(null, (source, result) =>'));
+    assert.ok(source.includes('source.wait_check_finish(result)'));
+    assert.ok(source.includes('reportFailure(e)'));
+    assert.ok(source.includes("Main.notify('GNOME Launcher', `Could not complete"));
+    assert.ok(!source.includes('GLib.spawn_command_line_async(command)'));
 });
 
 test('power commands use argument arrays instead of shell command strings', () => {
     const commands = source.slice(source.indexOf('const POWER_COMMANDS'), source.indexOf('export function activatePowerAction'));
-    assert.match(commands, /lock: \\['loginctl', 'lock-session'\\]/);
-    assert.match(commands, /suspend: \\['systemctl', 'suspend'\\]/);
-    assert.match(commands, /logout: \\['gnome-session-quit', '--logout', '--no-prompt'\\]/);
+    assert.ok(commands.includes("lock: ['loginctl', 'lock-session']"));
+    assert.ok(commands.includes("suspend: ['systemctl', 'suspend']"));
+    assert.ok(commands.includes("logout: ['gnome-session-quit', '--logout', '--no-prompt']"));
 });

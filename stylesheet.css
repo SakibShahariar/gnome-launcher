@@ -13,6 +13,12 @@
     padding: 0;
 }
 
+/* Shared search-entry structure; layout-specific typography remains below. */
+.launcher-search-entry {
+    background: none;
+    border: none;
+}
+
 /* Hotkey layout structure; theme-dependent colors remain inline so they
  * continue to follow the user's selected theme and opacity settings. */
 .launcher-hotkey-search-row {
@@ -421,8 +427,6 @@
 }
 
 .launcher-sidebar-entry {
-    background: none;
-    border: none;
     font-size: 15px;
 }
 
@@ -461,8 +465,6 @@
 }
 
 .launcher-hero-entry {
-    background: none;
-    border: none;
     font-size: 14px;
 }
 
@@ -504,8 +506,6 @@
 }
 
 .launcher-split-tabs-entry {
-    background: none;
-    border: none;
     font-size: 14px;
 }
 

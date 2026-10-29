@@ -9,6 +9,10 @@ import {resolveDefaultMode} from '../lib/defaultMode.js';
 const dialogSource = readFileSync(new URL('../lib/launcherDialog.js', import.meta.url), 'utf8');
 const prefsSource = readFileSync(new URL('../prefs.js', import.meta.url), 'utf8');
 
+test('resolves modes from the shared Spotlight finder registry', () => {
+    assert.ok(readFileSync(new URL('../lib/defaultMode.js', import.meta.url), 'utf8').includes("import {FINDERS} from './finderPrefix.js';"));
+});
+
 test('accepts each shared mode-based finder', () => {
     for (const mode of ['apps', 'run', 'files', 'clipboard', 'window', 'calculator', 'web', 'recent', 'emoji', 'settings'])
         assert.equal(resolveDefaultMode(mode), mode);

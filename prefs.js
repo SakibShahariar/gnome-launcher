@@ -10,6 +10,7 @@ import GLib from 'gi://GLib';
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 import {LAYOUT_NAMES} from './lib/layoutNames.js';
+import {FINDERS} from './lib/finderPrefix.js';
 import {LAYOUT_GALLERY} from './lib/layoutGallery.js';
 import {setLayoutAppearanceOverride} from './lib/layoutAppearance.js';
 import {isValidTerminalTemplateArgs} from './lib/terminalTemplate.js';
@@ -89,20 +90,14 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         layoutRow.selected = currentIndex === -1 ? 0 : currentIndex;
         layoutGroup.add(layoutRow);
 
+        const defaultModeFinders = FINDERS.list();
+        const defaultModeIds = defaultModeFinders.map(finder => finder.mode);
         const defaultModeGroup = new Adw.PreferencesGroup({title: 'Default finder'});
         const defaultModeRow = new Adw.ComboRow({
             title: 'Finder when opening the launcher',
             subtitle: 'Used by Sidebar, Split Tabs, and Hero Banner layouts; other layouts open Applications.',
-            model: Gtk.StringList.new([
-                'Applications', 'Run a command', 'Search files', 'Clipboard history',
-                'Switch windows', 'Calculate', 'Search the web', 'Recent documents',
-                'Search emoji', 'GNOME Settings',
-            ]),
+            model: Gtk.StringList.new(defaultModeFinders.map(finder => finder.label)),
         });
-        const defaultModeIds = [
-            'apps', 'run', 'files', 'clipboard', 'window',
-            'calculator', 'web', 'recent', 'emoji', 'settings',
-        ];
         const selectedDefaultMode = defaultModeIds.indexOf(settings.get_string('default-mode'));
         defaultModeRow.selected = selectedDefaultMode < 0 ? 0 : selectedDefaultMode;
         defaultModeRow.connect('notify::selected', () => {

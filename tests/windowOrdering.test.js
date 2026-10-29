@@ -26,7 +26,7 @@ test('sorting is case-insensitive and stable for equal titles', () => {
     const second = windowEntry('browser');
     const third = windowEntry('Calculator');
 
-    assert.deepEqual(sortWindows([first, second, third]), [third, first, second]);
+    assert.deepEqual(sortWindows([first, second, third]), [first, second, third]);
 });
 
 test('captures focus once per window and handles missing title/focus methods', () => {

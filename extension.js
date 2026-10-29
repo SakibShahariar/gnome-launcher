@@ -57,6 +57,9 @@ export default class GnomeLauncherExtension extends Extension {
         }
         // Close the dialog first: its closed handler cancels active native
         // and file searches before their shared providers are torn down.
+        // Cancel synchronously before shared search services are cleaned up;
+        // ModalDialog's close animation may emit "closed" later.
+        this._dialog?.cancelPendingSearches();
         this._dialog?.close();
         this._dialog = null;
         ClipboardHistory.stopTracking();

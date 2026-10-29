@@ -55,10 +55,12 @@ export default class GnomeLauncherExtension extends Extension {
             this._settings.disconnect(this._clipboardHistoryClearSignalId);
             this._clipboardHistoryClearSignalId = 0;
         }
-        ClipboardHistory.stopTracking();
-        cleanupSearchProvider();
+        // Close the dialog first: its closed handler cancels active native
+        // and file searches before their shared providers are torn down.
         this._dialog?.close();
         this._dialog = null;
+        ClipboardHistory.stopTracking();
+        cleanupSearchProvider();
         this._cheatsheet?.close();
         this._cheatsheet = null;
         this._settings = null;

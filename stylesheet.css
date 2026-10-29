@@ -39,6 +39,12 @@
     border: none;
 }
 
+/* Shared empty-results treatment; message color follows the active theme. */
+.launcher-empty-state {
+    font-size: 13px;
+    padding: 14px 16px;
+}
+
 /* Hotkey layout structure; theme-dependent colors remain inline so they
  * continue to follow the user's selected theme and opacity settings. */
 .launcher-hotkey-search-row {

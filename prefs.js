@@ -88,6 +88,30 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const currentIndex = LAYOUT_NAMES.indexOf(current);
         layoutRow.selected = currentIndex === -1 ? 0 : currentIndex;
         layoutGroup.add(layoutRow);
+
+        const defaultModeGroup = new Adw.PreferencesGroup({title: 'Default finder'});
+        const defaultModeRow = new Adw.ComboRow({
+            title: 'Finder when opening the launcher',
+            subtitle: 'Used by Sidebar, Split Tabs, and Hero Banner layouts; other layouts open Applications.',
+            model: Gtk.StringList.new([
+                'Applications', 'Run a command', 'Search files', 'Clipboard history',
+                'Switch windows', 'Calculate', 'Search the web', 'Recent documents',
+                'Search emoji', 'GNOME Settings',
+            ]),
+        });
+        const defaultModeIds = [
+            'apps', 'run', 'files', 'clipboard', 'window',
+            'calculator', 'web', 'recent', 'emoji', 'settings',
+        ];
+        const selectedDefaultMode = defaultModeIds.indexOf(settings.get_string('default-mode'));
+        defaultModeRow.selected = selectedDefaultMode < 0 ? 0 : selectedDefaultMode;
+        defaultModeRow.connect('notify::selected', () => {
+            const mode = defaultModeIds[defaultModeRow.selected];
+            if (mode)
+                settings.set_string('default-mode', mode);
+        });
+        defaultModeGroup.add(defaultModeRow);
+        page.add(defaultModeGroup);
         page.add(layoutGroup);
 
         // -- Layout gallery ------------------------------------------------

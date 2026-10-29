@@ -20,6 +20,14 @@
       <default>'list'</default>
       <summary>Which layout to render</summary>
     </key>
+    <key name="default-mode" type="s">
+      <default>'apps'</default>
+      <summary>Default finder for mode-based layouts</summary>
+      <description>
+        Finder opened by default in Sidebar, Split Tabs, and Hero Banner layouts.
+        Other layouts always open in their standard application-search view.
+      </description>
+    </key>
     <key name="icon-scale" type="d">
       <default>1.0</default>
       <range min="0.7" max="1.6"/>

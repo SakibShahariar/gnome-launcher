@@ -151,8 +151,6 @@
 }
 
 .launcher-hotkey-entry {
-    background: none;
-    border: none;
     font-size: 16px;
 }
 
@@ -184,8 +182,6 @@
 }
 
 .launcher-corner-entry {
-    background: none;
-    border: none;
     font-size: 14px;
 }
 
@@ -219,8 +215,6 @@
 }
 
 .launcher-full-edge-entry {
-    background: none;
-    border: none;
     font-size: 14px;
 }
 
@@ -253,8 +247,6 @@
 }
 
 .launcher-krunner-entry {
-    background: none;
-    border: none;
     font-size: 16px;
 }
 
@@ -281,8 +273,6 @@
 }
 
 .launcher-notch-entry {
-    background: none;
-    border: none;
     font-size: 14px;
 }
 
@@ -317,8 +307,6 @@
 }
 
 .launcher-adaptive-width-entry {
-    background: none;
-    border: none;
     font-size: 15px;
 }
 
@@ -354,8 +342,6 @@
 }
 
 .launcher-top-dropdown-entry {
-    background: none;
-    border: none;
     font-size: 15px;
 }
 
@@ -390,8 +376,6 @@
 }
 
 .launcher-split-preview-entry {
-    background: none;
-    border: none;
     font-size: 15px;
 }
 
@@ -531,8 +515,6 @@
 
 /* Grid/list/dock text geometry; runtime colors remain theme-aware. */
 .launcher-grid-entry {
-    background: none;
-    border: none;
     font-size: 16px;
 }
 
@@ -543,8 +525,6 @@
 }
 
 .launcher-list-entry {
-    background: none;
-    border: none;
     font-size: 16px;
 }
 
@@ -554,8 +534,6 @@
 }
 
 .launcher-dock-entry {
-    background: none;
-    border: none;
     font-size: 15px;
 }
 
@@ -570,8 +548,6 @@
 }
 
 .launcher-fullscreen-entry {
-    background: none;
-    border: none;
     font-size: 18px;
 }
 

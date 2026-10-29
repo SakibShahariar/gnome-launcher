@@ -67,7 +67,10 @@ jobs:
               source = path.read_text()
               for pattern in patterns:
                   used.update(re.findall(pattern, source))
-          unknown = sorted(used - declared)
+          # Some settings belong to explicitly named desktop schemas rather
+          # than this extension's schema (for example, GNOME's clock-format).
+          external_schema_keys = {"clock-format"}
+          unknown = sorted(used - declared - external_schema_keys)
           assert not unknown, f"Undeclared GSettings keys used in JavaScript: {unknown}"
           print(f"Validated {len(declared)} settings keys and metadata for {metadata['uuid']}")
           PY

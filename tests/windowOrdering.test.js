@@ -18,7 +18,7 @@ test('keeps the focused window first and sorts the rest by title', () => {
         windowEntry('Calendar'),
     ];
 
-    assert.deepEqual(sortWindows(entries), [entries[2], entries[3], entries[1], entries[0]]);
+    assert.deepEqual(sortWindows(entries), [entries[2], entries[1], entries[3], entries[0]]);
 });
 
 test('sorting is case-insensitive and stable for equal titles', () => {

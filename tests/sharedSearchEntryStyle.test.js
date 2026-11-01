@@ -40,3 +40,11 @@ test('shared entry CSS owns background and border reset declarations once', () =
         assert.ok(!rule.includes('border: none;'), rule);
     }
 });
+
+test('shared layout typography and geometry are centralized', () => {
+    assert.match(css, /\.launcher-hotkey-label,[\\s\\S]*?font-weight: bold;/);
+    assert.match(css, /\.launcher-corner-entry,[\\s\\S]*?font-size: 14px;/);
+    assert.match(css, /\.launcher-hotkey-search-row,[\\s\\S]*?padding: 12px 14px;/);
+    assert.match(css, /\.launcher-hotkey-result-row,[\\s\\S]*?padding: 8px 12px;/);
+    assert.match(css, /\.launcher-list-card,[\\s\\S]*?border-radius: 20px;/);
+});

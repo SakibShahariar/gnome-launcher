@@ -27,7 +27,7 @@ test('does not schedule more work after cancellation is observed', async () => {
 
     await mapWithConcurrency([0, 1, 2, 3, 4], 2, async value => {
         started.push(value);
-        if (value === 0)
+        if (started.length === 2)
             cancelled = true;
         return value;
     }, () => cancelled);

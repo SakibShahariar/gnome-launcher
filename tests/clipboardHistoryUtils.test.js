@@ -56,31 +56,36 @@ test('keeps image entries and ordering intact when a text duplicate is moved', (
     ]);
 });
 
-test('reuses lazily created preview content and releases it on demand', () => {
-    const entry = {kind: 'image'};
+test('reuses preview content across clipboard search wrappers for the same bytes', () => {
+    const bytes = {};
+    const historyEntry = {kind: 'image', bytes};
+    const searchResult = {...historyEntry, kind: 'clipboard-image'};
     let creations = 0;
     const create = () => ({id: ++creations});
 
-    const first = getOrCreatePreviewContent(entry, create);
-    const second = getOrCreatePreviewContent(entry, create);
+    const first = getOrCreatePreviewContent(historyEntry, create);
+    const second = getOrCreatePreviewContent(searchResult, create);
 
     assert.equal(second, first);
     assert.equal(creations, 1);
 
-    releasePreviewContent(entry);
-    const third = getOrCreatePreviewContent(entry, create);
+    releasePreviewContent(historyEntry);
+    const third = getOrCreatePreviewContent(searchResult, create);
     assert.notEqual(third, first);
     assert.equal(creations, 2);
 });
 
 test('releases cached preview content when history entries are evicted', () => {
-    const retained = {kind: 'image', previewContent: {id: 'retained'}};
-    const evicted = {kind: 'image', previewContent: {id: 'evicted'}};
+    const retained = {kind: 'image', bytes: {}};
+    const evicted = {kind: 'image', bytes: {}};
     const history = [retained, evicted];
+    let creations = 0;
+    const create = () => ({id: ++creations});
 
+    getOrCreatePreviewContent(evicted, create);
     rememberTextEntry(history, 'new text', 3, 2);
 
     assert.equal(history.length, 2);
-    assert.equal(retained.previewContent.id, 'retained');
-    assert.equal(evicted.previewContent, null);
+    assert.notEqual(getOrCreatePreviewContent(evicted, create).id, 1);
+    assert.equal(creations, 2);
 });

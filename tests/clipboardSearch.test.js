@@ -44,6 +44,15 @@ test('ignores malformed history containers and entries safely', () => {
     assert.deepEqual(searchClipboardEntries([
         {name: 'Image from clipboard', kind: 'image'},
     ]), [
-        {name: 'Image from clipboard', kind: 'clipboard-image'},
+        {name: 'Image from clipboard (preview only)', kind: 'clipboard-image'},
     ]);
+});
+
+test('keeps original image bytes on the history entry, not the search result wrapper', () => {
+    const entry = {name: 'Recent image', kind: 'image', mimeType: 'image/png', bytes: {}};
+    const [result] = searchClipboardEntries([entry]);
+
+    assert.equal(result._historyEntry, entry);
+    assert.equal(Object.hasOwn(result, 'bytes'), false);
+    assert.equal(result.name, 'Recent image');
 });

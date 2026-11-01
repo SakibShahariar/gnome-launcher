@@ -23,3 +23,10 @@ test('returns structured entries with emoji and searchable metadata', () => {
     const result = searchEmoji('rainbow');
     assert.ok(result.some(item => item.emoji === '🌈' && item.name === 'rainbow'));
 });
+
+test('preserves case-insensitive matching, keyword fragments, and result order', () => {
+    assert.deepEqual(searchEmoji('SMILE'), searchEmoji('smile'));
+    assert.deepEqual(searchEmoji('JOY'), searchEmoji('joy'));
+    assert.deepEqual(searchEmoji('smile', 3), searchEmoji('smile').slice(0, 3));
+    assert.ok(searchEmoji('😀').some(item => item.emoji === '😀'));
+});

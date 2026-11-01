@@ -7,7 +7,7 @@ import {readFileSync} from 'node:fs';
 const source = readFileSync(new URL('../lib/appSearch.js', import.meta.url), 'utf8');
 
 test('routine native app-search successes do not write a journal entry per query', () => {
-    assert.doesNotMatch(source, /native search returned ${results\.length} launchable results/);
+    assert.doesNotMatch(source, /native search returned \$\{results\.length\} launchable results/);
 });
 
 test('native-search fallback diagnostics remain available', () => {

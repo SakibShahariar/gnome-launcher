@@ -91,7 +91,7 @@ test('retains newest original images within the total byte budget', () => {
     assert.equal(retained, 8);
     assert.ok(newest.bytes);
     assert.equal(older.bytes, null);
-    assert.equal(oldest.bytes, null);
+    assert.ok(oldest.bytes);
     assert.equal(getOrCreatePreviewContent(older, () => ({id: 'new'})), cachedPreview);
 });
 

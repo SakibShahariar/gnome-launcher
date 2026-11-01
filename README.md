@@ -69,7 +69,7 @@ Recent applications on the empty-query rest card come from GNOME Shell's usage d
 
 ## Clipboard history
 
-Clipboard history is **off by default**. To enable it, open the extension preferences and turn on **General → Privacy → Clipboard history**. While enabled, the extension listens for clipboard-owner changes and keeps up to 20 recent text and image entries **in memory only**; it does not write them to disk. Image entries support common PNG, JPEG, WebP, GIF, and BMP clipboard formats, show a small thumbnail in Sidebar, Split Tabs, and Hero Banner, and are limited to 8 MiB each. A one-second polling fallback is used only if change-signal setup is unavailable. Clipboard contents can include passwords, authentication codes, private messages, or sensitive images, so enable this only if you want the feature. Use **Clear clipboard history** in Preferences to remove retained entries without disabling collection. Turning the feature off immediately clears retained text and image data. Disabling the extension also stops tracking and clears the history.
+Clipboard history is **off by default**. To enable it, open the extension preferences and turn on **General → Privacy → Clipboard history**. While enabled, the extension listens for clipboard-owner changes and keeps up to 20 recent text and image entries **in memory only**; it does not write them to disk. Image entries support common PNG, JPEG, WebP, GIF, and BMP clipboard formats and show a small thumbnail in Sidebar, Split Tabs, and Hero Banner. Original image payloads are capped at 8 MiB total; older entries remain visible as previews but cannot be restored after their original bytes are released. A one-second polling fallback is used only if change-signal setup is unavailable. Clipboard contents can include passwords, authentication codes, private messages, or sensitive images, so enable this only if you want the feature. Use **Clear clipboard history** in Preferences to remove retained entries without disabling collection. Turning the feature off immediately clears retained text and image data. Disabling the extension also stops tracking and clears the history.
 
 ## Theming
 
@@ -86,7 +86,7 @@ Or set the path directly:
 gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher theme-file-path "/path/to/colors.css"
 ```
 
-The file is read whenever the launcher opens. Leave the path empty to use the built-in purple theme.
+The parsed theme is cached between opens and refreshed when the configured file's metadata changes. Leave the path empty to use the built-in purple theme.
 
 Global icon size and background opacity are configured under **Appearance**. To customize a single layout without affecting the others, use **Layout-specific appearance** on the same page, select a layout, and adjust either override. Use **Reset layout overrides** to return both values to the global defaults for that layout.
 

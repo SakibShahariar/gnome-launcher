@@ -62,7 +62,7 @@ test('keeps image entries and ordering intact when a text duplicate is moved', (
 });
 
 test('reuses preview content for an entry and releases it on demand', () => {
-    const entry = {kind: 'image'};
+    const entry = {kind: 'image', preview: {id: 'pixbuf'}};
     let creations = 0;
     const create = () => ({id: ++creations});
 
@@ -76,6 +76,7 @@ test('reuses preview content for an entry and releases it on demand', () => {
     const third = getOrCreatePreviewContent(entry, create);
     assert.notEqual(third, first);
     assert.equal(creations, 2);
+    assert.equal(entry.preview, null);
 });
 
 test('retains newest original images within the total byte budget', () => {

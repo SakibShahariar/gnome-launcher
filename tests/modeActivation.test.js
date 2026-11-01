@@ -10,7 +10,7 @@ function actions() {
     return {
         calls,
         openFile: value => calls.push(['openFile', value]),
-        restoreClipboard: value => calls.push(['restoreClipboard', value]),
+        restoreClipboard: value => { calls.push(['restoreClipboard', value]); return true; },
         copyText: value => calls.push(['copyText', value]),
         openWebSearch: value => { calls.push(['openWebSearch', value]); return true; },
         openRecentFile: value => { calls.push(['openRecentFile', value]); return true; },
@@ -52,4 +52,16 @@ test('copies calculator results and handles absent items safely', () => {
     assert.equal(activateModeResult(null, handler), false);
     assert.equal(activateModeResult({kind: 'calculator', value: '4', copyable: true}, handler), true);
     assert.deepEqual(handler.calls, [['copyText', '4'], ['close']]);
+});
+
+test('does not close when a clipboard image is preview-only and cannot be restored', () => {
+    const handler = actions();
+    handler.restoreClipboard = value => {
+        handler.calls.push(['restoreClipboard', value]);
+        return false;
+    };
+    const item = {kind: 'clipboard-image', name: 'Image from clipboard (preview only)'};
+
+    assert.equal(activateModeResult(item, handler), false);
+    assert.deepEqual(handler.calls, [['restoreClipboard', item]]);
 });

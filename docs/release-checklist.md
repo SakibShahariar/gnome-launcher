@@ -52,7 +52,7 @@ Sidebar, Split Tabs, and Hero Banner have mode controls and shared finder-prefix
 - [ ] App usage: launch a few different applications, reopen the launcher, and confirm empty-query ordering reflects GNOME's updated usage data without changing alphabetical tie-breaking.
 - [ ] Emoji: compare empty-query results, mixed-case queries, full names, and keyword fragments; confirm result order and the result limit remain unchanged.
 - [ ] Clipboard text: copy a new value, copy an existing value again after another item, and confirm it moves to the front without duplicates; verify the 20-entry cap.
-- [ ] Clipboard images: add multiple images whose combined original payload exceeds 8 MiB; confirm older originals become preview-only while thumbnails remain visible, and preview-only entries cannot replace the current clipboard contents.
+- [ ] Clipboard images: add multiple images whose combined original payload exceeds 8 MiB; confirm any original that does not fit the remaining budget becomes preview-only while its thumbnail remains visible. Older, smaller images may remain restorable if they still fit; preview-only entries must not replace the current clipboard contents.
 - [ ] Clipboard cleanup: clear history and disable the extension while images are present; confirm entries and previews disappear and tracking does not resume until opted in.
 - [ ] File search: search a directory with many results, change the query rapidly, and confirm cancelled searches stop scheduling additional icon lookups and stale results are not rendered.
 - [ ] Theme and wallpaper: change the configured CSS or wallpaper file, then reopen the launcher and confirm updated resources appear; disable and re-enable the extension to check cache cleanup.

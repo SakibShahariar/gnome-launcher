@@ -15,7 +15,12 @@ test('filters clipboard text case-insensitively and preserves entry data', () =>
         {...entries[0], kind: 'clipboard'},
     ]);
     assert.deepEqual(searchClipboardEntries(entries, 'shot'), [
-        {...entries[1], kind: 'clipboard-image'},
+        {
+            ...entries[1],
+            name: 'Screenshot (preview only)',
+            kind: 'clipboard-image',
+            _historyEntry: entries[1],
+        },
     ]);
 });
 

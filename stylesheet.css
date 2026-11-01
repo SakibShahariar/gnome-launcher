@@ -45,54 +45,153 @@
     padding: 14px 16px;
 }
 
-/* Hotkey layout structure; theme-dependent colors remain inline so they
- * continue to follow the user's selected theme and opacity settings. */
-.launcher-hotkey-search-row {
-    padding: 12px 14px;
-}
 
 .launcher-hotkey-results {
     padding: 0 6px 6px;
 }
 
-.launcher-hotkey-result-row {
-    border-radius: 14px;
-    padding: 8px 12px;
-}
 
-/* List layout structure; dynamic theme colors remain inline. */
-.launcher-list-search-row {
-    padding: 12px 14px;
-}
 
 .launcher-list-results {
     padding: 0 6px 6px;
 }
 
-.launcher-list-card {
-    border-radius: 20px;
-    padding: 4px;
-}
 
 .launcher-list-footer {
     font-size: 11px;
     padding: 4px 16px 8px;
 }
 
-.launcher-list-result-row {
+
+/* Shared typography and repeated layout geometry; distinctive dimensions stay local. */
+.launcher-hotkey-number,
+.launcher-hotkey-label,
+.launcher-corner-label,
+.launcher-full-edge-label,
+.launcher-notch-label,
+.launcher-adaptive-width-label,
+.launcher-top-dropdown-label,
+.launcher-sidebar-result-label,
+.launcher-split-tabs-pill-label,
+.launcher-grid-label,
+.launcher-list-result-label,
+.launcher-dock-result-label,
+.launcher-fullscreen-label,
+.launcher-mode-result-label,
+.launcher-split-preview-result-label,
+.launcher-split-preview-detail-title {
+    font-weight: bold;
+}
+
+.launcher-krunner-label,
+.launcher-notch-label,
+.launcher-sidebar-result-label,
+.launcher-list-result-label,
+.launcher-dock-result-label,
+.launcher-mode-result-label,
+.launcher-split-preview-result-label {
+    font-size: 13px;
+}
+
+.launcher-corner-entry,
+.launcher-full-edge-entry,
+.launcher-notch-entry,
+.launcher-hero-entry,
+.launcher-split-tabs-entry {
+    font-size: 14px;
+}
+
+.launcher-adaptive-width-entry,
+.launcher-top-dropdown-entry,
+.launcher-split-preview-entry,
+.launcher-sidebar-entry,
+.launcher-dock-entry {
+    font-size: 15px;
+}
+
+.launcher-hotkey-entry,
+.launcher-krunner-entry,
+.launcher-grid-entry,
+.launcher-list-entry {
+    font-size: 16px;
+}
+
+.launcher-full-edge-label,
+.launcher-adaptive-width-label,
+.launcher-top-dropdown-label,
+.launcher-grid-label,
+.launcher-fullscreen-label,
+.launcher-split-preview-detail-footer {
+    text-align: center;
+}
+
+.launcher-full-edge-grid-row,
+.launcher-adaptive-width-tiles-row,
+.launcher-top-dropdown-grid-row {
+    spacing: 8px;
+}
+
+.launcher-hotkey-search-row,
+.launcher-list-search-row,
+.launcher-corner-search-row,
+.launcher-adaptive-width-search-row {
+    padding: 12px 14px;
+}
+
+.launcher-grid-search-row,
+.launcher-krunner-search-row,
+.launcher-split-preview-search-row,
+.launcher-sidebar-search-row {
+    padding: 14px 18px;
+}
+
+.launcher-hotkey-result-row,
+.launcher-list-result-row,
+.launcher-sidebar-result-row {
     border-radius: 14px;
+}
+
+.launcher-hotkey-result-row,
+.launcher-list-result-row,
+.launcher-sidebar-result-row {
     padding: 8px 12px;
+}
+
+.launcher-dock-result-row,
+.launcher-notch-result-row,
+.launcher-mode-result-row {
+    border-radius: 12px;
+}
+
+.launcher-dock-result-row,
+.launcher-notch-result-row,
+.launcher-mode-result-row {
+    padding: 8px 12px;
+}
+
+.launcher-list-card,
+.launcher-hotkey-card,
+.launcher-adaptive-width-card,
+.launcher-split-preview-card,
+.launcher-sidebar-card,
+.launcher-hero-banner-card,
+.launcher-split-tabs-card {
+    border-radius: 20px;
+}
+
+.launcher-list-card,
+.launcher-grid-card,
+.launcher-hotkey-card,
+.launcher-corner-card,
+.launcher-adaptive-width-card {
+    padding: 4px;
 }
 
 /* Grid layout structure; selected/theme colors remain runtime-configurable. */
 .launcher-grid-card {
     border-radius: 24px;
-    padding: 4px;
 }
 
-.launcher-grid-search-row {
-    padding: 14px 18px;
-}
 
 .launcher-grid-results {
     padding: 4px 14px 16px;
@@ -139,10 +238,6 @@
     padding: 8px;
 }
 
-.launcher-dock-result-row {
-    border-radius: 12px;
-    padding: 8px 12px;
-}
 
 .launcher-dock-search-row {
     border-radius: 24px;
@@ -153,7 +248,6 @@
 
 /* KRunner-style layout structure; divider and selection colors stay dynamic. */
 .launcher-krunner-search-row {
-    padding: 14px 18px;
     border-bottom-width: 1px;
     border-bottom-style: solid;
 }
@@ -162,15 +256,7 @@
     padding: 8px 18px;
 }
 
-/* Hotkey layout card and text geometry; runtime colors remain theme-aware. */
-.launcher-hotkey-card {
-    border-radius: 20px;
-    padding: 4px;
-}
 
-.launcher-hotkey-entry {
-    font-size: 16px;
-}
 
 .launcher-hotkey-footer {
     font-size: 11px;
@@ -179,27 +265,18 @@
 
 .launcher-hotkey-number {
     font-size: 12px;
-    font-weight: bold;
 }
 
 .launcher-hotkey-label {
     font-size: 13px;
-    font-weight: bold;
 }
 
 /* Corner layout geometry; dynamic colors remain runtime-configurable. */
 .launcher-corner-card {
     border-radius: 18px;
-    padding: 4px;
 }
 
-.launcher-corner-search-row {
-    padding: 12px 14px;
-}
 
-.launcher-corner-entry {
-    font-size: 14px;
-}
 
 .launcher-corner-results {
     padding: 0 6px 6px;
@@ -212,7 +289,6 @@
 
 .launcher-corner-label {
     font-size: 12px;
-    font-weight: bold;
 }
 
 /* Full-edge layout geometry; theme colors remain supplied at runtime. */
@@ -228,18 +304,12 @@
     margin-bottom: 4px;
 }
 
-.launcher-full-edge-entry {
-    font-size: 14px;
-}
 
 .launcher-full-edge-grid {
     spacing: 10px;
     margin-top: 14px;
 }
 
-.launcher-full-edge-grid-row {
-    spacing: 8px;
-}
 
 .launcher-full-edge-tile {
     border-radius: 10px;
@@ -248,8 +318,6 @@
 
 .launcher-full-edge-label {
     font-size: 10px;
-    text-align: center;
-    font-weight: bold;
 }
 
 /* KRunner card and entry geometry; theme colors remain runtime-configurable. */
@@ -258,18 +326,12 @@
     border-radius: 0 0 12px 12px;
 }
 
-.launcher-krunner-entry {
-    font-size: 16px;
-}
 
 .launcher-krunner-result-divider {
     border-bottom-width: 1px;
     border-bottom-style: solid;
 }
 
-.launcher-krunner-label {
-    font-size: 13px;
-}
 
 /* Notch layout geometry; dynamic theme colors remain runtime-configurable. */
 .launcher-notch-card {
@@ -282,9 +344,6 @@
     spacing: 10px;
 }
 
-.launcher-notch-entry {
-    font-size: 14px;
-}
 
 .launcher-notch-divider {
     height: 1px;
@@ -294,32 +353,10 @@
     padding: 6px;
 }
 
-.launcher-notch-result-row {
-    border-radius: 12px;
-    padding: 8px 12px;
-}
 
-.launcher-notch-label {
-    font-size: 13px;
-    font-weight: bold;
-}
 
-/* Adaptive-width layout geometry; content width remains computed at runtime. */
-.launcher-adaptive-width-card {
-    border-radius: 20px;
-    padding: 4px;
-}
-
-.launcher-adaptive-width-search-row {
-    padding: 12px 14px;
-}
-
-.launcher-adaptive-width-entry {
-    font-size: 15px;
-}
 
 .launcher-adaptive-width-tiles-row {
-    spacing: 8px;
     padding: 4px 14px 16px;
 }
 
@@ -330,8 +367,6 @@
 
 .launcher-adaptive-width-label {
     font-size: 10px;
-    text-align: center;
-    font-weight: bold;
 }
 
 /* Top-dropdown shade geometry; monitor width and theme colors stay dynamic. */
@@ -347,17 +382,11 @@
     margin-bottom: 14px;
 }
 
-.launcher-top-dropdown-entry {
-    font-size: 15px;
-}
 
 .launcher-top-dropdown-grid {
     spacing: 10px;
 }
 
-.launcher-top-dropdown-grid-row {
-    spacing: 8px;
-}
 
 .launcher-top-dropdown-tile {
     border-radius: 12px;
@@ -366,22 +395,10 @@
 
 .launcher-top-dropdown-label {
     font-size: 11px;
-    text-align: center;
-    font-weight: bold;
 }
 
-/* Split-preview panel geometry; pane contents remain runtime-generated. */
-.launcher-split-preview-card {
-    border-radius: 20px;
-}
 
-.launcher-split-preview-search-row {
-    padding: 14px 18px;
-}
 
-.launcher-split-preview-entry {
-    font-size: 15px;
-}
 
 .launcher-split-preview-results {
     padding: 4px 4px 10px 10px;
@@ -392,10 +409,6 @@
     padding: 20px;
 }
 
-/* Sidebar layout geometry; theme-dependent colors remain runtime-configurable. */
-.launcher-sidebar-card {
-    border-radius: 20px;
-}
 
 .launcher-sidebar-rail {
     border-radius: 20px 0 0 20px;
@@ -408,32 +421,12 @@
     padding: 8px;
 }
 
-.launcher-sidebar-search-row {
-    padding: 14px 18px;
-}
 
-.launcher-sidebar-entry {
-    font-size: 15px;
-}
 
 .launcher-sidebar-results {
     padding: 0 10px 10px;
 }
 
-.launcher-sidebar-result-row {
-    border-radius: 14px;
-    padding: 8px 12px;
-}
-
-.launcher-sidebar-result-label {
-    font-size: 13px;
-    font-weight: bold;
-}
-
-/* Hero-banner layout geometry; wallpaper and theme colors remain dynamic. */
-.launcher-hero-banner-card {
-    border-radius: 20px;
-}
 
 .launcher-hero-banner {
     border-radius: 20px 20px 0 0;
@@ -448,9 +441,6 @@
     padding: 8px 14px;
 }
 
-.launcher-hero-entry {
-    font-size: 14px;
-}
 
 .launcher-hero-icons-row {
     spacing: 10px;
@@ -473,7 +463,6 @@
 
 /* Split-tabs layout geometry; pane and selected colors remain dynamic. */
 .launcher-split-tabs-card {
-    border-radius: 20px;
     padding: 14px;
     spacing: 14px;
 }
@@ -487,9 +476,6 @@
     padding: 8px 12px;
 }
 
-.launcher-split-tabs-entry {
-    font-size: 14px;
-}
 
 .launcher-split-tabs-pills {
     spacing: 6px;
@@ -502,7 +488,6 @@
 
 .launcher-split-tabs-pill-label {
     font-size: 10px;
-    font-weight: bold;
 }
 
 .launcher-split-tabs-results {
@@ -511,34 +496,13 @@
     spacing: 2px;
 }
 
-/* Grid/list/dock text geometry; runtime colors remain theme-aware. */
-.launcher-grid-entry {
-    font-size: 16px;
-}
 
 .launcher-grid-label {
     font-size: 11px;
-    text-align: center;
-    font-weight: bold;
 }
 
-.launcher-list-entry {
-    font-size: 16px;
-}
 
-.launcher-list-result-label {
-    font-size: 13px;
-    font-weight: bold;
-}
 
-.launcher-dock-entry {
-    font-size: 15px;
-}
-
-.launcher-dock-result-label {
-    font-size: 13px;
-    font-weight: bold;
-}
 
 /* Fullscreen geometry is monitor-sized at runtime; spacing is static CSS. */
 .launcher-fullscreen-root {
@@ -555,8 +519,6 @@
 
 .launcher-fullscreen-label {
     font-size: 12px;
-    text-align: center;
-    font-weight: bold;
 }
 
 /* Shared result details for mode-based layouts. */
@@ -565,10 +527,6 @@
     margin-right: 12px;
 }
 
-.launcher-mode-result-label {
-    font-size: 13px;
-    font-weight: bold;
-}
 
 .launcher-mode-result-footer {
     font-size: 11px;
@@ -579,17 +537,15 @@
     margin-right: 10px;
 }
 
-/* Shared mode-result row geometry; selected fill stays theme-dependent. */
-.launcher-mode-result-row {
-    border-radius: 12px;
-    padding: 8px 12px;
-}
 
 .launcher-mode-run-preview-row {
     border-radius: 12px;
     padding: 8px 10px;
 }
 
-.launcher-split-preview-result-label { font-size: 13px; font-weight: bold; }
-.launcher-split-preview-detail-title { font-size: 15px; font-weight: bold; }
-.launcher-split-preview-detail-footer { font-size: 12px; text-align: center; }
+.launcher-split-preview-detail-title {
+    font-size: 15px;
+}
+.launcher-split-preview-detail-footer {
+    font-size: 12px;
+}

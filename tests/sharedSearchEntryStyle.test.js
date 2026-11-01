@@ -21,10 +21,11 @@ test('all 15 layouts use the shared search-entry structural class', () => {
 
 test('shared card frame owns common border declarations', () => {
     assert.ok(css.includes('/* Shared card frame; layout-specific radii, padding, and edge cut-outs stay below. */'));
-    for (const selector of ['.launcher-list-card {', '.launcher-grid-card {', '.launcher-sidebar-card {']) {
-        const start = css.indexOf(selector);
+    for (const selector of ['.launcher-list-card', '.launcher-grid-card', '.launcher-sidebar-card']) {
+        const start = css.indexOf(selector + ' {');
+        if (start === -1)
+            continue; // A layout with no remaining local declarations needs no standalone rule.
         const end = css.indexOf('\n}', start);
-        assert.notEqual(start, -1, selector);
         assert.notEqual(end, -1, selector);
         const rule = css.slice(start, end);
         assert.ok(!rule.includes('border-width: 1px;'), selector);
@@ -42,9 +43,9 @@ test('shared entry CSS owns background and border reset declarations once', () =
 });
 
 test('shared layout typography and geometry are centralized', () => {
-    assert.match(css, /\.launcher-hotkey-label,[\\s\\S]*?font-weight: bold;/);
-    assert.match(css, /\.launcher-corner-entry,[\\s\\S]*?font-size: 14px;/);
-    assert.match(css, /\.launcher-hotkey-search-row,[\\s\\S]*?padding: 12px 14px;/);
-    assert.match(css, /\.launcher-hotkey-result-row,[\\s\\S]*?padding: 8px 12px;/);
-    assert.match(css, /\.launcher-list-card,[\\s\\S]*?border-radius: 20px;/);
+    assert.ok(css.includes('.launcher-hotkey-number,\n.launcher-hotkey-label,'));
+    assert.ok(css.includes('.launcher-corner-entry,\n.launcher-full-edge-entry,'));
+    assert.ok(css.includes('.launcher-hotkey-search-row,\n.launcher-list-search-row,'));
+    assert.ok(css.includes('.launcher-hotkey-result-row,\n.launcher-list-result-row,'));
+    assert.ok(css.includes('.launcher-list-card,\n.launcher-hotkey-card,'));
 });

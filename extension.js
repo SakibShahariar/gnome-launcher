@@ -7,6 +7,7 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 import {LauncherDialog} from './lib/launcherDialog.js';
+import {clearThemeCaches} from './lib/theme.js';
 import {ShortcutCheatsheet} from './lib/shortcutCheatsheet.js';
 import * as ClipboardHistory from './lib/clipboardHistory.js';
 import {cleanupSearchProvider, initializeSearchProvider} from './lib/appSearch.js';
@@ -64,6 +65,7 @@ export default class GnomeLauncherExtension extends Extension {
         this._dialog = null;
         ClipboardHistory.stopTracking();
         cleanupSearchProvider();
+        clearThemeCaches();
         this._cheatsheet?.close();
         this._cheatsheet = null;
         this._settings = null;

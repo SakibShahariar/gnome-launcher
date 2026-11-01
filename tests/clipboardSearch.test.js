@@ -49,10 +49,13 @@ test('ignores malformed history containers and entries safely', () => {
 });
 
 test('keeps original image bytes on the history entry, not the search result wrapper', () => {
-    const entry = {name: 'Recent image', kind: 'image', mimeType: 'image/png', bytes: {}};
+    const entry = {name: 'Recent image', kind: 'image', mimeType: 'image/png', bytes: {}, preview: {pixels: true}};
     const [result] = searchClipboardEntries([entry]);
 
     assert.equal(result._historyEntry, entry);
     assert.equal(Object.hasOwn(result, 'bytes'), false);
+    assert.equal(Object.hasOwn(result, 'preview'), false);
     assert.equal(result.name, 'Recent image');
+    entry.preview = null;
+    assert.equal(result._historyEntry.preview, null);
 });

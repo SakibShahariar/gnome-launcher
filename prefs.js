@@ -230,7 +230,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const privacyGroup = new Adw.PreferencesGroup({title: 'Privacy'});
         const clipboardRow = new Adw.ActionRow({
             title: 'Clipboard history',
-            subtitle: 'Opt in to collecting up to 20 recent text entries in memory',
+            subtitle: 'Opt in to 20 recent text and image entries; original image data is capped at 8 MiB total',
         });
         const clipboardSwitch = new Gtk.Switch({
             active: settings.get_boolean('clipboard-history-enabled'),

@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {rememberTextEntry} from '../lib/clipboardHistoryUtils.js';
+import {getOrCreatePreviewContent, rememberTextEntry, releasePreviewContent} from '../lib/clipboardHistoryUtils.js';
 
 test('moves an existing text entry to the front without disturbing other entries', () => {
     const image = {kind: 'image', name: 'Image from clipboard'};
@@ -54,4 +54,33 @@ test('keeps image entries and ordering intact when a text duplicate is moved', (
         {kind: 'text', name: 'other', text: 'other', timestamp: 1},
         secondImage,
     ]);
+});
+
+test('reuses lazily created preview content and releases it on demand', () => {
+    const entry = {kind: 'image'};
+    let creations = 0;
+    const create = () => ({id: ++creations});
+
+    const first = getOrCreatePreviewContent(entry, create);
+    const second = getOrCreatePreviewContent(entry, create);
+
+    assert.equal(second, first);
+    assert.equal(creations, 1);
+
+    releasePreviewContent(entry);
+    const third = getOrCreatePreviewContent(entry, create);
+    assert.notEqual(third, first);
+    assert.equal(creations, 2);
+});
+
+test('releases cached preview content when history entries are evicted', () => {
+    const retained = {kind: 'image', previewContent: {id: 'retained'}};
+    const evicted = {kind: 'image', previewContent: {id: 'evicted'}};
+    const history = [retained, evicted];
+
+    rememberTextEntry(history, 'new text', 3, 2);
+
+    assert.equal(history.length, 2);
+    assert.equal(retained.previewContent.id, 'retained');
+    assert.equal(evicted.previewContent, null);
 });

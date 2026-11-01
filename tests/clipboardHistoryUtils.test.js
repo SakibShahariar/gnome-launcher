@@ -3,7 +3,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {getOrCreatePreviewContent, rememberTextEntry, releasePreviewContent} from '../lib/clipboardHistoryUtils.js';
+import {
+    enforceImageByteBudget,
+    getOrCreatePreviewContent,
+    rememberTextEntry,
+    releasePreviewContent,
+} from '../lib/clipboardHistoryUtils.js';
 
 test('moves an existing text entry to the front without disturbing other entries', () => {
     const image = {kind: 'image', name: 'Image from clipboard'};
@@ -56,28 +61,43 @@ test('keeps image entries and ordering intact when a text duplicate is moved', (
     ]);
 });
 
-test('reuses preview content across clipboard search wrappers for the same bytes', () => {
-    const bytes = {};
-    const historyEntry = {kind: 'image', bytes};
-    const searchResult = {...historyEntry, kind: 'clipboard-image'};
+test('reuses preview content for an entry and releases it on demand', () => {
+    const entry = {kind: 'image'};
     let creations = 0;
     const create = () => ({id: ++creations});
 
-    const first = getOrCreatePreviewContent(historyEntry, create);
-    const second = getOrCreatePreviewContent(searchResult, create);
+    const first = getOrCreatePreviewContent(entry, create);
+    const second = getOrCreatePreviewContent(entry, create);
 
     assert.equal(second, first);
     assert.equal(creations, 1);
 
-    releasePreviewContent(historyEntry);
-    const third = getOrCreatePreviewContent(searchResult, create);
+    releasePreviewContent(entry);
+    const third = getOrCreatePreviewContent(entry, create);
     assert.notEqual(third, first);
     assert.equal(creations, 2);
 });
 
-test('releases cached preview content when history entries are evicted', () => {
-    const retained = {kind: 'image', bytes: {}};
-    const evicted = {kind: 'image', bytes: {}};
+test('retains newest original images within the total byte budget', () => {
+    const newest = {kind: 'image', bytes: {get_size: () => 5}};
+    const older = {kind: 'image', bytes: {get_size: () => 4}};
+    const oldest = {kind: 'image', bytes: {get_size: () => 3}};
+    const text = {kind: 'text', text: 'notes'};
+    const history = [newest, text, older, oldest];
+    const cachedPreview = getOrCreatePreviewContent(older, () => ({id: 'preview'}));
+
+    const retained = enforceImageByteBudget(history, 8);
+
+    assert.equal(retained, 8);
+    assert.ok(newest.bytes);
+    assert.equal(older.bytes, null);
+    assert.equal(oldest.bytes, null);
+    assert.equal(getOrCreatePreviewContent(older, () => ({id: 'new'})), cachedPreview);
+});
+
+test('releases preview content and image bytes when an entry is evicted', () => {
+    const retained = {kind: 'image', bytes: {get_size: () => 2}};
+    const evicted = {kind: 'image', bytes: {get_size: () => 2}};
     const history = [retained, evicted];
     let creations = 0;
     const create = () => ({id: ++creations});
@@ -86,6 +106,7 @@ test('releases cached preview content when history entries are evicted', () => {
     rememberTextEntry(history, 'new text', 3, 2);
 
     assert.equal(history.length, 2);
+    assert.equal(evicted.bytes, null);
     assert.notEqual(getOrCreatePreviewContent(evicted, create).id, 1);
     assert.equal(creations, 2);
 });

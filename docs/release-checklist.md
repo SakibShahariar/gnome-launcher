@@ -46,6 +46,17 @@ Sidebar, Split Tabs, and Hero Banner have mode controls and shared finder-prefix
 - [ ] Emoji (`emoji `): search for an emoji and verify the result can be selected and activated.
 - [ ] Confirm changing prefixes or closing the launcher does not allow stale results from a previous query to replace current results.
 
+## Caches and bounded resources
+
+- [ ] Apps: open the launcher repeatedly and confirm the installed-app list is reused; install or remove an application and confirm the next search reflects the change.
+- [ ] App usage: launch a few different applications, reopen the launcher, and confirm empty-query ordering reflects GNOME's updated usage data without changing alphabetical tie-breaking.
+- [ ] Emoji: compare empty-query results, mixed-case queries, full names, and keyword fragments; confirm result order and the result limit remain unchanged.
+- [ ] Clipboard text: copy a new value, copy an existing value again after another item, and confirm it moves to the front without duplicates; verify the 20-entry cap.
+- [ ] Clipboard images: add multiple images whose combined original payload exceeds 8 MiB; confirm older originals become preview-only while thumbnails remain visible, and preview-only entries cannot replace the current clipboard contents.
+- [ ] Clipboard cleanup: clear history and disable the extension while images are present; confirm entries and previews disappear and tracking does not resume until opted in.
+- [ ] File search: search a directory with many results, change the query rapidly, and confirm cancelled searches stop scheduling additional icon lookups and stale results are not rendered.
+- [ ] Theme and wallpaper: change the configured CSS or wallpaper file, then reopen the launcher and confirm updated resources appear; disable and re-enable the extension to check cache cleanup.
+
 ## Keyboard and preferences
 
 - [ ] Open the launcher using the configured shortcut, then complete a search and activation without a pointer.

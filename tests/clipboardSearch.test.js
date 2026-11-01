@@ -19,7 +19,6 @@ test('filters clipboard text case-insensitively and preserves entry data', () =>
             ...entries[1],
             name: 'Screenshot (preview only)',
             kind: 'clipboard-image',
-            _historyEntry: entries[1],
         },
     ]);
 });

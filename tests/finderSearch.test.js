@@ -48,3 +48,13 @@ test('delegates remaining finders and respects cancellation', async () => {
         is_cancelled: () => true,
     }), []);
 });
+
+
+test('keeps the selected result visible in a bounded finder window', async () => {
+    const {getFinderResultWindow} = await import('../lib/finderSearch.js');
+    assert.deepEqual(getFinderResultWindow(30, 0, 12), {start: 0, end: 12});
+    assert.deepEqual(getFinderResultWindow(30, 12, 12), {start: 1, end: 13});
+    assert.deepEqual(getFinderResultWindow(30, 29, 12), {start: 18, end: 30});
+    assert.deepEqual(getFinderResultWindow(3, 2, 12), {start: 0, end: 3});
+    assert.deepEqual(getFinderResultWindow(0, 0, 12), {start: 0, end: 0});
+});

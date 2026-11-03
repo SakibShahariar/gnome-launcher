@@ -54,6 +54,8 @@ Checkpoint range: `7cf1ea1` → `1af49a6` (2026-11-03). Workflow run results wer
 | `5da4932e42ba45c01bc34fa9748ac3b7e5f507a9` | Handle malformed native provider results | [#473](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615332403) | green | Full CI passed; 169 tests passed, 0 failed. |
 | `33f52808902655346299aeae1b3f5b03ba4fb2c1` | Add focus and keyboard activation for reference layouts | [#474](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615687914) | green | Full CI passed; 172 tests passed, 0 failed. |
 | `c26557468323f01fc7d2d8178260261399f1ecd2` | Render focus indicators on transparent controls | [#475](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615868511) | green | All 23 job steps completed successfully, including lint, syntax, unit tests, benchmark, metadata, and GSettings validation. |
+| `1af49a68b3c02f942e20700f8bf716002f5f0dc1` | Make finder prefixes work across layouts | [#476](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618721728) | red | Lint and syntax passed. Unit tests: 173 passed, 2 failed; power was unintentionally accepted as a default finder, and the clipboard test mock returned the raw history type. |
+| `0173f253c574dda727a722f26888f6a0822845ed` | Keep power prefix out of default finder options | [#477](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618965851) | green | Full CI passed; 175 tests passed, 0 failed. All validation steps completed. |
 | `1af49a68b3c02f942e20700f8bf716002f5f0dc1` | Make finder prefixes work across layouts | [#476](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618721728) | red | Lint and syntax passed. Unit tests: 173 passed, 2 failed. `power` was incorrectly exposed as a default finder, and the new clipboard test mock returned raw history kind `text` instead of normalized `clipboard`; both corrected in the follow-up commit. |
 
 ## Red-cross investigation log
@@ -106,7 +108,7 @@ Checkpoint range: `7cf1ea1` → `1af49a6` (2026-11-03). Workflow run results wer
 | Date | Reviewed range / checkpoint | Result summary |
 |---|---|---|
 | 2026-11-02 | Initial checkpoint: `7cf1ea1959a16cd1ed1fb62d883e3f57bf02ccba` | Latest commit queried; empty status response recorded as unavailable. Earlier history not retroactively audited. |
-| 2026-11-03 | Reviewed `7cf1ea1` through `c265574` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest reviewed commit: `1af49a6`; run #476 red, follow-up fix pending. |
+| 2026-11-03 | Reviewed `7cf1ea1` through `c265574` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `0173f25`; run #476 red was resolved by #477. |
 
 
 ### Finder-prefix integration test failures
@@ -118,6 +120,6 @@ Checkpoint range: `7cf1ea1` → `1af49a6` (2026-11-03). Workflow run results wer
 - Failed job / step: `validate` / `Run unit tests`
 - Failure summary: `defaultMode.test.js` correctly rejected `power` as a persistent default mode; adding it to the global prefix registry had unintentionally exposed it in default-mode preferences. The finder-search test mock also returned the raw clipboard history kind (`text`) rather than the normalized search result kind (`clipboard`).
 - Classification: integration/test-contract regression.
-- Fix commit: pending.
-- Final verified outcome: pending.
+- Fix commit: `0173f253c574dda727a722f26888f6a0822845ed`.
+- Final verified outcome: [run #477](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618965851) green; 175/175 tests passed and all workflow validation steps completed.
 - Remaining follow-up: verify all 15 layouts in a live GNOME session; automated CI cannot verify Shell actor rendering and real activation.

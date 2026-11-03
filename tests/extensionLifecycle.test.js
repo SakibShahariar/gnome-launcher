@@ -23,10 +23,12 @@ test('extension disable cancels searches before closing and cleaning up shared s
 });
 
 test('closed signal reuses cancellation and destroys transient app action menus', () => {
-    const closedHandler = dialogSource.match(
-        /this\\.connect\\('closed', \\(\\) => \\{([\\s\\S]*?)\\}\\);/
-    )?.[1] ?? '';
+    const closedStart = dialogSource.indexOf("this.connect('closed', () => {");
+    const closedEnd = dialogSource.indexOf('});', closedStart);
+    const closedHandler = dialogSource.slice(closedStart, closedEnd);
 
+    assert.notEqual(closedStart, -1);
+    assert.notEqual(closedEnd, -1);
     assert.ok(closedHandler.includes('this.cancelPendingSearches()'));
     assert.ok(closedHandler.includes('this._destroyAppActionsMenu()'));
     assert.ok(dialogSource.includes('cancelPendingSearches() {'));

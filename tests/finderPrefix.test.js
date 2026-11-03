@@ -20,6 +20,7 @@ test('parses symbolic and word finder prefixes', () => {
     assert.deepEqual(parseFinderPrefix('s network'), {mode: 'settings', query: 'network'});
     assert.deepEqual(parseFinderPrefix('S network'), {mode: 'settings', query: 'network'});
     assert.deepEqual(parseFinderPrefix('settings Displays'), {mode: 'settings', query: 'Displays'});
+    assert.deepEqual(parseFinderPrefix('color screen'), {mode: 'color', query: 'screen'});
 });
 
 test('allows registered prefixes with an empty query', () => {
@@ -34,6 +35,7 @@ test('allows registered prefixes with an empty query', () => {
     assert.deepEqual(parseFinderPrefix('w '), {mode: 'window', query: ''});
     assert.deepEqual(parseFinderPrefix('s '), {mode: 'settings', query: ''});
     assert.deepEqual(parseFinderPrefix('settings '), {mode: 'settings', query: ''});
+    assert.deepEqual(parseFinderPrefix('color '), {mode: 'color', query: ''});
 });
 
 test('exposes finder metadata for layout and finder integration', () => {
@@ -42,7 +44,8 @@ test('exposes finder metadata for layout and finder integration', () => {
     assert.equal(FINDERS.get('run').label, 'Run a command');
     assert.equal(FINDERS.get('power').label, 'Power actions');
     assert.equal(FINDERS.get('settings').label, 'GNOME Settings');
-    assert.equal(FINDERS.list().length, 11);
+    assert.equal(FINDERS.get('color').defaultMode, false);
+    assert.equal(FINDERS.list().length, 12);
 });
 
 test('does not parse ordinary text or non-string input as a prefix', () => {
@@ -51,6 +54,7 @@ test('does not parse ordinary text or non-string input as a prefix', () => {
     assert.equal(parseFinderPrefix('recent'), null);
     assert.equal(parseFinderPrefix('emoji'), null);
     assert.equal(parseFinderPrefix('settings'), null);
+    assert.equal(parseFinderPrefix('color'), null);
     assert.equal(parseFinderPrefix(null), null);
     assert.equal(parseFinderPrefix(42), null);
 });

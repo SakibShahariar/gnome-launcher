@@ -19,7 +19,7 @@ test('accepts each shared mode-based finder', () => {
 });
 
 test('unknown and layout-specific modes safely fall back to applications', () => {
-    for (const mode of ['', 'power', 'missing', null, 1])
+    for (const mode of ['', 'power', 'color', 'missing', null, 1])
         assert.equal(resolveDefaultMode(mode), 'apps');
 });
 

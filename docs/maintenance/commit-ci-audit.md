@@ -24,10 +24,10 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 - Repository: `SakibShahariar/gnome-launcher`
 - Default branch: `main`
-- Checkpoint SHA: `aa3530983fafca6250b68f013acfe900dfb106f0`
+- Checkpoint SHA: `17df637a8ee47eb33b2970136ebe892826256082`
 - Initialized: 2026-11-02
 - Baseline: latest branch tip queried through combined commit-status endpoint; empty status list recorded as **unavailable**, not green/red. Older history was not retroactively audited during setup.
-- Next session: review commits after `aa35309`; run #476 was red and its test failures were resolved by green runs #477 and #478, and layout-routing test run #479 was green. Older history before the original checkpoint remains outside this audit unless specifically flagged.
+- Next session: review commits after `17df637`; runs #477–#480 were green, resolving #476's test failures. Run #480 validated the shared rest card across all layouts. Older history before the original checkpoint remains outside this audit unless specifically flagged.
 
 ## Initial baseline
 
@@ -37,7 +37,7 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 ## Reviewed range after initial checkpoint
 
-Checkpoint range: `7cf1ea1` → `aa35309` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
+Checkpoint range: `7cf1ea1` → `17df637` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
 
 | Commit SHA | Subject | Run | CI result | Follow-up |
 |---|---|---:|---|---|
@@ -58,6 +58,7 @@ Checkpoint range: `7cf1ea1` → `aa35309` (2026-11-03). Workflow run results wer
 | `0173f253c574dda727a722f26888f6a0822845ed` | Keep power prefix out of default finder options | [#477](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618965851) | green | Full CI passed; 175 tests passed, 0 failed. All validation steps completed. |
 | `2b8e408166f1a956790d045b3442ca1662b568a8` | Keep selected finder results in view | [#478](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41619161839) | green | Full CI passed; 176 tests passed, 0 failed. All validation steps completed. |
 | `aa3530983fafca6250b68f013acfe900dfb106f0` | Cover prefix routing in all layouts | [#479](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41619447216) | green | Full CI passed; 178 tests passed, 0 failed. All validation steps completed. |
+| `17df637a8ee47eb33b2970136ebe892826256082` | Add shared rest cards to all layouts | [#480](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41620392169) | green | Full CI passed; 181 tests passed, 0 failed. All validation steps completed. |
 
 ## Red-cross investigation log
 
@@ -109,7 +110,7 @@ Checkpoint range: `7cf1ea1` → `aa35309` (2026-11-03). Workflow run results wer
 | Date | Reviewed range / checkpoint | Result summary |
 |---|---|---|
 | 2026-11-02 | Initial checkpoint: `7cf1ea1959a16cd1ed1fb62d883e3f57bf02ccba` | Latest commit queried; empty status response recorded as unavailable. Earlier history not retroactively audited. |
-| 2026-11-03 | Reviewed `7cf1ea1` through `aa35309` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `aa35309`; run #476 red was resolved by #477, and runs #478–#479 passed. |
+| 2026-11-03 | Reviewed `7cf1ea1` through `17df637` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `17df637`; run #476 red was resolved by #477, and runs #478–#480 passed. |
 
 
 ### Finder-prefix integration test failures

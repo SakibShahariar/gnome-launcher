@@ -17,6 +17,12 @@ const dependencies = {
     searchModeResults: (mode, query) => [{kind: mode, name: query}],
 };
 
+test('resolves the screen-color picker action without depending on optional portal availability', async () => {
+    assert.deepEqual(await searchFinderResults('color', '', dependencies), [
+        {kind: 'color', name: 'Pick a color from the screen'},
+    ]);
+});
+
 test('resolves command and power finders', async () => {
     assert.deepEqual(await searchFinderResults('run', '  echo hi  ', dependencies), [
         {kind: 'run', command: 'echo hi', name: 'Run: echo hi'},

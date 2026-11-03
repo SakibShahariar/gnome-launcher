@@ -33,7 +33,7 @@ test('all 15 layouts show a rest card for an empty application query', () => {
 
 test('rest-card hints list every registered finder prefix', () => {
     const source = readFileSync(new URL('../lib/restCard.js', import.meta.url), 'utf8');
-    for (const hint of ['> run', '/ files', '; clipboard', '! power', '= calculate', '? web', 'w windows', 'recent', 'emoji', 's settings'])
+    for (const hint of ['> run', '/ files', '; clipboard', '! power', '= calculate', '? web', 'w windows', 'recent', 'emoji', 's settings', 'color'])
         assert.ok(source.includes(hint), `missing finder hint: ${hint}`);
     assert.ok(source.includes('showRecentApps && !compact'));
     assert.ok(source.includes('label.clutter_text.set_line_wrap(true)'));

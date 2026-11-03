@@ -17,8 +17,15 @@ function actions() {
         activateWindow: value => calls.push(['activateWindow', value]),
         openSettingsPanel: value => { calls.push(['openSettingsPanel', value]); return true; },
         close: () => calls.push(['close']),
+        closeAndPickScreenColor: () => calls.push(['closeAndPickScreenColor']),
     };
 }
+
+test('closes the launcher before starting the screen-color picker', () => {
+    const handler = actions();
+    assert.equal(activateModeResult({kind: 'color'}, handler), true);
+    assert.deepEqual(handler.calls, [['closeAndPickScreenColor']]);
+});
 
 test('activates and closes for file, clipboard, emoji, and window results', () => {
     const image = {kind: 'clipboard-image', uri: 'image'};

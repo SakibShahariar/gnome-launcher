@@ -24,10 +24,10 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 - Repository: `SakibShahariar/gnome-launcher`
 - Default branch: `main`
-- Checkpoint SHA: `8974ed12d4fe0a3dab2ee3604f49929078545115`
+- Checkpoint SHA: `52c97636701f203b53d1695935c184bb59cfab96`
 - Initialized: 2026-11-02
 - Baseline: latest branch tip queried through combined commit-status endpoint; empty status list recorded as **unavailable**, not green/red. Older history was not retroactively audited during setup.
-- Next session: review commits after `8974ed1`. Commits `fb3f2cf`, `e062a00`, and `8974ed1` were reviewed through runs #484–#486 (all green; 192, 195, and 195 tests respectively). Older history before the original checkpoint remains outside this audit unless specifically flagged.
+- Next session: review commits after `52c9763`. Commits `fb3f2cf`, `e062a00`, `8974ed1`, and `52c9763` were reviewed through runs #484–#487 (all green; 192, 195, 195, and 202 tests respectively). Older history before the original checkpoint remains outside this audit unless specifically flagged.
 
 ## Initial baseline
 
@@ -65,6 +65,7 @@ Checkpoint range: `7cf1ea1` → `8974ed1` (2026-11-03). Workflow run results wer
 | `fb3f2cf578c342ec389330b5ebf522a9041e487f` | Match position method calls, not comments (#7) | [#484](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41621958047) | green | Full CI passed; 192 tests passed, 0 failed. Corrected the source assertion to detect an actual method call. |
 | `e062a002a12fecb9768012a18b0730c17781aa99` | Open desktop actions on right-click (#25) | [#485](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41622568317) | green | Full CI passed; 195 tests passed, 0 failed. Shared right-click routing covered across all 15 layouts. |
 | `8974ed12d4fe0a3dab2ee3604f49929078545115` | Keep destructive power actions out of Spotlight (#23) | [#486](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41622811214) | green | Full CI passed; 195 tests passed, 0 failed. Run head SHA matched the default-branch commit. |
+| `52c97636701f203b53d1695935c184bb59cfab96` | Add global pinned apps (#25) | [#487](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41628077874) | green | Full CI passed; 202 tests passed, 0 failed. Favorites persist in GSettings, retain pin order, and appear in the empty-query rest card and ahead of ordinary search results. |
 
 ## Red-cross investigation log
 
@@ -116,7 +117,7 @@ Checkpoint range: `7cf1ea1` → `8974ed1` (2026-11-03). Workflow run results wer
 | Date | Reviewed range / checkpoint | Result summary |
 |---|---|---|
 | 2026-11-02 | Initial checkpoint: `7cf1ea1959a16cd1ed1fb62d883e3f57bf02ccba` | Latest commit queried; empty status response recorded as unavailable. Earlier history not retroactively audited. |
-| 2026-11-03 | Reviewed `7cf1ea1` through `8974ed1` | Setup/documentation, desktop-actions, native-search, proxy-cache, malformed-response, accessibility, finder, rest-card, color-picker, positioning, desktop-action, and Spotlight commits reviewed. Runs #484–#486 green. Latest verified checkpoint: `8974ed1`. |
+| 2026-11-03 | Reviewed `7cf1ea1` through `52c9763` | Setup/documentation, desktop-actions, native-search, proxy-cache, malformed-response, accessibility, finder, rest-card, color-picker, positioning, desktop-action, and Spotlight commits reviewed. Runs #484–#486 green. Latest verified checkpoint: `52c9763`; run #487 passed all 202 tests. |
 
 
 ### Finder-prefix integration test failures

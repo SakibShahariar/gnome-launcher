@@ -48,3 +48,11 @@ test('pinning persists the global desktop-ID list and refreshes ordered results'
     assert.ok(dialogSource.includes('this._pinnedApps = getPinnedApps(this._allApps, this._pinnedAppIds)'));
     assert.ok(dialogSource.includes('this._rerender()'));
 });
+
+
+test('favorite activation uses the normal app launch path and closes the launcher', () => {
+    assert.ok(dialogSource.includes('    launchApp(app) {'));
+    assert.ok(dialogSource.includes('app.open_new_window(-1);'));
+    assert.ok(dialogSource.includes('this.close();'));
+    assert.ok(dialogSource.includes('return this.launchApp(this._filtered[index]);'));
+});

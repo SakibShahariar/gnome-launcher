@@ -39,6 +39,7 @@ test('rest-card hints list every registered finder prefix', () => {
     assert.ok(source.includes('showRecentApps && !compact'));
     assert.ok(source.includes("text: 'Favorites'"));
     assert.ok(source.includes('can_focus: true'));
+    assert.ok(source.includes('onActivate(app)'));
     assert.ok(source.includes('accessible_name: `Favorite: ${app.get_name()}`'));
     assert.ok(source.indexOf("text: 'Favorites'") < source.indexOf('if (showRecentApps && !compact)'));
     assert.ok(source.includes('label.clutter_text.set_line_wrap(true)'));
@@ -51,4 +52,12 @@ test('Hotkey rest card preserves the Ctrl+1–9 launch hint without taking digit
     assert.ok(source.includes('onDigitKey(localIndex)'));
     assert.ok(source.includes('if (!this.entry.get_text().trim())'));
 
+});
+
+
+test('launcher dialog supplies the shared launch callback to every rest card', () => {
+    const dialog = readFileSync(new URL('../lib/launcherDialog.js', import.meta.url), 'utf8');
+    assert.ok(dialog.includes('theme.launchApp = app => this.launchApp(app);'));
+    assert.ok(dialog.includes('launchApp(app) {'));
+    assert.ok(dialog.includes('return this.launchApp(this._filtered[index]);'));
 });

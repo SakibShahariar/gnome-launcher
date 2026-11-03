@@ -19,6 +19,14 @@ test('uses the XDG Screenshot portal request and response instead of direct scre
     assert.ok(!pickerSource.includes('Shell.Screenshot'));
 });
 
+test('subscribes to the predicted portal request path before making the call', () => {
+    const subscribeAt = pickerSource.indexOf('subscribeToResponse(connection, expectedPath');
+    const callAt = pickerSource.indexOf('connection.call(');
+    assert.ok(subscribeAt >= 0 && callAt > subscribeAt);
+    assert.ok(pickerSource.includes("uniqueName.replace(/^:/, '').replace(/\\./g, '_')"));
+    assert.ok(pickerSource.includes('if (requestPath !== expectedPath)'));
+});
+
 test('waits for the launcher to close before opening the desktop picker', () => {
     assert.ok(activationSource.includes("dialog.connect('closed'"));
     assert.ok(activationSource.includes('pickScreenColor({'));

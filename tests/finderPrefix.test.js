@@ -7,6 +7,7 @@ import {parseFinderPrefix, FINDERS} from '../lib/finderPrefix.js';
 
 test('parses symbolic and word finder prefixes', () => {
     assert.deepEqual(parseFinderPrefix('> top'), {mode: 'run', query: 'top'});
+    assert.deepEqual(parseFinderPrefix('! lock'), {mode: 'power', query: 'lock'});
     assert.deepEqual(parseFinderPrefix('/ report'), {mode: 'files', query: 'report'});
     assert.deepEqual(parseFinderPrefix('; copied text'), {mode: 'clipboard', query: 'copied text'});
     assert.deepEqual(parseFinderPrefix('= 2 + 2'), {mode: 'calculator', query: '2 + 2'});
@@ -23,6 +24,7 @@ test('parses symbolic and word finder prefixes', () => {
 
 test('allows registered prefixes with an empty query', () => {
     assert.deepEqual(parseFinderPrefix('>'), {mode: 'run', query: ''});
+    assert.deepEqual(parseFinderPrefix('!'), {mode: 'power', query: ''});
     assert.deepEqual(parseFinderPrefix('/'), {mode: 'files', query: ''});
     assert.deepEqual(parseFinderPrefix(';'), {mode: 'clipboard', query: ''});
     assert.deepEqual(parseFinderPrefix('='), {mode: 'calculator', query: ''});
@@ -38,8 +40,9 @@ test('exposes finder metadata for layout and finder integration', () => {
     assert.equal(FINDERS.get('apps').default, true);
     assert.equal(FINDERS.get('apps').label, 'Applications');
     assert.equal(FINDERS.get('run').label, 'Run a command');
+    assert.equal(FINDERS.get('power').label, 'Power actions');
     assert.equal(FINDERS.get('settings').label, 'GNOME Settings');
-    assert.equal(FINDERS.list().length, 10);
+    assert.equal(FINDERS.list().length, 11);
 });
 
 test('does not parse ordinary text or non-string input as a prefix', () => {

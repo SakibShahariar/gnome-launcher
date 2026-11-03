@@ -24,10 +24,10 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 - Repository: `SakibShahariar/gnome-launcher`
 - Default branch: `main`
-- Checkpoint SHA: `33f52808902655346299aeae1b3f5b03ba4fb2c1`
+- Checkpoint SHA: `c26557468323f01fc7d2d8178260261399f1ecd2`
 - Initialized: 2026-11-02
 - Baseline: latest branch tip queried through combined commit-status endpoint; empty status list recorded as **unavailable**, not green/red. Older history was not retroactively audited during setup.
-- Next session: review commits after `33f5280`; all red runs in the reviewed range below have a later green fix run. Older history before the original checkpoint remains outside this audit unless specifically flagged.
+- Next session: review commits after `c265574`; all red runs in the reviewed range below have a later green fix run. Older history before the original checkpoint remains outside this audit unless specifically flagged.
 
 ## Initial baseline
 
@@ -37,7 +37,7 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 ## Reviewed range after initial checkpoint
 
-Checkpoint range: `7cf1ea1` → `a5f2c6f` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
+Checkpoint range: `7cf1ea1` → `c265574` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
 
 | Commit SHA | Subject | Run | CI result | Follow-up |
 |---|---|---:|---|---|
@@ -53,6 +53,7 @@ Checkpoint range: `7cf1ea1` → `a5f2c6f` (2026-11-03). Workflow run results wer
 | `0299ff244ef4c3f82122419d3306ce4baf8b5651` | Reuse Nautilus provider proxy | [#472](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615198509) | green | Full CI passed; 168 tests passed, 0 failed. |
 | `5da4932e42ba45c01bc34fa9748ac3b7e5f507a9` | Handle malformed native provider results | [#473](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615332403) | green | Full CI passed; 169 tests passed, 0 failed. |
 | `33f52808902655346299aeae1b3f5b03ba4fb2c1` | Add focus and keyboard activation for reference layouts | [#474](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615687914) | green | Full CI passed; 172 tests passed, 0 failed. |
+| `c26557468323f01fc7d2d8178260261399f1ecd2` | Render focus indicators on transparent controls | [#475](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615868511) | green | All 23 job steps completed successfully, including lint, syntax, unit tests, benchmark, metadata, and GSettings validation. |
 
 ## Red-cross investigation log
 
@@ -104,4 +105,4 @@ Checkpoint range: `7cf1ea1` → `a5f2c6f` (2026-11-03). Workflow run results wer
 | Date | Reviewed range / checkpoint | Result summary |
 |---|---|---|
 | 2026-11-02 | Initial checkpoint: `7cf1ea1959a16cd1ed1fb62d883e3f57bf02ccba` | Latest commit queried; empty status response recorded as unavailable. Earlier history not retroactively audited. |
-| 2026-11-03 | Reviewed `7cf1ea1` through `33f5280` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#474 green. Latest verified checkpoint: `33f5280`. |
+| 2026-11-03 | Reviewed `7cf1ea1` through `c265574` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `c265574`. |

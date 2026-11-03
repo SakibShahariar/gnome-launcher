@@ -22,8 +22,13 @@ test('extension disable cancels searches before closing and cleaning up shared s
     assert.ok(cancel < cleanupProvider, 'searches must be cancelled before provider cleanup');
 });
 
-test('closed signal reuses the same idempotent cancellation method', () => {
-    assert.ok(dialogSource.includes("this.connect('closed', () => this.cancelPendingSearches());"));
+test('closed signal reuses cancellation and destroys transient app action menus', () => {
+    const closedHandler = dialogSource.match(
+        /this\\.connect\\('closed', \\(\\) => \\{([\\s\\S]*?)\\}\\);/
+    )?.[1] ?? '';
+
+    assert.ok(closedHandler.includes('this.cancelPendingSearches()'));
+    assert.ok(closedHandler.includes('this._destroyAppActionsMenu()'));
     assert.ok(dialogSource.includes('cancelPendingSearches() {'));
     assert.ok(dialogSource.includes('this._layout?._cancelFileSearch?.();'));
 });

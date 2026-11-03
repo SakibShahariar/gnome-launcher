@@ -51,3 +51,11 @@ test('handles empty and malformed provider responses', () => {
     assert.deepEqual(mapNativeFileResults(null, null), []);
     assert.deepEqual(mapNativeFileResults([null, 42, 'not-a-uri'], []), []);
 });
+
+test('handles non-array provider metadata and identifiers defensively', () => {
+    const uri = 'file:///home/user/notes.txt';
+    assert.deepEqual(mapNativeFileResults([uri], {id: uri, name: 'Notes'}), [
+        {uri, name: null},
+    ]);
+    assert.deepEqual(mapNativeFileResults(uri, []), []);
+});

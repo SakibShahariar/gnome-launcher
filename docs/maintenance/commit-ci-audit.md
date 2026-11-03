@@ -24,10 +24,10 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 - Repository: `SakibShahariar/gnome-launcher`
 - Default branch: `main`
-- Checkpoint SHA: `a5f2c6f484a9aaac648c7dc2612744f32212666f`
+- Checkpoint SHA: `0299ff244ef4c3f82122419d3306ce4baf8b5651`
 - Initialized: 2026-11-02
 - Baseline: latest branch tip queried through combined commit-status endpoint; empty status list recorded as **unavailable**, not green/red. Older history was not retroactively audited during setup.
-- Next session: review commits after `a5f2c6f`; all red runs in the reviewed range below have a later green fix run. Older history before the original checkpoint remains outside this audit unless specifically flagged.
+- Next session: review commits after `0299ff2`; all red runs in the reviewed range below have a later green fix run. Older history before the original checkpoint remains outside this audit unless specifically flagged.
 
 ## Initial baseline
 
@@ -50,6 +50,7 @@ Checkpoint range: `7cf1ea1` → `a5f2c6f` (2026-11-03). Workflow run results wer
 | `7ed3b9e131742c7db24f5993c95f1776fd4e254d` | Fix lifecycle callback assertion | [#469](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41614632765) | green | Full CI passed; 164 tests passed, 0 failed. |
 | `fc881a8cb94011cd6e60675ca3b660f21191ce30` | Prefer Nautilus native file search | [#470](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41614982653) | red | ESLint caught an unterminated regular expression caused by over-escaped query/fallback patterns. Corrected in `a5f2c6f`. |
 | `a5f2c6f484a9aaac648c7dc2612744f32212666f` | Preserve query splitting and find escaping | [#471](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615056161) | green | Full CI passed; 168 tests passed, 0 failed. |
+| `0299ff244ef4c3f82122419d3306ce4baf8b5651` | Reuse Nautilus provider proxy | [#472](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615198509) | green | Full CI passed; 168 tests passed, 0 failed. |
 
 ## Red-cross investigation log
 
@@ -101,4 +102,4 @@ Checkpoint range: `7cf1ea1` → `a5f2c6f` (2026-11-03). Workflow run results wer
 | Date | Reviewed range / checkpoint | Result summary |
 |---|---|---|
 | 2026-11-02 | Initial checkpoint: `7cf1ea1959a16cd1ed1fb62d883e3f57bf02ccba` | Latest commit queried; empty status response recorded as unavailable. Earlier history not retroactively audited. |
-| 2026-11-03 | Reviewed `7cf1ea1` through `a5f2c6f` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471. Latest verified checkpoint: `a5f2c6f`. |
+| 2026-11-03 | Reviewed `7cf1ea1` through `0299ff2` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache run #472 green. Latest verified checkpoint: `0299ff2`. |

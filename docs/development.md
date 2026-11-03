@@ -24,6 +24,8 @@ Finder prefixes are registered in `lib/finderPrefix.js`, backed by the pure `lib
 
 The Sidebar, Split Tabs, and Hero Banner layouts share prefix switching through `lib/finderPrefixController.js` and reset common mode state through `lib/modeController.js`. Query-backed modes that share behavior use `lib/modeSearch.js`; clipboard filtering lives in `lib/clipboardSearch.js`, and debounced file-search cancellation is handled by `lib/fileSearchLifecycle.js`. Add or change shared behavior in these helpers rather than copying another branch into each layout. Keep rendering and activation layout-specific where their interactions differ.
 
+File search in `lib/modes.js` first calls Nautilus' `org.gnome.Shell.SearchProvider2` D-Bus interface (`org.gnome.Nautilus`) and maps local `file://` results into the launcher's existing result model. If the provider is unavailable or returns no usable local files, it falls back to the existing bounded `find` subprocess. Both requests share the caller's cancellable; queries are passed as D-Bus string arrays or subprocess arguments, never shell-interpolated. Native results are limited to the same result cap and use the same asynchronous icon enrichment as fallback results.
+
 The GNOME Settings finder uses the `s ` and `settings ` prefixes. Its searchable panel metadata is in `lib/settingsFinder.js`; activation is delegated to `gnome-control-center` through an argument array rather than a shell command string. Update the README finder-prefix list whenever a prefix changes.
 
 ## Development setup

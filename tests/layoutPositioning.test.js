@@ -42,5 +42,5 @@ test('positioning remains declarative across relayouts', () => {
     assert.ok(positionSource.includes('margin-bottom:'));
     assert.ok(positionSource.includes('margin-left:'));
     assert.ok(positionSource.includes('margin-right:'));
-    assert.ok(!positionSource.includes('set_position('));
+    assert.ok(!/\.\s*set_position\s*\(/.test(positionSource));
 });

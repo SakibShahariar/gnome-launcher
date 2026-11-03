@@ -12,6 +12,7 @@ const dependencies = {
     clipboardEnabled: true,
     searchClipboardEntries: (entries, query, enabled) => enabled
         ? entries.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+            .map(item => ({...item, kind: item.kind === 'image' ? 'clipboard-image' : 'clipboard'}))
         : [],
     searchModeResults: (mode, query) => [{kind: mode, name: query}],
 };

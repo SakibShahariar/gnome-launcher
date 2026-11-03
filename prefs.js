@@ -90,7 +90,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         layoutRow.selected = currentIndex === -1 ? 0 : currentIndex;
         layoutGroup.add(layoutRow);
 
-        const defaultModeFinders = FINDERS.list();
+        const defaultModeFinders = FINDERS.list().filter(finder => finder.defaultMode !== false);
         const defaultModeIds = defaultModeFinders.map(finder => finder.mode);
         const defaultModeGroup = new Adw.PreferencesGroup({title: 'Default finder'});
         const defaultModeRow = new Adw.ComboRow({

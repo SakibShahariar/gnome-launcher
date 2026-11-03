@@ -30,7 +30,7 @@ test('launcher applies the configured mode only to layouts with a mode switcher'
 });
 
 test('preferences derive finder labels and saved IDs from the shared registry', () => {
-    assert.ok(prefsSource.includes('const defaultModeFinders = FINDERS.list();'));
+    assert.ok(prefsSource.includes('const defaultModeFinders = FINDERS.list().filter(finder => finder.defaultMode !== false);'));
     assert.ok(prefsSource.includes('defaultModeFinders.map(finder => finder.mode)'));
     assert.ok(prefsSource.includes('defaultModeFinders.map(finder => finder.label)'));
 });

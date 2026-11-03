@@ -28,6 +28,7 @@ test('all 15 layouts show a rest card for an empty application query', () => {
         assert.ok(source.includes("import {makeRestCard} from '../restCard.js';"), `${name} imports the shared rest card`);
         assert.ok(source.includes('if (!this.entry.get_text().trim())'), `${name} handles an empty query`);
         assert.ok(source.includes(`variant: '${variant}'`), `${name} uses the ${variant} rest-card variant`);
+        assert.ok(source.includes('pinnedApps: this.dialog._pinnedApps'), `${name} supplies global favorites to the rest card`);
     }
 });
 
@@ -36,6 +37,10 @@ test('rest-card hints list every registered finder prefix', () => {
     for (const hint of ['> run', '/ files', '; clipboard', '! power', '= calculate', '? web', 'w windows', 'recent', 'emoji', 's settings', 'color'])
         assert.ok(source.includes(hint), `missing finder hint: ${hint}`);
     assert.ok(source.includes('showRecentApps && !compact'));
+    assert.ok(source.includes("text: 'Favorites'"));
+    assert.ok(source.includes('can_focus: true'));
+    assert.ok(source.includes('accessible_name: `Favorite: ${app.get_name()}`'));
+    assert.ok(source.indexOf("text: 'Favorites'") < source.indexOf('if (showRecentApps && !compact)'));
     assert.ok(source.includes('label.clutter_text.set_line_wrap(true)'));
 });
 

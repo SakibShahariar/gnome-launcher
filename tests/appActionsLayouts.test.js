@@ -32,10 +32,19 @@ test('keyboard and right-click paths share one menu implementation', () => {
     assert.ok(menuSource.includes('activateDesktopAction(app, action.name'));
 });
 
-test('right-clicking an app without desktop actions does not launch it accidentally', () => {
-    const noActions = menuSource.indexOf('if (actions.length === 0)');
-    const fallback = menuSource.indexOf('if (!launchIfEmpty)', noActions);
-    const launch = menuSource.indexOf('this.launchSelected()', fallback);
-    assert.ok(noActions >= 0 && fallback > noActions && launch > fallback);
+test('right-click menu offers pinning even when an app has no desktop actions', () => {
+    assert.ok(menuSource.includes('if (actions.length === 0 && launchIfEmpty)'));
+    assert.ok(menuSource.includes('new PopupMenu.PopupMenuItem('));
+    assert.ok(menuSource.includes("pinned ? 'Remove from Favorites' : 'Pin to Favorites'"));
+    assert.ok(menuSource.includes('this._togglePinnedApp(app)'));
+    assert.ok(menuSource.includes('this.launchSelected()'));
     assert.ok(menuSource.includes('launchIfEmpty = false'));
+});
+
+test('pinning persists the global desktop-ID list and refreshes ordered results', () => {
+    assert.ok(dialogSource.includes("settings.get_strv('pinned-app-ids')"));
+    assert.ok(dialogSource.includes("this._settings.set_strv('pinned-app-ids', this._pinnedAppIds)"));
+    assert.ok(dialogSource.includes('orderAppsWithPinnedFirst('));
+    assert.ok(dialogSource.includes('this._pinnedApps = getPinnedApps(this._allApps, this._pinnedAppIds)'));
+    assert.ok(dialogSource.includes('this._rerender()'));
 });

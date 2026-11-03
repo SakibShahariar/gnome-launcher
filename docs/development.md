@@ -62,7 +62,7 @@ After changing extension code, restart the GNOME Shell session as appropriate fo
 
 ## Keyboard behavior
 
-- All layouts support typing to filter apps, arrow-key navigation, `Enter` to launch the selected result, and `Escape` to close.
+- All layouts support typing to filter apps, arrow-key navigation, `Enter` to launch the selected result, `Alt+Enter` to open the selected app's desktop actions (or launch normally when it has none), and `Escape` to close. Desktop actions are read from the app's desktop entry and activated through `Shell.App`; the shortcut applies only in Applications mode.
 - In Hotkey layout, `Ctrl+1` through `Ctrl+9` launch the corresponding visible result. The number row and numeric keypad are both supported; ordinary digits without `Ctrl` remain available for searching.
 - Layouts with mode controls use `Ctrl+1` through `Ctrl+4` to switch modes. This mode shortcut takes precedence over Hotkey layout's direct-launch shortcut only in layouts that expose mode switching.
 - Sidebar, Split Tabs, and Hero Banner expose Run, Window, and Clipboard modes. Window mode honors the `windows-all-workspaces` preference and filters titles as you type. Clipboard mode only tracks clipboard changes when the opt-in `clipboard-history-enabled` setting is enabled; it keeps up to 20 text entries in memory, typing filters them, and activating one copies it back to the clipboard.

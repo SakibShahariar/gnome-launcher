@@ -30,10 +30,23 @@ test('resolves command and power finders', async () => {
     assert.deepEqual(await searchFinderResults('power', '', dependencies), [
         {id: 'lock', name: 'Lock Screen', kind: 'power'},
     ]);
+    assert.deepEqual(await searchFinderResults('power', '', {
+        ...dependencies,
+        powerActions: [
+            ...dependencies.powerActions,
+            {id: 'suspend', name: 'Suspend'},
+            {id: 'restart', name: 'Restart'},
+            {id: 'poweroff', name: 'Power Off'},
+            {id: 'logout', name: 'Log Out'},
+        ],
+    }), [
+        {id: 'lock', name: 'Lock Screen', kind: 'power'},
+        {id: 'suspend', name: 'Suspend', kind: 'power'},
+    ]);
     assert.deepEqual(await searchFinderResults('power', 'restart', {
         ...dependencies,
         powerActions: [...dependencies.powerActions, {id: 'restart', name: 'Restart'}],
-    }), [{id: 'restart', name: 'Restart', kind: 'power'}]);
+    }), []);
 });
 
 test('resolves files and clipboard finders', async () => {

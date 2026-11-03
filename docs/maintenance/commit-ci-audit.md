@@ -24,10 +24,10 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 - Repository: `SakibShahariar/gnome-launcher`
 - Default branch: `main`
-- Checkpoint SHA: `fb3f2cf578c342ec389330b5ebf522a9041e487f`
+- Checkpoint SHA: `e062a002a12fecb9768012a18b0730c17781aa99`
 - Initialized: 2026-11-02
 - Baseline: latest branch tip queried through combined commit-status endpoint; empty status list recorded as **unavailable**, not green/red. Older history was not retroactively audited during setup.
-- Next session: review commits after `fb3f2cf`; run #483 was red from a source-test assertion matching a comment and was corrected by green run #484 (192 tests). Older history before the original checkpoint remains outside this audit unless specifically flagged.
+- Next session: review commits after `e062a00`; run #485 was green (195 tests). The follow-up enforces the Spotlight epic's explicit non-goal: destructive power actions must stay out of Spotlight. Older history before the original checkpoint remains outside this audit unless specifically flagged.
 
 ## Initial baseline
 
@@ -37,7 +37,7 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 ## Reviewed range after initial checkpoint
 
-Checkpoint range: `7cf1ea1` → `fb3f2cf` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
+Checkpoint range: `7cf1ea1` → `e062a00` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
 
 | Commit SHA | Subject | Run | CI result | Follow-up |
 |---|---|---:|---|---|
@@ -113,7 +113,7 @@ Checkpoint range: `7cf1ea1` → `fb3f2cf` (2026-11-03). Workflow run results wer
 | Date | Reviewed range / checkpoint | Result summary |
 |---|---|---|
 | 2026-11-02 | Initial checkpoint: `7cf1ea1959a16cd1ed1fb62d883e3f57bf02ccba` | Latest commit queried; empty status response recorded as unavailable. Earlier history not retroactively audited. |
-| 2026-11-03 | Reviewed `7cf1ea1` through `fb3f2cf` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `fb3f2cf`; run #483 red was resolved by #484, which passed all 192 tests. |
+| 2026-11-03 | Reviewed `7cf1ea1` through `e062a00` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `e062a00`; run #483 red was resolved by #484, and #485 passed all 195 tests. |
 
 
 ### Finder-prefix integration test failures

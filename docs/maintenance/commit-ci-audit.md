@@ -24,10 +24,10 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 - Repository: `SakibShahariar/gnome-launcher`
 - Default branch: `main`
-- Checkpoint SHA: `1af49a68b3c02f942e20700f8bf716002f5f0dc1`
+- Checkpoint SHA: `2b8e408166f1a956790d045b3442ca1662b568a8`
 - Initialized: 2026-11-02
 - Baseline: latest branch tip queried through combined commit-status endpoint; empty status list recorded as **unavailable**, not green/red. Older history was not retroactively audited during setup.
-- Next session: review commits after `1af49a6`; run #476 is red and its test-contract/default-mode failures are being corrected in the next issue #23 commit. Older history before the original checkpoint remains outside this audit unless specifically flagged.
+- Next session: review commits after `2b8e408`; run #476 was red and its test failures were resolved by green runs #477 and #478. Older history before the original checkpoint remains outside this audit unless specifically flagged.
 
 ## Initial baseline
 
@@ -37,7 +37,7 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 ## Reviewed range after initial checkpoint
 
-Checkpoint range: `7cf1ea1` → `1af49a6` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
+Checkpoint range: `7cf1ea1` → `2b8e408` (2026-11-03). Workflow run results were read from GitHub Actions, not inferred from commit-status endpoints.
 
 | Commit SHA | Subject | Run | CI result | Follow-up |
 |---|---|---:|---|---|
@@ -56,7 +56,7 @@ Checkpoint range: `7cf1ea1` → `1af49a6` (2026-11-03). Workflow run results wer
 | `c26557468323f01fc7d2d8178260261399f1ecd2` | Render focus indicators on transparent controls | [#475](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41615868511) | green | All 23 job steps completed successfully, including lint, syntax, unit tests, benchmark, metadata, and GSettings validation. |
 | `1af49a68b3c02f942e20700f8bf716002f5f0dc1` | Make finder prefixes work across layouts | [#476](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618721728) | red | Lint and syntax passed. Unit tests: 173 passed, 2 failed; power was unintentionally accepted as a default finder, and the clipboard test mock returned the raw history type. |
 | `0173f253c574dda727a722f26888f6a0822845ed` | Keep power prefix out of default finder options | [#477](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618965851) | green | Full CI passed; 175 tests passed, 0 failed. All validation steps completed. |
-| `1af49a68b3c02f942e20700f8bf716002f5f0dc1` | Make finder prefixes work across layouts | [#476](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41618721728) | red | Lint and syntax passed. Unit tests: 173 passed, 2 failed. `power` was incorrectly exposed as a default finder, and the new clipboard test mock returned raw history kind `text` instead of normalized `clipboard`; both corrected in the follow-up commit. |
+| `2b8e408166f1a956790d045b3442ca1662b568a8` | Keep selected finder results in view | [#478](https://github.com/SakibShahariar/gnome-launcher/actions/runs/41619161839) | green | Full CI passed; 176 tests passed, 0 failed. All validation steps completed. |
 
 ## Red-cross investigation log
 
@@ -108,7 +108,7 @@ Checkpoint range: `7cf1ea1` → `1af49a6` (2026-11-03). Workflow run results wer
 | Date | Reviewed range / checkpoint | Result summary |
 |---|---|---|
 | 2026-11-02 | Initial checkpoint: `7cf1ea1959a16cd1ed1fb62d883e3f57bf02ccba` | Latest commit queried; empty status response recorded as unavailable. Earlier history not retroactively audited. |
-| 2026-11-03 | Reviewed `7cf1ea1` through `c265574` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `0173f25`; run #476 red was resolved by #477. |
+| 2026-11-03 | Reviewed `7cf1ea1` through `2b8e408` | Four setup/documentation commits green; desktop-actions runs #467/#468 red and resolved by #469; native-search run #470 red and resolved by #471; proxy-cache, malformed-response, and accessibility runs #472–#475 green. Latest verified checkpoint: `2b8e408`; run #476 red was resolved by #477 and #478 passed. |
 
 
 ### Finder-prefix integration test failures

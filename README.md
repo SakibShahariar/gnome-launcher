@@ -18,9 +18,6 @@ Choose from **15 layouts**, search and launch apps, switch between useful finder
 
 Pick the layout that fits your workflow in Preferences.
 
-<details>
-<summary>Explore all 15 layouts</summary>
-
 | Layout | Preview |
 |---|---|
 | Grid | ![Grid](screenshots/grid.png) |
@@ -39,7 +36,6 @@ Pick the layout that fits your workflow in Preferences.
 | Hero Banner | ![Hero Banner](screenshots/heroBanner.png) |
 | Notch | ![Notch](screenshots/notch.png) |
 
-</details>
 
 ## Install
 

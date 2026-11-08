@@ -1,100 +1,100 @@
 # GNOME Launcher
 
-A customizable GNOME Shell app launcher with **15 layouts**, keyboard-driven navigation, native GNOME app search, and Matugen-compatible theming.
+A customizable, keyboard-first app launcher for GNOME Shell.
 
-Built with GNOME Shell's native `ModalDialog`, it works on stock GNOME under Wayland and X11.
+Choose from **15 layouts**, search and launch apps, switch between useful finders, pin favorites, and personalize the look with your own colors and wallpapers.
 
-## Screenshots
+![GNOME Launcher — Grid layout](screenshots/grid.png)
 
-All 15 layouts:
+## What you can do
 
-| | | |
-|---|---|---|
-| ![Grid](screenshots/grid.png)<br>`grid` | ![List](screenshots/list.png)<br>`list` | ![Hotkey](screenshots/hotkey.png)<br>`hotkey` |
-| ![Sidebar](screenshots/sidebar.png)<br>`sidebar` | ![Split preview](screenshots/splitPreview.png)<br>`split-preview` | ![Dock](screenshots/dock.png)<br>`dock` |
-| ![Fullscreen](screenshots/fullscreen.png)<br>`fullscreen` | ![Top dropdown](screenshots/topDropdown.png)<br>`top-dropdown` | ![Corner](screenshots/corner.png)<br>`corner` |
-| ![Full edge](screenshots/fullEdge.png)<br>`full-edge` | ![Adaptive width](screenshots/adaptiveWidth.png)<br>`adaptive-width` | ![KRunner](screenshots/krunner.png)<br>`krunner` |
-| ![Split tabs](screenshots/splitTabs.png)<br>`split-tabs` | ![Hero banner](screenshots/heroBanner.png)<br>`hero-banner` | ![Notch](screenshots/notch.png)<br>`notch` |
+- **Make it yours:** 15 layouts, from a classic grid and list to dock, sidebar, KRunner-style, fullscreen, and notch designs.
+- **Find more than apps:** Search files, windows, clipboard history, recent documents, emoji, GNOME Settings, and the web. Calculate expressions or run commands without leaving the launcher.
+- **Move fast:** Keyboard navigation, desktop actions, pinned apps, and optional number-key launching.
+- **Personalize the look:** Matugen-compatible Material 3 colors, per-layout appearance settings, and custom wallpapers.
+- **Stay in control:** Clipboard history is optional and disabled by default.
 
-## Features
+## Layouts
 
-- **15 layouts** to choose from, including grid, list, dock, fullscreen, sidebar, KRunner-style, and notch.
-- **Keyboard-first workflow:** open with `Ctrl+Alt+Space`, type to search, navigate with arrow keys, press `Enter` to launch, `Alt+Enter` to open the selected app's desktop actions when available (otherwise it launches normally), or `Escape` to close. Right-click an app result to open its desktop actions when available. In Hotkey layout, use `Ctrl+1`–`Ctrl+9` (number row or numeric keypad) to launch the corresponding visible result; plain digits remain searchable.
-- **Application search** using GNOME's app-search provider with fuzzy matching as a fallback.
-- **Configurable default finder** for Sidebar, Split Tabs, and Hero Banner. Choose Applications, Run, Files, Clipboard, Windows, Calculator, Web, Recent, Emoji, or GNOME Settings in Preferences; Applications remains the default. Other layouts continue to open in their normal app-search view.
-- **Run and window modes** in Sidebar, Split Tabs, and Hero Banner. In Run mode, press `Enter` to launch normally or `Ctrl+Enter` to launch in an available terminal emulator for interactive CLI/TUI programs. Configure a terminal command template in Preferences using one standalone `{command}` placeholder (for example, `ptyxis -- {command}`), or leave it empty for automatic detection. Window mode respects the **Search all workspaces** preference. Run commands are parsed into arguments and launched directly without a shell; shell operators, pipes, redirects, globbing, and variable expansion are not interpreted. Quote arguments containing spaces as needed. Invalid quoting produces an error instead of launching.
-- **Finder prefixes** in Sidebar, Split Tabs, and Hero Banner: `> command` for Run, `/ name` for files, `w name` for windows, `; text` for clipboard history, `= expression` for arithmetic and offline unit conversions, `? query` for web search, `recent query` for recent documents, `emoji query` to search emoji, and `s name` or `settings name` to find GNOME Settings panels. Use `color` to pick a screen color and copy its hex value.
-- **Matugen-compatible theming** using Material 3 color roles from a CSS file.
-- **Per-layout appearance overrides** for icon size and background opacity. Each layout can override either value independently; unset values inherit the global Appearance settings.
-- **Custom wallpapers** for layouts that display a banner or split panel.
-- **Optional clipboard history** with an explicit opt-in setting; collection is off by default. Search and re-copy recent text in Sidebar, Split Tabs, and Hero Banner clipboard mode. Each text entry also has an explicit **QR** action that copies a generated PNG image to the clipboard using the optional `qrencode` utility; if it is missing, the launcher explains how to enable the feature.
-- **Native GNOME Shell overlay** using `ModalDialog`.
+Pick the layout that fits your workflow in Preferences.
 
-## Installation
+<details>
+<summary>Explore all 15 layouts</summary>
 
-Clone or download this repository, then run these commands from the project directory:
+| Layout | Preview |
+|---|---|
+| Grid | ![Grid](screenshots/grid.png) |
+| List | ![List](screenshots/list.png) |
+| Hotkey | ![Hotkey](screenshots/hotkey.png) |
+| Sidebar | ![Sidebar](screenshots/sidebar.png) |
+| Split Preview | ![Split Preview](screenshots/splitPreview.png) |
+| Dock | ![Dock](screenshots/dock.png) |
+| Fullscreen | ![Fullscreen](screenshots/fullscreen.png) |
+| Top Dropdown | ![Top Dropdown](screenshots/topDropdown.png) |
+| Corner | ![Corner](screenshots/corner.png) |
+| Full Edge | ![Full Edge](screenshots/fullEdge.png) |
+| Adaptive Width | ![Adaptive Width](screenshots/adaptiveWidth.png) |
+| KRunner | ![KRunner](screenshots/krunner.png) |
+| Split Tabs | ![Split Tabs](screenshots/splitTabs.png) |
+| Hero Banner | ![Hero Banner](screenshots/heroBanner.png) |
+| Notch | ![Notch](screenshots/notch.png) |
+
+</details>
+
+## Install
+
+Install the extension from a local clone:
 
 ```bash
+git clone https://github.com/SakibShahariar/gnome-launcher.git
+cd gnome-launcher
 glib-compile-schemas schemas/
-
 mkdir -p ~/.local/share/gnome-shell/extensions
-ln -s "$(pwd)" ~/.local/share/gnome-shell/extensions/gnome-launcher@sakib.dev
-```
-
-Log out and back in so GNOME Shell detects the extension. Then enable it:
-
-```bash
+ln -s "$PWD" ~/.local/share/gnome-shell/extensions/gnome-launcher@sakib.dev
 gnome-extensions enable gnome-launcher@sakib.dev
 ```
 
-The default shortcut is **Ctrl+Alt+Space**. Open the preferences window to choose a layout:
+Log out and back in if GNOME Shell does not detect the extension.
 
-```bash
-gnome-extensions prefs gnome-launcher@sakib.dev
-```
+## Get started
 
-You can also select a layout from the terminal:
+- Open the launcher with **Ctrl + Alt + Space**.
+- Type to search for an application.
+- Use the arrow keys to move, **Enter** to launch, and **Esc** to close.
+- Press **Alt + Enter** or right-click a result to open its desktop actions when available.
+- Open Preferences to choose a layout, adjust its appearance, and configure finders.
 
-```bash
-gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher layout "grid"
-```
+In the Hotkey layout, **Ctrl + 1–9** launches the matching visible result.
 
-Available layouts: `list`, `grid`, `hotkey`, `sidebar`, `split-preview`, `dock`, `fullscreen`, `top-dropdown`, `corner`, `full-edge`, `adaptive-width`, `krunner`, `split-tabs`, `hero-banner`, and `notch`.
+## Finders
 
-## Finder prefixes
+In Sidebar, Split Tabs, and Hero Banner, use a prefix to search a specific source:
 
-Type normally to search applications. Prefix the query to use a finder: `> command` runs a command, `/ file` searches files, `; text` searches clipboard history, `= expression` calculates, `? query` searches the web, `recent query` searches recent documents, `emoji query` searches emoji, `w query` switches windows, and `s query` or `settings query` searches GNOME Settings panels; `color` opens the desktop's screen color picker and copies the selected hex value. Screen color picking depends on the desktop screenshot portal. Settings panel availability depends on the installed GNOME Control Center version.
+| Prefix | Finder |
+|---|---|
+| `> command` | Run a command |
+| `/ file` | Files |
+| `w name` | Open windows |
+| `;` | Clipboard history |
+| `= expression` | Calculator |
+| `? query` | Web search |
+| `recent query` | Recent documents |
+| `emoji query` | Emoji |
+| `s name` or `settings name` | GNOME Settings |
 
-Recent applications on the empty-query rest card come from GNOME Shell's usage data; the extension does not maintain a separate app-usage history.
+Type `color` to open the screen color picker and copy a color's hex value.
 
-## Clipboard history
+## Personalization
 
-Clipboard history is **off by default**. To enable it, open the extension preferences and turn on **General → Privacy → Clipboard history**. While enabled, the extension listens for clipboard-owner changes and keeps up to 20 recent text and image entries **in memory only**; it does not write them to disk. Image entries support common PNG, JPEG, WebP, GIF, and BMP clipboard formats and show a small thumbnail in Sidebar, Split Tabs, and Hero Banner. Original image payloads are capped at 8 MiB total; older entries remain visible as previews but cannot be restored after their original bytes are released. A one-second polling fallback is used only if change-signal setup is unavailable. Clipboard contents can include passwords, authentication codes, private messages, or sensitive images, so enable this only if you want the feature. Use **Clear clipboard history** in Preferences to remove retained entries without disabling collection. Turning the feature off immediately clears retained text and image data. Disabling the extension also stops tracking and clears the history.
+- **Colors:** In Preferences → Theming, select a CSS file with Material 3 color roles. Leave it empty to use the built-in theme.
+- **Appearance:** Set global icon size and background opacity, or override them for individual layouts.
+- **Wallpaper:** Set a custom wallpaper for layouts with a banner or split panel.
 
-## Theming
+## Privacy
 
-In the extension preferences, open **Theming → Theme CSS file** and select a CSS file containing Material 3 color roles, for example:
+Clipboard history is **off by default**. When enabled, up to 20 recent text and image entries are kept in memory only; they are not written to disk. Clipboard contents may be sensitive, so enable this feature only if you want the launcher to retain them temporarily. Turning it off or disabling the extension clears the history.
 
-```css
---surface: #1b1b1f;
---primary: #d0bcff;
-```
-
-Or set the path directly:
-
-```bash
-gsettings --schemadir schemas set org.gnome.shell.extensions.gnome-launcher theme-file-path "/path/to/colors.css"
-```
-
-The parsed theme is cached between opens and refreshed when the configured file's metadata changes. Leave the path empty to use the built-in purple theme.
-
-Global icon size and background opacity are configured under **Appearance**. To customize a single layout without affecting the others, use **Layout-specific appearance** on the same page, select a layout, and adjust either override. Use **Reset layout overrides** to return both values to the global defaults for that layout.
-
-Layouts with a banner or split panel can also use a custom wallpaper. Set **Wallpaper path** in preferences, or configure the `wallpaper-path` GSettings key. When left empty, the extension first uses GNOME's configured desktop wallpaper, then checks legacy fallback paths.
-
-## Uninstallation
-
-Disable the extension and remove its symlink:
+## Uninstall
 
 ```bash
 gnome-extensions disable gnome-launcher@sakib.dev
@@ -104,8 +104,8 @@ dconf reset -f /org/gnome/shell/extensions/gnome-launcher/
 
 ## Development
 
-See [Development notes](docs/development.md) for the project structure and instructions for adding a layout.
+See the [Development Guide](docs/development.md) for project structure, setup, and contribution notes.
 
 ## License
 
-GPL-2.0-or-later. See [LICENSE](LICENSE).
+[GPL-2.0-or-later](LICENSE).

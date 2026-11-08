@@ -2,17 +2,16 @@
 
 A customizable, keyboard-first app launcher for GNOME Shell.
 
-Choose from **15 layouts**, search and launch apps, switch between useful finders, pin favorites, and personalize the look with your own colors and wallpapers.
+Choose from **15 layouts**, search beyond your installed apps, and tailor the launcher to your workflow.
 
 ![GNOME Launcher — Grid layout](screenshots/grid.png)
 
-## What you can do
+## Features
 
-- **Make it yours:** 15 layouts, from a classic grid and list to dock, sidebar, KRunner-style, fullscreen, and notch designs.
-- **Find more than apps:** Search files, windows, clipboard history, recent documents, emoji, GNOME Settings, and the web. Calculate expressions or run commands without leaving the launcher.
-- **Move fast:** Keyboard navigation, desktop actions, pinned apps, and optional number-key launching.
-- **Personalize the look:** Matugen-compatible Material 3 colors, per-layout appearance settings, and custom wallpapers.
-- **Stay in control:** Clipboard history is optional and disabled by default.
+- **15 layouts:** Grid, list, dock, sidebar, fullscreen, KRunner-style, and more.
+- **Powerful search:** Find apps, files, windows, clipboard items, recent documents, emoji, settings, and web results. Calculate or run commands too.
+- **Fast workflow:** Keyboard navigation, favorites, desktop actions, and optional number-key shortcuts.
+- **Custom appearance:** Material 3 colors, per-layout settings, and custom wallpapers.
 
 ## Layouts
 
@@ -35,7 +34,6 @@ Pick the layout that fits your workflow in Preferences.
 | Split Tabs | ![Split Tabs](screenshots/splitTabs.png) |
 | Hero Banner | ![Hero Banner](screenshots/heroBanner.png) |
 | Notch | ![Notch](screenshots/notch.png) |
-
 
 ## Install
 

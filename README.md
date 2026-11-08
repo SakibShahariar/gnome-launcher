@@ -8,10 +8,13 @@ Choose from **15 layouts**, search beyond your installed apps, and tailor the la
 
 ## Features
 
-- **15 layouts:** Grid, list, dock, sidebar, fullscreen, KRunner-style, and more.
-- **Powerful search:** Find apps, files, windows, clipboard items, recent documents, emoji, settings, and web results. Calculate or run commands too.
-- **Fast workflow:** Keyboard navigation, favorites, desktop actions, and optional number-key shortcuts.
-- **Custom appearance:** Material 3 colors, per-layout settings, and custom wallpapers.
+- **15 layouts:** Grid, list, dock, fullscreen, sidebar, KRunner-style, notch, and more.
+- **Keyboard-first:** Fast app search, fuzzy matching, desktop actions, and optional Ctrl+1–9 shortcuts in Hotkey layout.
+- **Flexible finders:** Search apps, files, windows, clipboard, recent documents, emoji, settings, and the web; calculate expressions or run commands.
+- **Configurable search:** Choose a default finder and use prefixes to switch sources in Sidebar, Split Tabs, and Hero Banner. Run commands directly or in a terminal.
+- **Personalized design:** Matugen-compatible Material 3 theming, per-layout icon and opacity overrides, and custom wallpapers.
+- **Optional clipboard tools:** In-memory history is off by default; search, re-copy, or create QR images from text entries.
+- **Native GNOME feel:** Uses GNOME Shell's ModalDialog overlay.
 
 ## Layouts
 

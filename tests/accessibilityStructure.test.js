@@ -50,6 +50,16 @@ test('mode controls in reference layouts are focusable, named, and keyboard-acti
     }
 });
 
+test('St.Bin mode controls avoid unsupported tooltip properties', () => {
+    for (const path of [
+        '../lib/layouts/sidebar.js',
+        '../lib/layouts/heroBanner.js',
+    ]) {
+        assert.doesNotMatch(read(path), /tooltip_text\s*:/,
+            `${path} uses St.Bin controls, which do not support tooltip_text`);
+    }
+});
+
 test('shared stylesheet draws focus and selected-result indicators', () => {
     const css = read('../stylesheet.css');
     assert.match(css, /\.launcher-search-entry:focus/);

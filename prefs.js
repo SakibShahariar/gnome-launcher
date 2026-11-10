@@ -26,6 +26,12 @@ const MODIFIER_KEYVALS = new Set([
 
 const DEFAULT_SHORTCUT = '<Control><Alt>space';
 
+const LAYOUT_SELECTOR_CSS = `
+.launcher-layout-selector button {
+    min-width: 16rem;
+}
+`;
+
 function expandHomePath(path) {
     const trimmed = path.trim();
     if (trimmed === '~')
@@ -67,6 +73,12 @@ function commitPathOnFocusLeave(row, callback) {
 export default class GnomeLauncherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
+        const selectorCss = new Gtk.CssProvider();
+        selectorCss.load_from_string(LAYOUT_SELECTOR_CSS);
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(), selectorCss,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        );
 
         // -- General page: behavior, shortcut, and finders -----------------
 
@@ -93,6 +105,9 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             subtitle: `${LAYOUT_NAMES.length} layouts available. Changes apply the next time you open the launcher.`,
             model: Gtk.StringList.new(LAYOUT_NAMES),
         });
+        // ComboRow's selected value is an internal button. Style that button
+        // directly so its collapsed state has a comfortably sized target.
+        layoutRow.add_css_class('launcher-layout-selector');
         const current = settings.get_string('layout');
         const currentIndex = LAYOUT_NAMES.indexOf(current);
         layoutRow.selected = currentIndex === -1 ? 0 : currentIndex;

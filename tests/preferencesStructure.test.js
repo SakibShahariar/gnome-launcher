@@ -10,4 +10,6 @@ test('preferences keep the large layout gallery on a dedicated page', () => {
     assert.match(source, /layoutsPage\.add\(layoutGroup\)/);
     assert.match(source, /layoutsPage\.add\(galleryGroup\)/);
     assert.match(source, /window\.add\(generalPage\);\s*window\.add\(layoutsPage\);/);
+    assert.match(source, /layoutRow\.add_css_class\('launcher-layout-selector'\)/);
+    assert.match(source, /\.launcher-layout-selector button[\s\S]*min-width: 16rem/);
 });

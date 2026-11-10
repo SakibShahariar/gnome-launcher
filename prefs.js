@@ -68,7 +68,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
 
-        // -- General page: layout + keybinding -----------------------------
+        // -- General page: behavior, shortcut, and finders -----------------
 
         const generalPage = new Adw.PreferencesPage({
             title: 'General',
@@ -76,6 +76,14 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
 
         const page = generalPage;
+
+        // Keep visual layout selection separate from routine launcher
+        // settings. The gallery contains fifteen previews and otherwise makes
+        // the General page unnecessarily long.
+        const layoutsPage = new Adw.PreferencesPage({
+            title: 'Layouts',
+            icon_name: 'view-grid-symbolic',
+        });
 
         // -- Layout ------------------------------------------------------
 
@@ -107,7 +115,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         defaultModeGroup.add(defaultModeRow);
         page.add(defaultModeGroup);
-        page.add(layoutGroup);
+        layoutsPage.add(layoutGroup);
 
         // -- Layout gallery ------------------------------------------------
         // Keep the dropdown for quick selection while also offering visual previews.
@@ -175,7 +183,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             updateGallerySelection();
         });
         updateGallerySelection();
-        page.add(galleryGroup);
+        layoutsPage.add(galleryGroup);
 
         // -- Keybinding ----------------------------------------------------
 
@@ -332,6 +340,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         page.add(terminalGroup);
 
         window.add(generalPage);
+        window.add(layoutsPage);
 
         // -- Appearance page: icon scale + transparency + theming ---------
 

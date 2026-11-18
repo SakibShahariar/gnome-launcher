@@ -85,6 +85,7 @@ Type `color` to open the screen color picker and copy a color's hex value.
 
 - **Startup:** In Preferences → General → Startup, turn off "Show initial panel" to replace the greeting/favorites/hints panel with a short list of pinned and recently used apps.
 - **Modes:** In Preferences → General → Visible modes, choose which modes appear in Sidebar, Split Tabs, and Hero Banner. Applications is always kept as the fallback.
+- **Search focus line:** In Preferences → Appearance, turn off "Search focus line" to remove the accent underline under the search field.
 - **Colors:** In Preferences → Theming, select a CSS file with Material 3 color roles. Leave it empty to use the built-in theme.
 - **Appearance:** Set global icon size and background opacity, or override them for individual layouts.
 - **Wallpaper:** Set a custom wallpaper for layouts with a banner or split panel.

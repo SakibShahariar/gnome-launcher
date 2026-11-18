@@ -485,6 +485,21 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         plateRow.add_suffix(plateSwitch);
         plateRow.activatable_widget = plateSwitch;
         sizeGroup.add(plateRow);
+
+        const focusLineRow = new Adw.ActionRow({
+            title: 'Search focus line',
+            subtitle: 'Accent underline under the search field when focused',
+        });
+        const focusLineSwitch = new Gtk.Switch({
+            active: settings.get_boolean('show-search-focus-line'),
+            valign: Gtk.Align.CENTER,
+        });
+        focusLineSwitch.connect('notify::active', () => {
+            settings.set_boolean('show-search-focus-line', focusLineSwitch.active);
+        });
+        focusLineRow.add_suffix(focusLineSwitch);
+        focusLineRow.activatable_widget = focusLineSwitch;
+        sizeGroup.add(focusLineRow);
         appearancePage.add(sizeGroup);
 
         // -- Per-layout appearance overrides -----------------------------

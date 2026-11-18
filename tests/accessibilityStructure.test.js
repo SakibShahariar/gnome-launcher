@@ -71,3 +71,18 @@ test('shared stylesheet draws focus and selected-result indicators', () => {
     assert.doesNotMatch(css, /box-shadow:[^;]*currentColor/);
     assert.match(css, /box-shadow:[^;]*-st-accent-color/);
 });
+
+test('search focus line can be hidden from Preferences', () => {
+    const schema = read('../schemas/org.gnome.shell.extensions.gnome-launcher.gschema.xml');
+    assert.match(schema, /<key name="show-search-focus-line" type="b">\s*<default>true<\/default>/);
+
+    const prefs = read('../prefs.js');
+    assert.match(prefs, /title: 'Search focus line'/);
+    assert.match(prefs, /settings\.set_boolean\('show-search-focus-line', focusLineSwitch\.active\)/);
+
+    const dialog = read('../lib/launcherDialog.js');
+    assert.match(dialog, /add_style_class_name\('launcher-no-focus-line'\)/);
+
+    const css = read('../stylesheet.css');
+    assert.match(css, /\.launcher-no-focus-line \.launcher-search-entry:focus \{\s*box-shadow: none !important;/);
+});

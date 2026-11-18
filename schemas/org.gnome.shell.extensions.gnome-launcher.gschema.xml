@@ -36,6 +36,14 @@
         with an empty search. Turn off to show favorites and recent apps instead.
       </description>
     </key>
+    <key name="show-search-focus-line" type="b">
+      <default>true</default>
+      <summary>Show the search focus line</summary>
+      <description>
+        Draw a slim accent-colored underline beneath the search field while it
+        has keyboard focus. Disable for a cleaner, indicator-free search field.
+      </description>
+    </key>
     <key name="visible-modes" type="as">
       <default>['apps', 'run', 'files', 'window', 'clipboard', 'calculator', 'web', 'recent', 'emoji', 'settings', 'power']</default>
       <summary>Modes shown in multi-mode layouts</summary>

@@ -567,6 +567,11 @@
     box-shadow: inset 0 -2px 0 -st-accent-color !important;
 }
 
+/* Preference to drop the underline while keeping the focusable entry. */
+.launcher-no-focus-line .launcher-search-entry:focus {
+    box-shadow: none !important;
+}
+
 .launcher-result-selected {
     box-shadow: inset 0 0 0 2px -st-accent-color;
 }

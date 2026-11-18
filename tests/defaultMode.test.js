@@ -26,11 +26,11 @@ test('unknown and layout-specific modes safely fall back to applications', () =>
 test('launcher applies the configured mode only to layouts with a mode switcher', () => {
     assert.ok(dialogSource.includes("typeof this._layout._switchMode === 'function'"));
     assert.ok(dialogSource.includes("resolveDefaultMode(settings.get_string('default-mode'))"));
-    assert.ok(dialogSource.includes("if (defaultMode !== 'apps')"));
+    assert.ok(dialogSource.includes("if (defaultMode !== 'apps' && theme.visibleModes.includes(defaultMode))"));
 });
 
 test('preferences derive finder labels and saved IDs from the shared registry', () => {
-    assert.ok(prefsSource.includes('const defaultModeFinders = FINDERS.list().filter(finder => finder.defaultMode !== false);'));
+    assert.match(prefsSource, /const defaultModeFinders = FINDERS\.list\(\)\.filter\(finder =>[\s\S]*?finder\.defaultMode !== false &&[\s\S]*?visibleModes\.includes\(finder\.mode\)/);
     assert.ok(prefsSource.includes('defaultModeFinders.map(finder => finder.mode)'));
     assert.ok(prefsSource.includes('defaultModeFinders.map(finder => finder.label)'));
 });

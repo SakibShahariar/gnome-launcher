@@ -14,6 +14,7 @@ import {FINDERS} from './lib/finderPrefix.js';
 import {LAYOUT_GALLERY} from './lib/layoutGallery.js';
 import {setLayoutAppearanceOverride} from './lib/layoutAppearance.js';
 import {isValidTerminalTemplateArgs} from './lib/terminalTemplate.js';
+import {MODE_OPTIONS, normalizeVisibleModes} from './lib/modeVisibility.js';
 
 const MODIFIER_KEYVALS = new Set([
     Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,
@@ -88,6 +89,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
 
         const page = generalPage;
+        const visibleModes = normalizeVisibleModes(settings.get_strv('visible-modes'));
 
         // Keep visual layout selection separate from routine launcher
         // settings. The gallery contains fifteen previews and otherwise makes
@@ -113,7 +115,9 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         layoutRow.selected = currentIndex === -1 ? 0 : currentIndex;
         layoutGroup.add(layoutRow);
 
-        const defaultModeFinders = FINDERS.list().filter(finder => finder.defaultMode !== false);
+        const defaultModeFinders = FINDERS.list().filter(finder =>
+            finder.defaultMode !== false &&
+            (visibleModes.includes(finder.mode) || finder.mode === 'apps'));
         const defaultModeIds = defaultModeFinders.map(finder => finder.mode);
         const defaultModeGroup = new Adw.PreferencesGroup({title: 'Default finder'});
         const defaultModeRow = new Adw.ComboRow({
@@ -136,7 +140,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const startupGroup = new Adw.PreferencesGroup({title: 'Startup'});
         const initialPanelRow = new Adw.ActionRow({
             title: 'Show initial panel',
-            subtitle: 'Greeting, favorites, and finder hints before you type',
+            subtitle: 'Greeting, favorites, and hints; off shows favorites and recent apps',
         });
         const initialPanelSwitch = new Gtk.Switch({
             active: settings.get_boolean('show-initial-panel'),
@@ -149,6 +153,68 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         initialPanelRow.activatable_widget = initialPanelSwitch;
         startupGroup.add(initialPanelRow);
         page.add(startupGroup);
+
+        // -- Visible modes -------------------------------------------------
+
+        const modesGroup = new Adw.PreferencesGroup({
+            title: 'Visible modes',
+            description: 'Choose which modes appear in Sidebar, Split Tabs, and Hero Banner. Changes apply the next time you open the launcher.',
+        });
+        const modeChecks = new Map();
+        for (const {id, label} of MODE_OPTIONS) {
+            const row = new Adw.ActionRow({
+                title: label,
+                subtitle: id === 'apps' ? 'Always available as the fallback' : null,
+            });
+            const check = new Gtk.CheckButton({
+                active: visibleModes.includes(id),
+                valign: Gtk.Align.CENTER,
+            });
+            if (id === 'apps')
+                check.set_sensitive(false);
+            check.connect('toggled', () => {
+                let ids = normalizeVisibleModes(settings.get_strv('visible-modes'));
+                if (check.active) {
+                    if (!ids.includes(id))
+                        ids.push(id);
+                } else {
+                    ids = ids.filter(value => value !== id);
+                }
+                settings.set_strv('visible-modes', normalizeVisibleModes(ids));
+            });
+            row.add_suffix(check);
+            if (id !== 'apps')
+                row.activatable_widget = check;
+            modesGroup.add(row);
+            modeChecks.set(id, check);
+        }
+        const refreshDefaultModes = () => {
+            const ids = normalizeVisibleModes(settings.get_strv('visible-modes'));
+            const finders = FINDERS.list().filter(finder =>
+                finder.defaultMode !== false &&
+                (ids.includes(finder.mode) || finder.mode === 'apps'));
+            defaultModeIds.splice(0, defaultModeIds.length, ...finders.map(f => f.mode));
+            defaultModeRow.model = Gtk.StringList.new(finders.map(f => f.label));
+            let index = defaultModeIds.indexOf(settings.get_string('default-mode'));
+            if (index < 0) {
+                settings.set_string('default-mode', 'apps');
+                index = defaultModeIds.indexOf('apps');
+            }
+            defaultModeRow.selected = index;
+        };
+        const modesSettingsSignalId = settings.connect('changed::visible-modes', () => {
+            const ids = normalizeVisibleModes(settings.get_strv('visible-modes'));
+            for (const [id, check] of modeChecks) {
+                if (check.active !== ids.includes(id))
+                    check.active = ids.includes(id);
+            }
+            refreshDefaultModes();
+        });
+        window.connect('close-request', () => {
+            settings.disconnect(modesSettingsSignalId);
+            return false;
+        });
+        page.add(modesGroup);
 
         layoutsPage.add(layoutGroup);
 

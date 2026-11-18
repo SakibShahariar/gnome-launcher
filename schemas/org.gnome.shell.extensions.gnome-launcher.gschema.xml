@@ -33,7 +33,15 @@
       <summary>Show the initial panel</summary>
       <description>
         Show the greeting, favorites, and finder hints when the launcher opens
-        with an empty search. Turn off to open with just the search field.
+        with an empty search. Turn off to show favorites and recent apps instead.
+      </description>
+    </key>
+    <key name="visible-modes" type="as">
+      <default>['apps', 'run', 'files', 'window', 'clipboard', 'calculator', 'web', 'recent', 'emoji', 'settings', 'power']</default>
+      <summary>Modes shown in multi-mode layouts</summary>
+      <description>
+        Which mode switchers are visible in Sidebar, Split Tabs, and Hero Banner.
+        Applications is always available as the fallback.
       </description>
     </key>
     <key name="pinned-app-ids" type="as">

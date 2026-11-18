@@ -67,4 +67,7 @@ test('shared stylesheet draws focus and selected-result indicators', () => {
     assert.match(css, /\.launcher-sidebar-rail-icon:focus/);
     assert.match(css, /\.launcher-hero-mode-circle:focus/);
     assert.match(css, /\.launcher-split-tabs-pill:focus/);
+    // St 51 cannot parse currentColor in shadows and silently paints black.
+    assert.doesNotMatch(css, /box-shadow:[^;]*currentColor/);
+    assert.match(css, /box-shadow:[^;]*-st-accent-color/);
 });

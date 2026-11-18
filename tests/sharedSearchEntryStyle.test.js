@@ -34,7 +34,11 @@ test('shared card frame owns common border declarations', () => {
 });
 
 test('shared entry CSS owns background and border reset declarations once', () => {
-    assert.ok(css.includes('.launcher-search-entry {\n    background: none;\n    border: none;\n}'));
+    const shared = css.match(/\.launcher-search-entry,[\s\S]*?\n\}/)?.[0] ?? '';
+    assert.ok(shared.includes('background: none !important;'), 'shared entry must clear theme backgrounds');
+    assert.ok(shared.includes('border: none !important;'), 'shared entry must clear theme borders');
+    assert.ok(shared.includes('box-shadow: none !important;'), 'shared entry must clear theme shadows');
+    assert.ok(!css.includes('rgba(0, 0, 0, 0.01)'), 'focus wash must not be a dark shade');
     const rules = css.match(/\.launcher-[a-z-]+-entry \{[^}]*\}/g) ?? [];
     for (const rule of rules.filter(rule => !rule.startsWith('.launcher-search-entry'))) {
         assert.ok(!rule.includes('background: none;'), rule);

@@ -33,10 +33,16 @@
     border-style: solid;
 }
 
-/* Shared search-entry structure; layout-specific typography remains below. */
-.launcher-search-entry {
-    background: none;
-    border: none;
+/* Shared search-entry structure; layout-specific typography remains below.
+ * Shell themes style StEntry with their own dark surface and !important
+ * borders/shadows. Override those in every state so no dark pill is painted
+ * behind the search text in any layout. */
+.launcher-search-entry,
+.launcher-search-entry:hover,
+.launcher-search-entry:focus {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 /* Shared empty-results treatment; message color follows the active theme. */
@@ -551,19 +557,23 @@
 }
 
 
-/* Keyboard focus: keep indicators visible without changing actor geometry. */
+/* Keyboard focus: keep indicators visible without changing actor geometry.
+ * St 51 does not understand currentColor in box-shadow and silently falls
+ * back to opaque black, which paints a dark band under the search text.
+ * Use St's supported theme accent color instead. The near-transparent
+ * background is still needed for St to paint the inset shadow at all. */
 .launcher-search-entry:focus {
-    background-color: rgba(0, 0, 0, 0.01);
-    box-shadow: inset 0 -2px 0 currentColor;
+    background-color: rgba(255, 255, 255, 0.01) !important;
+    box-shadow: inset 0 -2px 0 -st-accent-color !important;
 }
 
 .launcher-result-selected {
-    box-shadow: inset 0 0 0 2px currentColor;
+    box-shadow: inset 0 0 0 2px -st-accent-color;
 }
 
 .launcher-sidebar-rail-icon:focus,
 .launcher-hero-mode-circle:focus,
 .launcher-split-tabs-pill:focus {
-    background-color: rgba(0, 0, 0, 0.01);
-    box-shadow: inset 0 0 0 2px currentColor;
+    background-color: rgba(255, 255, 255, 0.01);
+    box-shadow: inset 0 0 0 2px -st-accent-color;
 }

@@ -24,8 +24,9 @@ test('dialog passes the setting to layouts', () => {
     assert.match(source, /theme\.showInitialPanel = settings\.get_boolean\('show-initial-panel'\)/);
 });
 
-test('shared rest card hides itself when the setting is off', () => {
+test('shared rest card shows favorites and recent apps when the setting is off', () => {
     const source = read('../lib/restCard.js');
     assert.match(source, /theme\.showInitialPanel === false/);
-    assert.match(source, /return new St\.Widget\(\{visible: false\}\)/);
+    assert.match(source, /pinnedApps\.forEach\(app => addUnique\(app, 'Favorite'\)\)/);
+    assert.match(source, /getRecentApps\(8\)\.forEach\(app => addUnique\(app\)\)/);
 });

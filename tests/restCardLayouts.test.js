@@ -40,7 +40,7 @@ test('rest-card hints list every registered finder prefix', () => {
     assert.ok(source.includes("text: 'Favorites'"));
     assert.ok(source.includes('can_focus: true'));
     assert.ok(source.includes('onActivate(app)'));
-    assert.ok(source.includes('accessible_name: `Favorite: ${app.get_name()}`'));
+    assert.ok(source.includes('accessible_name: accessiblePrefix ?'));
     assert.ok(source.indexOf("text: 'Favorites'") < source.indexOf('if (showRecentApps && !compact)'));
     assert.ok(source.includes('label.clutter_text.set_line_wrap(true)'));
 });

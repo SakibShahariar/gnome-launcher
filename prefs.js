@@ -130,6 +130,26 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         defaultModeGroup.add(defaultModeRow);
         page.add(defaultModeGroup);
+
+        // -- Initial panel ------------------------------------------------
+
+        const startupGroup = new Adw.PreferencesGroup({title: 'Startup'});
+        const initialPanelRow = new Adw.ActionRow({
+            title: 'Show initial panel',
+            subtitle: 'Greeting, favorites, and finder hints before you type',
+        });
+        const initialPanelSwitch = new Gtk.Switch({
+            active: settings.get_boolean('show-initial-panel'),
+            valign: Gtk.Align.CENTER,
+        });
+        initialPanelSwitch.connect('notify::active', () => {
+            settings.set_boolean('show-initial-panel', initialPanelSwitch.active);
+        });
+        initialPanelRow.add_suffix(initialPanelSwitch);
+        initialPanelRow.activatable_widget = initialPanelSwitch;
+        startupGroup.add(initialPanelRow);
+        page.add(startupGroup);
+
         layoutsPage.add(layoutGroup);
 
         // -- Layout gallery ------------------------------------------------

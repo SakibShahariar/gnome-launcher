@@ -83,6 +83,7 @@ Type `color` to open the screen color picker and copy a color's hex value.
 
 ## Personalization
 
+- **Startup:** In Preferences → General → Startup, turn off "Show initial panel" to open with only the search field instead of the greeting, favorites, and finder hints.
 - **Colors:** In Preferences → Theming, select a CSS file with Material 3 color roles. Leave it empty to use the built-in theme.
 - **Appearance:** Set global icon size and background opacity, or override them for individual layouts.
 - **Wallpaper:** Set a custom wallpaper for layouts with a banner or split panel.

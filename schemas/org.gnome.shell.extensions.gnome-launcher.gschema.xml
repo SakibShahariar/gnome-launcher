@@ -28,6 +28,14 @@
         Other layouts always open in their standard application-search view.
       </description>
     </key>
+    <key name="show-initial-panel" type="b">
+      <default>true</default>
+      <summary>Show the initial panel</summary>
+      <description>
+        Show the greeting, favorites, and finder hints when the launcher opens
+        with an empty search. Turn off to open with just the search field.
+      </description>
+    </key>
     <key name="pinned-app-ids" type="as">
       <default>[]</default>
       <summary>Pinned application desktop IDs</summary>

@@ -56,7 +56,7 @@ Log out and back in if GNOME Shell does not detect the extension.
 - Open the launcher with **Ctrl + Alt + Space**.
 - Type to search for an application.
 - Use the arrow keys to move, **Enter** to launch, and **Esc** to close.
-- Press **Alt + Enter** or right-click a result to open its desktop actions when available.
+- Press **Alt + Enter** or right-click a result to open its actions when available. File results offer "Copy full path" and "Open containing folder"; apps keep their desktop actions and pin/unpin menu.
 - Open Preferences to choose a layout, adjust its appearance, and configure finders.
 
 In the Hotkey layout, **Ctrl + 1–9** launches the matching visible result.

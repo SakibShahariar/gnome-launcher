@@ -25,7 +25,8 @@ test('all 13 layouts route app-row right-clicks to the shared desktop-action men
 });
 
 test('keyboard and right-click paths share one menu implementation', () => {
-    assert.ok(menuSource.includes('return this.openAppActions(this._selectedIndex, {launchIfEmpty: true});'));
+    assert.ok(menuSource.includes("const index = this._finderMode ? this._finderSelectedIndex : this._selectedIndex;"));
+    assert.ok(menuSource.includes('return this.openAppActions(index, {launchIfEmpty: true});'));
     assert.ok(menuSource.includes('openAppActions(index, {launchIfEmpty = false} = {})'));
     assert.ok(menuSource.includes('new PopupMenu.PopupMenu(sourceActor, 0.5, St.Side.TOP)'));
     assert.ok(menuSource.includes('listDesktopActions(app)'));

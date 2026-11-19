@@ -44,6 +44,14 @@
         has keyboard focus. Disable for a cleaner, indicator-free search field.
       </description>
     </key>
+    <key name="snippets" type="s">
+      <default>'[]'</default>
+      <summary>Reusable text snippets</summary>
+      <description>
+        Versioned JSON list of locally stored snippets: title, optional unique
+        trigger, and text content. Snippets are never sent to a network service.
+      </description>
+    </key>
     <key name="quicklinks" type="s">
       <default>'[]'</default>
       <summary>User-defined URL/search shortcuts</summary>

@@ -16,6 +16,7 @@ import {setLayoutAppearanceOverride} from './lib/layoutAppearance.js';
 import {isValidTerminalTemplateArgs} from './lib/terminalTemplate.js';
 import {MODE_OPTIONS, normalizeVisibleModes} from './lib/modeVisibility.js';
 import {normalizeQuicklinks, serializeQuicklinks, MAX_QUICKLINKS} from './lib/quicklinks.js';
+import {normalizeSnippets, serializeSnippets, MAX_SNIPPETS} from './lib/snippets.js';
 
 const MODIFIER_KEYVALS = new Set([
     Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,
@@ -526,6 +527,89 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             return false;
         });
         page.add(quicklinksGroup);
+
+        // -- Text snippets -------------------------------------------------
+
+        const snippetsGroup = new Adw.PreferencesGroup({
+            title: 'Text snippets',
+            description: `Reusable text opened with the # finder. Up to ${MAX_SNIPPETS} snippets; activating one copies it so you can paste it into the previous app.`,
+        });
+        const loadSnippets = () => normalizeSnippets(settings.get_string('snippets'));
+        const saveSnippets = items => settings.set_string('snippets', serializeSnippets(items));
+
+        const snippetTitleRow = new Adw.EntryRow({title: 'Title'});
+        const snippetTriggerRow = new Adw.EntryRow({title: 'Trigger (optional)'});
+        const snippetContentRow = new Adw.EntryRow({title: 'Text'});
+        const addSnippetRow = new Adw.ActionRow({title: 'Add a snippet'});
+        const addSnippetButton = new Gtk.Button({
+            label: 'Add',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['suggested-action'],
+        });
+        addSnippetRow.add_suffix(addSnippetButton);
+        addSnippetRow.activatable_widget = addSnippetButton;
+
+        addSnippetButton.connect('clicked', () => {
+            snippetContentRow.remove_css_class('error');
+            snippetContentRow.set_tooltip_text(null);
+            const current = loadSnippets();
+            if (current.length >= MAX_SNIPPETS) {
+                snippetContentRow.add_css_class('error');
+                snippetContentRow.set_tooltip_text(`Maximum of ${MAX_SNIPPETS} snippets reached.`);
+                return;
+            }
+            const candidate = {
+                title: snippetTitleRow.get_text(),
+                trigger: snippetTriggerRow.get_text(),
+                content: snippetContentRow.get_text(),
+            };
+            const updated = normalizeSnippets([...current, candidate]);
+            if (updated.length !== current.length + 1) {
+                snippetContentRow.add_css_class('error');
+                snippetContentRow.set_tooltip_text('Add a title and text; triggers must be unique lowercase words.');
+                return;
+            }
+            saveSnippets(updated);
+            snippetTitleRow.set_text('');
+            snippetTriggerRow.set_text('');
+            snippetContentRow.set_text('');
+        });
+
+        snippetsGroup.add(snippetTitleRow);
+        snippetsGroup.add(snippetTriggerRow);
+        snippetsGroup.add(snippetContentRow);
+        snippetsGroup.add(addSnippetRow);
+
+        let snippetRows = [];
+        const refreshSnippets = () => {
+            for (const row of snippetRows)
+                snippetsGroup.remove(row);
+            snippetRows = [];
+            for (const snippet of loadSnippets()) {
+                const row = new Adw.ActionRow({
+                    title: snippet.title,
+                    subtitle: snippet.trigger ? `#${snippet.trigger}` : 'No trigger',
+                });
+                const removeButton = new Gtk.Button({
+                    icon_name: 'user-trash-symbolic',
+                    valign: Gtk.Align.CENTER,
+                    css_classes: ['flat'],
+                    tooltip_text: 'Remove snippet',
+                });
+                removeButton.connect('clicked', () =>
+                    saveSnippets(loadSnippets().filter(item => item.id !== snippet.id)));
+                row.add_suffix(removeButton);
+                snippetsGroup.add(row);
+                snippetRows.push(row);
+            }
+        };
+        refreshSnippets();
+        const snippetsSignalId = settings.connect('changed::snippets', refreshSnippets);
+        window.connect('close-request', () => {
+            settings.disconnect(snippetsSignalId);
+            return false;
+        });
+        page.add(snippetsGroup);
 
         window.add(generalPage);
         window.add(layoutsPage);

@@ -81,6 +81,8 @@ Type `color` to open the screen color picker and copy a color's hex value.
 
 You can also define your own **Quick links** in Preferences → General → Quick links: a trigger, a name, and an HTTP(S) URL template with one `{query}` placeholder. Typing `trigger search terms` opens the encoded URL after you press Enter. Definitions stay local, and only safe web URLs are accepted.
 
+**Text snippets** live in Preferences → General → Text snippets. Search them with `#` (for example `#reply`); activating a result copies its exact text and shows a paste reminder. Snippets stay local and are never sent anywhere or added to clipboard history by the launcher.
+
 ## Personalization
 
 - **Startup:** In Preferences → General → Startup, turn off "Show initial panel" to replace the greeting/favorites/hints panel with a short list of pinned and recently used apps.

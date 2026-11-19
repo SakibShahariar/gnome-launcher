@@ -45,7 +45,8 @@ test('exposes finder metadata for layout and finder integration', () => {
     assert.equal(FINDERS.get('power').label, 'Power actions');
     assert.equal(FINDERS.get('settings').label, 'GNOME Settings');
     assert.equal(FINDERS.get('color').defaultMode, false);
-    assert.equal(FINDERS.list().length, 12);
+    assert.equal(FINDERS.get('quicklinks').defaultMode, false);
+    assert.equal(FINDERS.list().length, 13);
 });
 
 test('does not parse ordinary text or non-string input as a prefix', () => {

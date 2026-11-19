@@ -44,6 +44,14 @@
         has keyboard focus. Disable for a cleaner, indicator-free search field.
       </description>
     </key>
+    <key name="quicklinks" type="s">
+      <default>'[]'</default>
+      <summary>User-defined URL/search shortcuts</summary>
+      <description>
+        Versioned JSON list of local shortcuts: trigger, name, URL template with
+        one {query} placeholder, and enabled state. Only HTTP(S) is supported.
+      </description>
+    </key>
     <key name="visible-modes" type="as">
       <default>['apps', 'run', 'files', 'window', 'clipboard', 'calculator', 'web', 'recent', 'emoji', 'settings', 'power']</default>
       <summary>Modes shown in multi-mode layouts</summary>

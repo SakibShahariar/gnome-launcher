@@ -15,6 +15,7 @@ import {LAYOUT_GALLERY} from './lib/layoutGallery.js';
 import {setLayoutAppearanceOverride} from './lib/layoutAppearance.js';
 import {isValidTerminalTemplateArgs} from './lib/terminalTemplate.js';
 import {MODE_OPTIONS, normalizeVisibleModes} from './lib/modeVisibility.js';
+import {normalizeQuicklinks, serializeQuicklinks, MAX_QUICKLINKS} from './lib/quicklinks.js';
 
 const MODIFIER_KEYVALS = new Set([
     Gdk.KEY_Shift_L, Gdk.KEY_Shift_R,
@@ -439,6 +440,92 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         });
         terminalGroup.add(terminalTemplateRow);
         page.add(terminalGroup);
+
+        // -- Quick links ---------------------------------------------------
+
+        const quicklinksGroup = new Adw.PreferencesGroup({
+            title: 'Quick links',
+            description: `Shortcuts opened by typing their trigger before a query. Use one {query} placeholder and an http(s) URL. Up to ${MAX_QUICKLINKS} links.`,
+        });
+        const loadQuicklinks = () => normalizeQuicklinks(settings.get_string('quicklinks'));
+        const saveQuicklinks = links =>
+            settings.set_string('quicklinks', serializeQuicklinks(links));
+
+        const triggerRow = new Adw.EntryRow({title: 'Trigger'});
+        const nameRow = new Adw.EntryRow({title: 'Name'});
+        const urlRow = new Adw.EntryRow({title: 'URL template'});
+        const addQuicklinkRow = new Adw.ActionRow({title: 'Add a quick link'});
+        const addQuicklinkButton = new Gtk.Button({
+            label: 'Add',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['suggested-action'],
+        });
+        addQuicklinkRow.add_suffix(addQuicklinkButton);
+        addQuicklinkRow.activatable_widget = addQuicklinkButton;
+
+        const markQuicklinkError = message => {
+            urlRow.add_css_class('error');
+            urlRow.set_tooltip_text(message);
+        };
+        addQuicklinkButton.connect('clicked', () => {
+            urlRow.remove_css_class('error');
+            urlRow.set_tooltip_text(null);
+            const candidate = {
+                trigger: triggerRow.get_text(),
+                name: nameRow.get_text(),
+                url: urlRow.get_text(),
+            };
+            const current = loadQuicklinks();
+            if (current.length >= MAX_QUICKLINKS) {
+                markQuicklinkError(`Maximum of ${MAX_QUICKLINKS} quick links reached.`);
+                return;
+            }
+            const updated = normalizeQuicklinks([...current, candidate]);
+            if (updated.length !== current.length + 1) {
+                markQuicklinkError('Use a unique lowercase trigger and a single {query} placeholder in an http(s) URL.');
+                return;
+            }
+            saveQuicklinks(updated);
+            triggerRow.set_text('');
+            nameRow.set_text('');
+            urlRow.set_text('');
+        });
+
+        quicklinksGroup.add(triggerRow);
+        quicklinksGroup.add(nameRow);
+        quicklinksGroup.add(urlRow);
+        quicklinksGroup.add(addQuicklinkRow);
+
+        let quicklinkRows = [];
+        const refreshQuicklinks = () => {
+            for (const row of quicklinkRows)
+                quicklinksGroup.remove(row);
+            quicklinkRows = [];
+            for (const link of loadQuicklinks()) {
+                const row = new Adw.ActionRow({
+                    title: `${link.trigger} — ${link.name}`,
+                    subtitle: link.url,
+                });
+                const removeButton = new Gtk.Button({
+                    icon_name: 'user-trash-symbolic',
+                    valign: Gtk.Align.CENTER,
+                    css_classes: ['flat'],
+                    tooltip_text: 'Remove quick link',
+                });
+                removeButton.connect('clicked', () =>
+                    saveQuicklinks(loadQuicklinks().filter(item => item.trigger !== link.trigger)));
+                row.add_suffix(removeButton);
+                quicklinksGroup.add(row);
+                quicklinkRows.push(row);
+            }
+        };
+        refreshQuicklinks();
+        const quicklinksSignalId = settings.connect('changed::quicklinks', refreshQuicklinks);
+        window.connect('close-request', () => {
+            settings.disconnect(quicklinksSignalId);
+            return false;
+        });
+        page.add(quicklinksGroup);
 
         window.add(generalPage);
         window.add(layoutsPage);

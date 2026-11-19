@@ -9,8 +9,6 @@ const layoutPositions = {
     dock: 'bottom',
     fullEdge: 'left-edge',
     fullscreen: 'fullscreen',
-    krunner: 'top-flush',
-    notch: 'top-flush',
     topDropdown: 'top-flush',
 };
 

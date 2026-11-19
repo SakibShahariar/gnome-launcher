@@ -4,7 +4,7 @@ Use this checklist before a release that changes launcher behavior, layout code,
 
 ## Common interaction matrix
 
-For **each of the 15 layouts**, select it in Preferences, open the launcher, type a query, navigate results with the arrow keys, activate a result with `Enter`, and close the launcher with `Escape`.
+For **each of the 13 layouts**, select it in Preferences, open the launcher, type a query, navigate results with the arrow keys, activate a result with `Enter`, and close the launcher with `Escape`.
 
 - [ ] `list`
 - [ ] `grid`
@@ -17,16 +17,14 @@ For **each of the 15 layouts**, select it in Preferences, open the launcher, typ
 - [ ] `corner`
 - [ ] `full-edge`
 - [ ] `adaptive-width`
-- [ ] `krunner`
 - [ ] `split-tabs`
 - [ ] `hero-banner`
-- [ ] `notch`
 
 For every layout, also check that an empty query and a query with no matching results leave the launcher usable, and that repeated open/type/close cycles do not leave stale UI behind.
 
 ## Layout positioning and visual behavior
 
-- [ ] For each non-centered or edge/corner-positioned layout, type and clear queries of different lengths and with different result counts; confirm the launcher stays anchored to its intended position instead of drifting. Include Dock, Top Dropdown, Corner, Full Edge, Notch, Sidebar, and Adaptive Width where applicable. See [issue #7](https://github.com/SakibShahariar/gnome-launcher/issues/7).
+- [ ] For each non-centered or edge/corner-positioned layout, type and clear queries of different lengths and with different result counts; confirm the launcher stays anchored to its intended position instead of drifting. Include Dock, Top Dropdown, Corner, Full Edge, Sidebar, and Adaptive Width where applicable. See [issue #7](https://github.com/SakibShahariar/gnome-launcher/issues/7).
 - [ ] Check that resizing result content, changing selection, and showing an empty state do not cause unexpected clipping or overlap.
 - [ ] Check scrolling and the last visible result in layouts that scroll.
 - [ ] Check layout-specific transitions and open/close animation for visible jumps or stale actors.

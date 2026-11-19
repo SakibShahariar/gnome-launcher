@@ -8,7 +8,6 @@ const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const layoutPaths = [
     '../lib/layouts/list.js',
     '../lib/layouts/corner.js',
-    '../lib/layouts/notch.js',
     '../lib/layouts/grid.js',
     '../lib/layouts/dock.js',
     '../lib/layouts/hotkey.js',
@@ -19,7 +18,6 @@ const layoutPaths = [
     '../lib/layouts/sidebar.js',
     '../lib/layouts/splitTabs.js',
     '../lib/layouts/heroBanner.js',
-    '../lib/layouts/krunner.js',
     '../lib/layouts/fullEdge.js',
 ];
 

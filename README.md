@@ -2,13 +2,13 @@
 
 A customizable, keyboard-first app launcher for GNOME Shell.
 
-Choose from **15 layouts**, search beyond your installed apps, and tailor the launcher to your workflow.
+Choose from **13 layouts**, search beyond your installed apps, and tailor the launcher to your workflow.
 
 ![GNOME Launcher — Grid layout](screenshots/grid.png)
 
 ## Features
 
-- **15 layouts:** Grid, list, dock, fullscreen, sidebar, KRunner-style, notch, and more.
+- **13 layouts:** Grid, list, dock, fullscreen, sidebar, and more.
 - **Keyboard-first:** Fast app search, fuzzy matching, desktop actions, and optional Ctrl+1–9 shortcuts in Hotkey layout.
 - **Flexible finders:** Search apps, files, windows, clipboard, recent documents, emoji, settings, and the web; calculate expressions or run commands.
 - **Configurable search:** Choose a default finder and use prefixes to switch sources in Sidebar, Split Tabs, and Hero Banner. Run commands directly or in a terminal.
@@ -33,10 +33,8 @@ Pick the layout that fits your workflow in Preferences.
 | Corner | ![Corner](screenshots/corner.png) |
 | Full Edge | ![Full Edge](screenshots/fullEdge.png) |
 | Adaptive Width | ![Adaptive Width](screenshots/adaptiveWidth.png) |
-| KRunner | ![KRunner](screenshots/krunner.png) |
 | Split Tabs | ![Split Tabs](screenshots/splitTabs.png) |
 | Hero Banner | ![Hero Banner](screenshots/heroBanner.png) |
-| Notch | ![Notch](screenshots/notch.png) |
 
 ## Install
 
@@ -87,7 +85,7 @@ Type `color` to open the screen color picker and copy a color's hex value.
 - **Modes:** In Preferences → General → Visible modes, choose which modes appear in Sidebar, Split Tabs, and Hero Banner. Applications is always kept as the fallback.
 - **Search focus line:** In Preferences → Appearance, turn off "Search focus line" to remove the accent underline under the search field.
 - **Colors:** In Preferences → Theming, select a CSS file with Material 3 color roles. Leave it empty to use the built-in theme.
-- **Appearance:** Set global icon size and background opacity, or override them for individual layouts.
+- **Appearance:** Set global icon size and background opacity, or override them for individual layouts. Background opacity applies only while Blur my Shell is active; without it, backgrounds are solid.
 - **Wallpaper:** Set a custom wallpaper for layouts with a banner or split panel.
 
 ## Privacy

@@ -6,11 +6,14 @@
  * is styled directly in each layout's buildUI() from theme.js instead).
  * Strip it here so only our own styled card is visible.
  */
-.modal-dialog.launcher-dialog {
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
+/* BMS paints its own popup background and border on .modal-dialog. Once our
+ * surfaces opt into per-surface blur, that single box would still be visible
+ * behind them, so force the dialog frame itself fully transparent. */
+.modal-dialog.launcher-dialog.launcher-modal-box {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
 }
 
 /* Shared card frame; layout-specific radii, padding, and edge cut-outs stay below. */
@@ -20,8 +23,6 @@
 .launcher-hotkey-card,
 .launcher-corner-card,
 .launcher-full-edge-root,
-.launcher-krunner-card,
-.launcher-notch-card,
 .launcher-adaptive-width-card,
 .launcher-top-dropdown-card,
 .launcher-split-preview-card,
@@ -74,7 +75,6 @@
 .launcher-hotkey-label,
 .launcher-corner-label,
 .launcher-full-edge-label,
-.launcher-notch-label,
 .launcher-adaptive-width-label,
 .launcher-top-dropdown-label,
 .launcher-sidebar-result-label,
@@ -89,8 +89,6 @@
     font-weight: bold;
 }
 
-.launcher-krunner-label,
-.launcher-notch-label,
 .launcher-sidebar-result-label,
 .launcher-list-result-label,
 .launcher-dock-result-label,
@@ -101,7 +99,6 @@
 
 .launcher-corner-entry,
 .launcher-full-edge-entry,
-.launcher-notch-entry,
 .launcher-hero-entry,
 .launcher-split-tabs-entry {
     font-size: 14px;
@@ -116,7 +113,6 @@
 }
 
 .launcher-hotkey-entry,
-.launcher-krunner-entry,
 .launcher-grid-entry,
 .launcher-list-entry {
     font-size: 16px;
@@ -145,7 +141,6 @@
 }
 
 .launcher-grid-search-row,
-.launcher-krunner-search-row,
 .launcher-split-preview-search-row,
 .launcher-sidebar-search-row {
     padding: 14px 18px;
@@ -164,13 +159,11 @@
 }
 
 .launcher-dock-result-row,
-.launcher-notch-result-row,
 .launcher-mode-result-row {
     border-radius: 12px;
 }
 
 .launcher-dock-result-row,
-.launcher-notch-result-row,
 .launcher-mode-result-row {
     padding: 8px 12px;
 }
@@ -252,18 +245,6 @@
     padding: 10px 18px;
 }
 
-/* KRunner-style layout structure; divider and selection colors stay dynamic. */
-.launcher-krunner-search-row {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-}
-
-.launcher-krunner-result-row {
-    padding: 8px 18px;
-}
-
-
-
 .launcher-hotkey-footer {
     font-size: 11px;
     padding: 4px 16px 8px;
@@ -325,42 +306,6 @@
 .launcher-full-edge-label {
     font-size: 10px;
 }
-
-/* KRunner card and entry geometry; theme colors remain runtime-configurable. */
-.launcher-krunner-card {
-    border-top-width: 0;
-    border-radius: 0 0 12px 12px;
-}
-
-
-.launcher-krunner-result-divider {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-}
-
-
-/* Notch layout geometry; dynamic theme colors remain runtime-configurable. */
-.launcher-notch-card {
-    border-top-width: 0;
-    border-radius: 0 0 20px 20px;
-}
-
-.launcher-notch-search-row {
-    padding: 12px 18px;
-    spacing: 10px;
-}
-
-
-.launcher-notch-divider {
-    height: 1px;
-}
-
-.launcher-notch-results {
-    padding: 6px;
-}
-
-
-
 
 .launcher-adaptive-width-tiles-row {
     padding: 4px 14px 16px;

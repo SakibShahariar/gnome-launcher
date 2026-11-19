@@ -6,7 +6,7 @@ import {readFileSync} from 'node:fs';
 
 const layouts = [
     'adaptiveWidth', 'corner', 'dock', 'fullEdge', 'fullscreen',
-    'grid', 'hotkey', 'heroBanner', 'krunner', 'list', 'notch',
+    'grid', 'hotkey', 'heroBanner', 'list',
     'sidebar', 'splitPreview', 'splitTabs', 'topDropdown',
 ];
 
@@ -15,7 +15,7 @@ const menuStart = dialogSource.indexOf('    openSelectedAppActions() {');
 const menuEnd = dialogSource.indexOf('    _destroyAppActionsMenu()', menuStart);
 const menuSource = dialogSource.slice(menuStart, menuEnd);
 
-test('all 15 layouts route app-row right-clicks to the shared desktop-action menu', () => {
+test('all 13 layouts route app-row right-clicks to the shared desktop-action menu', () => {
     for (const layout of layouts) {
         const source = readFileSync(new URL(`../lib/layouts/${layout}.js`, import.meta.url), 'utf8');
         assert.ok(source.includes('event.get_button() === Clutter.BUTTON_SECONDARY'), `${layout} handles secondary click`);

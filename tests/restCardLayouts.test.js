@@ -13,20 +13,18 @@ const variants = {
     grid: 'compact',
     hotkey: 'compact',
     heroBanner: 'full',
-    krunner: 'full',
     list: 'full',
-    notch: 'compact',
     sidebar: 'full',
     splitPreview: 'compact',
     splitTabs: 'full',
     topDropdown: 'full',
 };
 
-test('all 15 layouts show a rest card for an empty application query', () => {
+test('all 13 layouts show a rest card for an empty application query', () => {
     for (const [name, variant] of Object.entries(variants)) {
         const source = readFileSync(new URL(`../lib/layouts/${name}.js`, import.meta.url), 'utf8');
         assert.ok(source.includes("import {makeRestCard} from '../restCard.js';"), `${name} imports the shared rest card`);
-        assert.ok(source.includes('if (!this.entry.get_text().trim())'), `${name} handles an empty query`);
+        assert.ok(source.includes('if (!this.entry.get_text().trim() && this.theme.showInitialPanel !== false)'), `${name} handles an empty query`);
         assert.ok(source.includes(`variant: '${variant}'`), `${name} uses the ${variant} rest-card variant`);
         assert.ok(source.includes('pinnedApps: this.dialog._pinnedApps'), `${name} supplies global favorites to the rest card`);
     }

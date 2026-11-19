@@ -222,7 +222,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         // Keep the dropdown for quick selection while also offering visual previews.
         const galleryGroup = new Adw.PreferencesGroup({
             title: 'Layout gallery',
-            description: 'Preview all 15 layouts. Selecting one applies it the next time you open the launcher.',
+            description: `Preview all ${LAYOUT_NAMES.length} layouts. Selecting one applies it the next time you open the launcher.`,
         });
         const galleryButtons = new Map();
         const updateGallerySelection = () => {

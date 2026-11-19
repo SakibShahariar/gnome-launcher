@@ -7,12 +7,12 @@ import {readFileSync} from 'node:fs';
 const css = readFileSync(new URL('../stylesheet.css', import.meta.url), 'utf8');
 const layoutFiles = [
     'adaptiveWidth.js', 'corner.js', 'dock.js', 'fullEdge.js', 'fullscreen.js',
-    'grid.js', 'heroBanner.js', 'hotkey.js', 'krunner.js', 'list.js', 'notch.js',
+    'grid.js', 'heroBanner.js', 'hotkey.js', 'list.js',
     'sidebar.js', 'splitPreview.js', 'splitTabs.js', 'topDropdown.js',
 ];
 
-test('all 15 layouts use the shared search-entry structural class', () => {
-    assert.equal(layoutFiles.length, 15);
+test('all 13 layouts use the shared search-entry structural class', () => {
+    assert.equal(layoutFiles.length, 13);
     for (const file of layoutFiles) {
         const source = readFileSync(new URL('../lib/layouts/' + file, import.meta.url), 'utf8');
         assert.match(source, /style_class: 'launcher-search launcher-search-entry launcher-[a-z-]+-entry'/, file);

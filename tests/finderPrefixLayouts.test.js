@@ -6,11 +6,11 @@ import {readFileSync} from 'node:fs';
 
 const layouts = [
     'adaptiveWidth', 'corner', 'dock', 'fullEdge', 'fullscreen',
-    'grid', 'hotkey', 'heroBanner', 'krunner', 'list', 'notch',
+    'grid', 'hotkey', 'heroBanner', 'list',
     'sidebar', 'splitPreview', 'splitTabs', 'topDropdown',
 ];
 
-test('all 15 layouts send search-entry changes through the shared query controller', () => {
+test('all 13 layouts send search-entry changes through the shared query controller', () => {
     for (const name of layouts) {
         const source = readFileSync(new URL(`../lib/layouts/${name}.js`, import.meta.url), 'utf8');
         assert.match(source, /text-changed/, `${name} must observe search-entry changes`);

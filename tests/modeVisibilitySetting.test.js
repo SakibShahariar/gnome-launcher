@@ -53,6 +53,7 @@ test('mode switches hand key focus back to the search entry', () => {
     const dialog = read('../lib/launcherDialog.js');
     assert.match(dialog, /focusSearchEntry\(\)/);
     assert.match(dialog, /grab_key_focus\(\)/);
+    assert.match(dialog, /open\(timestamp\) \{[\s\S]*?this\.focusSearchEntry\(\);/);
     for (const file of ['sidebar.js', 'splitTabs.js', 'heroBanner.js']) {
         const source = read(`../lib/layouts/${file}`);
         assert.match(source, /_switchMode\(modeId\) \{\s*this\.dialog\.focusSearchEntry\(\);/, file);

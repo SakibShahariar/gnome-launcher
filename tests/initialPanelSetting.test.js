@@ -24,9 +24,23 @@ test('dialog passes the setting to layouts', () => {
     assert.match(source, /theme\.showInitialPanel = settings\.get_boolean\('show-initial-panel'\)/);
 });
 
-test('shared rest card shows favorites and recent apps when the setting is off', () => {
-    const source = read('../lib/restCard.js');
-    assert.match(source, /theme\.showInitialPanel === false/);
-    assert.match(source, /pinnedApps\.forEach\(app => addUnique\(app, 'Favorite'\)\)/);
-    assert.match(source, /getRecentApps\(8\)\.forEach\(app => addUnique\(app\)\)/);
+test('startup apps are rendered through each layout, not the shared rest card', () => {
+    const dialog = read('../lib/launcherDialog.js');
+    assert.match(dialog, /getStartupApps\(\)/);
+    assert.match(dialog, /\[\.\.\.this\._pinnedApps, \.\.\.getRecentApps\(8\)\]/);
+    assert.match(dialog, /this\._searchResults = this\.getStartupApps\(\);\s*this\._filtered = this\._searchResults;/);
+
+    const restCard = read('../lib/restCard.js');
+    assert.match(restCard, /theme\.showInitialPanel === false/);
+    assert.match(restCard, /return new St\.Widget\(\{visible: false\}\)/);
+
+    for (const file of [
+        'adaptiveWidth', 'corner', 'dock', 'fullEdge', 'fullscreen', 'grid',
+        'heroBanner', 'hotkey', 'list', 'sidebar', 'splitPreview', 'splitTabs', 'topDropdown',
+    ]) {
+        const source = read(`../lib/layouts/${file}.js`);
+        assert.match(source,
+            /if \(!this\.entry\.get_text\(\)\.trim\(\) && this\.theme\.showInitialPanel !== false\)/,
+            file);
+    }
 });

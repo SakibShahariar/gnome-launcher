@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {getContextActions, filePathFromItem} from '../lib/contextActions.js';
+import {getContextActions, filePathFromItem, fileParentPath} from '../lib/contextActions.js';
 
 const read = relative => readFileSync(new URL(relative, import.meta.url), 'utf8');
 
@@ -21,6 +21,18 @@ test('file paths are decoded only for local file URIs', () => {
     assert.equal(filePathFromItem({kind: 'file', path: '/tmp/x'}), '/tmp/x');
     assert.equal(filePathFromItem({kind: 'file', uri: 'file:///tmp/a%20b'}), '/tmp/a b');
     assert.equal(filePathFromItem({kind: 'file', uri: 'http://x/y'}), null);
+});
+
+test('file results expose their parent directory for display', () => {
+    assert.equal(fileParentPath({kind: 'file', path: '/home/sakib/Projects/ytui/README.md'}),
+        '/home/sakib/Projects/ytui');
+    assert.equal(fileParentPath({kind: 'file', uri: 'file:///tmp/a%20b.txt'}), '/tmp');
+    assert.equal(fileParentPath({kind: 'web', query: 'x'}), '');
+
+    const dialog = read('../lib/launcherDialog.js');
+    assert.match(dialog, /fileParentPath\(item\)/);
+    assert.match(dialog, /GLib\.get_home_dir\(\)/);
+    assert.match(dialog, /accessible_name: location \?/);
 });
 
 test('shared menu dispatches finder results and reuses the app menu', () => {

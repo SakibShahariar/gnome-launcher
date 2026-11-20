@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {parseFindOutput, diversifyFindPaths, diversifyFileEntries, sourceArea, rankFileEntries} from '../lib/fileSearchResults.js';
+import {parseFindOutput, parseFindBuffer, diversifyFindPaths, diversifyFileEntries, sourceArea, rankFileEntries} from '../lib/fileSearchResults.js';
 
 test('diversifyFindPaths interleaves directories instead of filling from one', () => {
     const paths = [
@@ -54,6 +54,13 @@ test('diversifyFileEntries interleaves native results by directory', () => {
     assert.deepEqual(diversifyFileEntries(entries, 3),
         [{path: '/a/1'}, {path: '/b/1'}, {path: '/c/1'}]);
     assert.deepEqual(diversifyFileEntries(null, 3), []);
+});
+
+test('parseFindBuffer keeps every NUL-delimited path', () => {
+    const encoded = new TextEncoder().encode('/a/one\0/b/two\0/c/three\0');
+    assert.deepEqual(parseFindBuffer(encoded, 10), ['/a/one', '/b/two', '/c/three']);
+    assert.deepEqual(parseFindBuffer(encoded, 2), ['/a/one', '/b/two']);
+    assert.deepEqual(parseFindBuffer(null, 10), []);
 });
 
 test('rankFileEntries prefers name matches and keeps subsequence matches', () => {

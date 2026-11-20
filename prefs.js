@@ -117,7 +117,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const layoutGroup = new Adw.PreferencesGroup({title: 'Layout'});
         const layoutRow = new Adw.ComboRow({
             title: 'Launcher layout',
-            subtitle: `${LAYOUT_NAMES.length} layouts available. Changes apply the next time you open the launcher.`,
+            subtitle: `${LAYOUT_NAMES.length} layouts — choose below`,
             model: Gtk.StringList.new(LAYOUT_NAMES),
         });
         // ComboRow's selected value is an internal button. Style that button
@@ -135,7 +135,7 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         const defaultModeGroup = new Adw.PreferencesGroup({title: 'Default finder'});
         const defaultModeRow = new Adw.ComboRow({
             title: 'Finder when opening the launcher',
-            subtitle: 'Used by Sidebar, Split Tabs, and Hero Banner layouts; other layouts open Applications.',
+            subtitle: 'Used by several layouts',
             model: Gtk.StringList.new(defaultModeFinders.map(finder => finder.label)),
         });
         const selectedDefaultMode = defaultModeIds.indexOf(settings.get_string('default-mode'));

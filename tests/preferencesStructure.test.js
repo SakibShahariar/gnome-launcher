@@ -13,3 +13,11 @@ test('preferences keep the large layout gallery on a dedicated page', () => {
     assert.match(source, /layoutRow\.add_css_class\('launcher-layout-selector'\)/);
     assert.match(source, /\.launcher-layout-selector button[\s\S]*min-width: 16rem/);
 });
+
+test('combo subtitles stay short so selected values are not clipped', () => {
+    const source = readFileSync(new URL('../prefs.js', import.meta.url), 'utf8');
+    assert.match(source, /subtitle: `\$\{LAYOUT_NAMES\.length\} layouts — choose below`/);
+    assert.doesNotMatch(source, /layouts available\. Changes apply the next time you open the launcher/);
+    assert.match(source, /subtitle: 'Used by several layouts'/);
+    assert.doesNotMatch(source, /Used by Sidebar, Split Tabs, and Hero Banner layouts/);
+});

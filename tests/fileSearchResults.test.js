@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {parseFindOutput, diversifyFindPaths} from '../lib/fileSearchResults.js';
+import {parseFindOutput, diversifyFindPaths, diversifyFileEntries} from '../lib/fileSearchResults.js';
 
 test('diversifyFindPaths interleaves directories instead of filling from one', () => {
     const paths = [
@@ -24,6 +24,15 @@ test('diversifyFindPaths handles malformed paths and invalid limits', () => {
     for (const limit of [0, -1, NaN, Infinity, undefined])
         assert.deepEqual(diversifyFindPaths(['/one'], limit), []);
     assert.deepEqual(diversifyFindPaths(null, 5), []);
+});
+
+test('diversifyFileEntries interleaves native results by directory', () => {
+    const entries = [
+        {path: '/a/1'}, {path: '/a/2'}, {path: '/b/1'}, {path: '/c/1'},
+    ];
+    assert.deepEqual(diversifyFileEntries(entries, 3),
+        [{path: '/a/1'}, {path: '/b/1'}, {path: '/c/1'}]);
+    assert.deepEqual(diversifyFileEntries(null, 3), []);
 });
 
 test('parseFindOutput preserves paths containing newline characters', () => {

@@ -73,6 +73,17 @@ function commitPathOnFocusLeave(row, callback) {
     row.add_controller(controller);
 }
 
+function iconButton(iconName, tooltip, onClick) {
+    const button = new Gtk.Button({
+        icon_name: iconName,
+        valign: Gtk.Align.CENTER,
+        css_classes: ['flat'],
+        tooltip_text: tooltip,
+    });
+    button.connect('clicked', onClick);
+    return button;
+}
+
 export default class GnomeLauncherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
@@ -464,6 +475,27 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         addQuicklinkRow.add_suffix(addQuicklinkButton);
         addQuicklinkRow.activatable_widget = addQuicklinkButton;
 
+        const cancelQuicklinkButton = new Gtk.Button({
+            label: 'Cancel',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['flat'],
+            visible: false,
+        });
+        addQuicklinkRow.add_suffix(cancelQuicklinkButton);
+
+        let editingQuicklink = null;
+        const resetQuicklinkForm = () => {
+            editingQuicklink = null;
+            triggerRow.set_text('');
+            nameRow.set_text('');
+            urlRow.set_text('');
+            addQuicklinkButton.set_label('Add');
+            cancelQuicklinkButton.set_visible(false);
+            urlRow.remove_css_class('error');
+            urlRow.set_tooltip_text(null);
+        };
+        cancelQuicklinkButton.connect('clicked', resetQuicklinkForm);
+
         const markQuicklinkError = message => {
             urlRow.add_css_class('error');
             urlRow.set_tooltip_text(message);
@@ -477,19 +509,20 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
                 url: urlRow.get_text(),
             };
             const current = loadQuicklinks();
-            if (current.length >= MAX_QUICKLINKS) {
+            const base = editingQuicklink === null
+                ? current : current.filter(item => item.trigger !== editingQuicklink);
+            const expected = base.length + 1;
+            if (expected > MAX_QUICKLINKS) {
                 markQuicklinkError(`Maximum of ${MAX_QUICKLINKS} quick links reached.`);
                 return;
             }
-            const updated = normalizeQuicklinks([...current, candidate]);
-            if (updated.length !== current.length + 1) {
+            const updated = normalizeQuicklinks([...base, candidate]);
+            if (updated.length !== expected) {
                 markQuicklinkError('Use a unique lowercase trigger and a single {query} placeholder in an http(s) URL.');
                 return;
             }
             saveQuicklinks(updated);
-            triggerRow.set_text('');
-            nameRow.set_text('');
-            urlRow.set_text('');
+            resetQuicklinkForm();
         });
 
         quicklinksGroup.add(triggerRow);
@@ -502,23 +535,48 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             for (const row of quicklinkRows)
                 quicklinksGroup.remove(row);
             quicklinkRows = [];
-            for (const link of loadQuicklinks()) {
+            const links = loadQuicklinks();
+            links.forEach((link, index) => {
                 const row = new Adw.ActionRow({
                     title: `${link.trigger} — ${link.name}`,
                     subtitle: link.url,
                 });
-                const removeButton = new Gtk.Button({
-                    icon_name: 'user-trash-symbolic',
+                const enabledSwitch = new Gtk.Switch({
+                    active: link.enabled,
                     valign: Gtk.Align.CENTER,
-                    css_classes: ['flat'],
-                    tooltip_text: 'Remove quick link',
                 });
-                removeButton.connect('clicked', () =>
-                    saveQuicklinks(loadQuicklinks().filter(item => item.trigger !== link.trigger)));
-                row.add_suffix(removeButton);
+                enabledSwitch.connect('notify::active', () => {
+                    saveQuicklinks(loadQuicklinks().map(item =>
+                        item.trigger === link.trigger ? {...item, enabled: enabledSwitch.active} : item));
+                });
+                row.add_suffix(enabledSwitch);
+
+                const move = offset => {
+                    const target = index + offset;
+                    if (target < 0 || target >= links.length)
+                        return;
+                    const reordered = [...links];
+                    [reordered[index], reordered[target]] = [reordered[target], reordered[index]];
+                    saveQuicklinks(reordered);
+                };
+                if (index > 0)
+                    row.add_suffix(iconButton('go-up-symbolic', 'Move up', () => move(-1)));
+                if (index < links.length - 1)
+                    row.add_suffix(iconButton('go-down-symbolic', 'Move down', () => move(1)));
+
+                row.add_suffix(iconButton('document-edit-symbolic', 'Edit quick link', () => {
+                    triggerRow.set_text(link.trigger);
+                    nameRow.set_text(link.name);
+                    urlRow.set_text(link.url);
+                    editingQuicklink = link.trigger;
+                    addQuicklinkButton.set_label('Save');
+                    cancelQuicklinkButton.set_visible(true);
+                }));
+                row.add_suffix(iconButton('user-trash-symbolic', 'Remove quick link', () =>
+                    saveQuicklinks(loadQuicklinks().filter(item => item.trigger !== link.trigger))));
                 quicklinksGroup.add(row);
                 quicklinkRows.push(row);
-            }
+            });
         };
         refreshQuicklinks();
         const quicklinksSignalId = settings.connect('changed::quicklinks', refreshQuicklinks);
@@ -549,11 +607,35 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
         addSnippetRow.add_suffix(addSnippetButton);
         addSnippetRow.activatable_widget = addSnippetButton;
 
+        const cancelSnippetButton = new Gtk.Button({
+            label: 'Cancel',
+            valign: Gtk.Align.CENTER,
+            css_classes: ['flat'],
+            visible: false,
+        });
+        addSnippetRow.add_suffix(cancelSnippetButton);
+
+        let editingSnippet = null;
+        const resetSnippetForm = () => {
+            editingSnippet = null;
+            snippetTitleRow.set_text('');
+            snippetTriggerRow.set_text('');
+            snippetContentRow.set_text('');
+            addSnippetButton.set_label('Add');
+            cancelSnippetButton.set_visible(false);
+            snippetContentRow.remove_css_class('error');
+            snippetContentRow.set_tooltip_text(null);
+        };
+        cancelSnippetButton.connect('clicked', resetSnippetForm);
+
         addSnippetButton.connect('clicked', () => {
             snippetContentRow.remove_css_class('error');
             snippetContentRow.set_tooltip_text(null);
             const current = loadSnippets();
-            if (current.length >= MAX_SNIPPETS) {
+            const base = editingSnippet === null
+                ? current : current.filter(item => item.id !== editingSnippet);
+            const expected = base.length + 1;
+            if (expected > MAX_SNIPPETS) {
                 snippetContentRow.add_css_class('error');
                 snippetContentRow.set_tooltip_text(`Maximum of ${MAX_SNIPPETS} snippets reached.`);
                 return;
@@ -563,16 +645,14 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
                 trigger: snippetTriggerRow.get_text(),
                 content: snippetContentRow.get_text(),
             };
-            const updated = normalizeSnippets([...current, candidate]);
-            if (updated.length !== current.length + 1) {
+            const updated = normalizeSnippets([...base, candidate]);
+            if (updated.length !== expected) {
                 snippetContentRow.add_css_class('error');
                 snippetContentRow.set_tooltip_text('Add a title and text; triggers must be unique lowercase words.');
                 return;
             }
             saveSnippets(updated);
-            snippetTitleRow.set_text('');
-            snippetTriggerRow.set_text('');
-            snippetContentRow.set_text('');
+            resetSnippetForm();
         });
 
         snippetsGroup.add(snippetTitleRow);
@@ -585,23 +665,48 @@ export default class GnomeLauncherPreferences extends ExtensionPreferences {
             for (const row of snippetRows)
                 snippetsGroup.remove(row);
             snippetRows = [];
-            for (const snippet of loadSnippets()) {
+            const items = loadSnippets();
+            items.forEach((snippet, index) => {
                 const row = new Adw.ActionRow({
                     title: snippet.title,
                     subtitle: snippet.trigger ? `#${snippet.trigger}` : 'No trigger',
                 });
-                const removeButton = new Gtk.Button({
-                    icon_name: 'user-trash-symbolic',
+                const enabledSwitch = new Gtk.Switch({
+                    active: snippet.enabled,
                     valign: Gtk.Align.CENTER,
-                    css_classes: ['flat'],
-                    tooltip_text: 'Remove snippet',
                 });
-                removeButton.connect('clicked', () =>
-                    saveSnippets(loadSnippets().filter(item => item.id !== snippet.id)));
-                row.add_suffix(removeButton);
+                enabledSwitch.connect('notify::active', () => {
+                    saveSnippets(loadSnippets().map(item =>
+                        item.id === snippet.id ? {...item, enabled: enabledSwitch.active} : item));
+                });
+                row.add_suffix(enabledSwitch);
+
+                const move = offset => {
+                    const target = index + offset;
+                    if (target < 0 || target >= items.length)
+                        return;
+                    const reordered = [...items];
+                    [reordered[index], reordered[target]] = [reordered[target], reordered[index]];
+                    saveSnippets(reordered);
+                };
+                if (index > 0)
+                    row.add_suffix(iconButton('go-up-symbolic', 'Move up', () => move(-1)));
+                if (index < items.length - 1)
+                    row.add_suffix(iconButton('go-down-symbolic', 'Move down', () => move(1)));
+
+                row.add_suffix(iconButton('document-edit-symbolic', 'Edit snippet', () => {
+                    snippetTitleRow.set_text(snippet.title);
+                    snippetTriggerRow.set_text(snippet.trigger);
+                    snippetContentRow.set_text(snippet.content);
+                    editingSnippet = snippet.id;
+                    addSnippetButton.set_label('Save');
+                    cancelSnippetButton.set_visible(true);
+                }));
+                row.add_suffix(iconButton('user-trash-symbolic', 'Remove snippet', () =>
+                    saveSnippets(loadSnippets().filter(item => item.id !== snippet.id))));
                 snippetsGroup.add(row);
                 snippetRows.push(row);
-            }
+            });
         };
         refreshSnippets();
         const snippetsSignalId = settings.connect('changed::snippets', refreshSnippets);

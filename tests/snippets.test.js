@@ -57,4 +57,9 @@ test('shared finder copies a snippet and never adds it to clipboard history', ()
     assert.match(prefs, /title: 'Text snippets'/);
     assert.match(prefs, /serializeSnippets/);
     assert.match(prefs, /changed::snippets/);
+    assert.match(prefs, /editingSnippet/);
+    assert.match(prefs, /go-up-symbolic/, 'reorder up control');
+    assert.match(prefs, /go-down-symbolic/, 'reorder down control');
+    assert.match(prefs, /document-edit-symbolic/, 'edit control');
+    assert.match(prefs, /enabled: enabledSwitch\.active/, 'enable toggle');
 });

@@ -65,4 +65,9 @@ test('finder resolves and launches quick links without touching other finders', 
     assert.match(prefs, /title: 'Quick links'/);
     assert.match(prefs, /serializeQuicklinks/);
     assert.match(prefs, /changed::quicklinks/);
+    assert.match(prefs, /editingQuicklink/);
+    assert.match(prefs, /go-up-symbolic/, 'reorder up control');
+    assert.match(prefs, /go-down-symbolic/, 'reorder down control');
+    assert.match(prefs, /document-edit-symbolic/, 'edit control');
+    assert.match(prefs, /enabled: enabledSwitch\.active/, 'enable toggle');
 });

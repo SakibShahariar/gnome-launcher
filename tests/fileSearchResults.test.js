@@ -3,7 +3,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {parseFindOutput} from '../lib/fileSearchResults.js';
+import {parseFindOutput, diversifyFindPaths} from '../lib/fileSearchResults.js';
+
+test('diversifyFindPaths interleaves directories instead of filling from one', () => {
+    const paths = [
+        '/a/one', '/a/two', '/a/three',
+        '/b/one', '/b/two',
+        '/c/one',
+    ];
+    assert.deepEqual(diversifyFindPaths(paths, 4),
+        ['/a/one', '/b/one', '/c/one', '/a/two']);
+    assert.deepEqual(diversifyFindPaths(paths, 20),
+        ['/a/one', '/b/one', '/c/one', '/a/two', '/b/two', '/a/three']);
+    assert.deepEqual(diversifyFindPaths(paths, 2), ['/a/one', '/b/one']);
+});
+
+test('diversifyFindPaths handles malformed paths and invalid limits', () => {
+    assert.deepEqual(diversifyFindPaths(['/a/one', '', null, 42, '/one'], 5),
+        ['/a/one', '/one']);
+    for (const limit of [0, -1, NaN, Infinity, undefined])
+        assert.deepEqual(diversifyFindPaths(['/one'], limit), []);
+    assert.deepEqual(diversifyFindPaths(null, 5), []);
+});
 
 test('parseFindOutput preserves paths containing newline characters', () => {
     const paths = ['/home/user/normal.txt', '/home/user/name\nwith-newline.txt'];

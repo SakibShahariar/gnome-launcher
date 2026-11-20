@@ -25,6 +25,9 @@ test('unsafe, duplicate and malformed definitions are dropped and bounded', () =
         {trigger: 'creds', url: 'https://user:pass@example.com/?q={query}'},
         {trigger: 'nop', url: 'https://example.com/'},
         {trigger: 'two', url: 'https://example.com/?a={query}&b={query}'},
+        {trigger: 'spaces', url: 'https://example.com/a b?q={query}'},
+        {trigger: 'badhost', url: 'https://exa mple.com/?q={query}'},
+        {trigger: 'badport', url: 'https://example.com:abc/?q={query}'},
         {trigger: 'bad trigger!', url: 'https://example.com/?q={query}'},
     ];
     assert.deepEqual(normalizeQuicklinks(links).map(link => link.trigger), ['ok']);
@@ -42,6 +45,17 @@ test('matching requires a trigger plus a non-empty query', () => {
     assert.equal(matchQuicklink('yt', links), null);
     assert.equal(matchQuicklink('off value', links), null);
     assert.equal(matchQuicklink('other value', links), null);
+});
+
+test('example template used in the Preferences workflow is accepted', () => {
+    const links = normalizeQuicklinks([{
+        trigger: 'yt',
+        name: 'Video',
+        url: 'https://www.youtube.com/results?search_query={query}',
+    }]);
+    assert.equal(links.length, 1);
+    assert.equal(buildQuicklinkUrl(links[0], 'linux tiling'),
+        'https://www.youtube.com/results?search_query=linux%20tiling');
 });
 
 test('URLs encode the query as one component', () => {

@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {parseFindOutput, diversifyFindPaths, diversifyFileEntries} from '../lib/fileSearchResults.js';
+import {parseFindOutput, diversifyFindPaths, diversifyFileEntries, sourceArea} from '../lib/fileSearchResults.js';
 
 test('diversifyFindPaths interleaves directories instead of filling from one', () => {
     const paths = [
@@ -16,6 +16,27 @@ test('diversifyFindPaths interleaves directories instead of filling from one', (
     assert.deepEqual(diversifyFindPaths(paths, 20),
         ['/a/one', '/b/one', '/c/one', '/a/two', '/b/two', '/a/three']);
     assert.deepEqual(diversifyFindPaths(paths, 2), ['/a/one', '/b/one']);
+});
+
+test('sourceArea keeps large trees in one group', () => {
+    assert.equal(sourceArea('/go/pkg/mod/x/README.md'), '/go');
+    assert.equal(sourceArea('/usr/share/doc/x/README.md'), '/usr');
+    assert.equal(sourceArea('/home/sakib/Projects/ytui/README.md'), '/home/sakib/Projects');
+    assert.equal(sourceArea('/home/sakib/Downloads/a.txt'), '/home/sakib/Downloads');
+});
+
+test('a single dense tree cannot dominate when its subdirectories differ', () => {
+    const paths = [
+        '/go/pkg/mod/a/README.md',
+        '/go/pkg/mod/b/README.md',
+        '/go/src/c/README.md',
+        '/usr/share/doc/x/README.md',
+        '/home/sakib/Projects/y/README.md',
+    ];
+    assert.deepEqual(diversifyFindPaths(paths, 10),
+        ['/go/pkg/mod/a/README.md', '/usr/share/doc/x/README.md',
+            '/home/sakib/Projects/y/README.md', '/go/pkg/mod/b/README.md',
+            '/go/src/c/README.md']);
 });
 
 test('diversifyFindPaths handles malformed paths and invalid limits', () => {

@@ -48,7 +48,7 @@ test('Hotkey rest card preserves the Ctrl+1–9 launch hint without taking digit
     assert.ok(source.includes('Ctrl+1–9 to launch'));
     assert.ok(source.includes("variant: 'compact'"));
     assert.ok(source.includes('onDigitKey(localIndex)'));
-    assert.ok(source.includes('if (!this.entry.get_text().trim())'));
+    assert.ok(source.includes("if (!this.entry.get_text().trim() && this.theme.showInitialPanel !== false)"));
 
 });
 

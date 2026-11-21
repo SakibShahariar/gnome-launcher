@@ -39,8 +39,7 @@ test('shared menu dispatches finder results and reuses the app menu', () => {
     const dialog = read('../lib/launcherDialog.js');
     assert.match(dialog, /if \(this\._finderMode\)\s*return this\._openFinderContextActions\(index\);/);
     assert.match(dialog, /getContextActions\(item\)/);
-    assert.match(dialog, /gettext as _/);
-    assert.match(dialog, /CONTEXT_ACTION_LABELS\[action\.id\] \?\? action\.label/);
+    assert.doesNotMatch(dialog, /gettext/);
     assert.match(dialog, /_activateFileAction\(action\.id, path\)/);
     assert.match(dialog, /St\.Clipboard\.get_default\(\)\?\.set_text\(St\.ClipboardType\.CLIPBOARD, path\)/);
     assert.match(dialog, /Gio\.AppInfo\.launch_default_for_uri\(parent\.get_uri\(\), null\)/);

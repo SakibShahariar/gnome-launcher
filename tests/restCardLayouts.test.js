@@ -43,6 +43,17 @@ test('rest-card hints list every registered finder prefix', () => {
     assert.ok(source.includes('label.clutter_text.set_line_wrap(true)'));
 });
 
+test('compact rest cards place finder hints before favorites, full cards after', () => {
+    const source = readFileSync(new URL('../lib/restCard.js', import.meta.url), 'utf8');
+    const compactHints = source.indexOf('if (compact)\n        addHints();');
+    const favorites = source.indexOf("text: 'Favorites'");
+    const recent = source.indexOf('if (showRecentApps && !compact)');
+    const fullHints = source.indexOf('if (!compact)\n        addHints();');
+    assert.ok(compactHints > 0, 'compact hint placement exists');
+    assert.ok(compactHints < favorites, 'compact hints come before favorites');
+    assert.ok(recent < fullHints, 'full-card hints come after recent apps');
+});
+
 test('Hotkey rest card preserves the Ctrl+1–9 launch hint without taking digit keys', () => {
     const source = readFileSync(new URL('../lib/layouts/hotkey.js', import.meta.url), 'utf8');
     assert.ok(source.includes('Ctrl+1–9 to launch'));

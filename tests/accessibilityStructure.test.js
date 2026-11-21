@@ -70,6 +70,14 @@ test('shared stylesheet draws focus and selected-result indicators', () => {
     assert.match(css, /box-shadow:[^;]*-st-accent-color/);
 });
 
+test('arrows navigate rest-card favorites when the initial panel is visible', () => {
+    const dialog = read('../lib/launcherDialog.js');
+    assert.match(dialog, /_navigateRestCardButtons\(delta\)/);
+    assert.match(dialog, /actor instanceof St\.Button && actor\.can_focus && actor\.visible/);
+    assert.match(dialog, /buttons\[index\]\.grab_key_focus\(\)/);
+    assert.match(dialog, /emptyRestCard && this\._navigateRestCardButtons\(Math\.sign\(delta\)\)/);
+});
+
 test('search focus line can be hidden from Preferences', () => {
     const schema = read('../schemas/org.gnome.shell.extensions.gnome-launcher.gschema.xml');
     assert.match(schema, /<key name="show-search-focus-line" type="b">\s*<default>true<\/default>/);

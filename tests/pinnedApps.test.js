@@ -63,6 +63,33 @@ test('puts pins before search results and suppresses duplicate matches', () => {
     );
 });
 
+test('only matching pins are promoted during a search', () => {
+    const terminal = {get_id: () => 'org.gnome.Terminal.desktop', get_name: () => 'Terminal'};
+    const files = {get_id: () => 'org.gnome.Nautilus.desktop', get_name: () => 'Files'};
+    const browser = {get_id: () => 'org.mozilla.firefox.desktop', get_name: () => 'Firefox'};
+    const pins = ['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop'];
+
+    // "firefox" promotes no pin, so the ranked match stays first.
+    assert.deepEqual(
+        orderAppsWithPinnedFirst([terminal, files, browser], pins,
+            [browser, files, terminal], 'firefox'),
+        [browser, files, terminal]
+    );
+
+    // A matching pin still comes first and is not duplicated.
+    assert.deepEqual(
+        orderAppsWithPinnedFirst([terminal, files, browser], pins,
+            [browser, files, terminal], 'files'),
+        [files, browser, terminal]
+    );
+
+    // Empty query keeps the original all-pins-first behavior.
+    assert.deepEqual(
+        orderAppsWithPinnedFirst([terminal, files, browser], pins, [browser, files, terminal]),
+        [terminal, files, browser]
+    );
+});
+
 test('keeps search-provider ranking unchanged when no apps are pinned', () => {
     const ranked = [app('firefox.desktop'), app('terminal.desktop'), app('files.desktop')];
     assert.deepEqual(orderAppsWithPinnedFirst([...ranked], [], ranked), ranked);

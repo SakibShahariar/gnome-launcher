@@ -76,6 +76,13 @@ test('arrows navigate rest-card favorites when the initial panel is visible', ()
     assert.match(dialog, /actor instanceof St\.Button && actor\.can_focus && actor\.visible/);
     assert.match(dialog, /buttons\[index\]\.grab_key_focus\(\)/);
     assert.match(dialog, /emptyRestCard && this\._navigateRestCardButtons\(Math\.sign\(delta\)\)/);
+    assert.match(dialog, /this\.connect\('key-press-event', \(_actor, event\) => this\._onDialogKeyPress\(event\)\)/);
+    assert.match(dialog, /_onDialogKeyPress\(event\) \{[\s\S]*?Clutter\.KEY_Escape[\s\S]*?this\.close\(\)/);
+
+    const css = read('../stylesheet.css');
+    assert.match(css, /\.launcher-rest-app-button:focus \{[\s\S]*?box-shadow: inset 0 0 0 2px -st-accent-color !important;/);
+    const restCard = read('../lib/restCard.js');
+    assert.match(restCard, /style_class: 'launcher-rest-app-button'/);
 });
 
 test('search focus line can be hidden from Preferences', () => {

@@ -56,7 +56,7 @@ test('does not parse ordinary text or non-string input as a prefix', () => {
     assert.equal(parseFinderPrefix('recent'), null);
     assert.equal(parseFinderPrefix('emoji'), null);
     assert.equal(parseFinderPrefix('settings'), null);
-    assert.equal(parseFinderPrefix('color'), null);
+    assert.deepEqual(parseFinderPrefix('color'), {mode: 'color', query: ''});
     assert.equal(parseFinderPrefix(null), null);
     assert.equal(parseFinderPrefix(42), null);
 });

@@ -139,7 +139,7 @@
       </description>
     </key>
     <key name="windows-all-workspaces" type="b">
-      <default>false</default>
+      <default>true</default>
       <summary>Search windows across all workspaces</summary>
       <description>
         When enabled, window mode includes windows from every workspace;

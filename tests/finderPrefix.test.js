@@ -53,8 +53,8 @@ test('exposes finder metadata for layout and finder integration', () => {
 test('does not parse ordinary text or non-string input as a prefix', () => {
     assert.equal(parseFinderPrefix('firefox'), null);
     assert.equal(parseFinderPrefix('window manager'), null);
-    assert.equal(parseFinderPrefix('recent'), null);
-    assert.equal(parseFinderPrefix('emoji'), null);
+    assert.deepEqual(parseFinderPrefix('recent'), {mode: 'recent', query: ''});
+    assert.deepEqual(parseFinderPrefix('emoji'), {mode: 'emoji', query: ''});
     assert.equal(parseFinderPrefix('settings'), null);
     assert.deepEqual(parseFinderPrefix('color'), {mode: 'color', query: ''});
     assert.equal(parseFinderPrefix(null), null);

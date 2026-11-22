@@ -43,6 +43,20 @@ test('rest-card hints list every registered finder prefix', () => {
     assert.ok(source.includes('label.clutter_text.set_line_wrap(true)'));
 });
 
+test('list moves finder hints into its footer', () => {
+    const source = readFileSync(new URL('../lib/layouts/list.js', import.meta.url), 'utf8');
+    assert.match(source, /FINDER_HINT_SUMMARY/);
+    assert.match(source, /showFinderHints: false/);
+    assert.match(source, /this\.footer\.set_text\(FINDER_HINT_SUMMARY\)/);
+});
+
+test('split tabs shows finder hints in the left pane on empty apps query', () => {
+    const source = readFileSync(new URL('../lib/layouts/splitTabs.js', import.meta.url), 'utf8');
+    assert.match(source, /this\.hints = makeFinderHints\(this\.theme, \{compact: true\}\)/);
+    assert.match(source, /this\.hints\.visible = this\.mode === 'apps' && !this\.entry\.get_text\(\)\.trim\(\)/);
+    assert.match(source, /variant: 'full', showFinderHints: false/);
+});
+
 test('split preview shows finder hints in the right-hand pane', () => {
     const source = readFileSync(new URL('../lib/layouts/splitPreview.js', import.meta.url), 'utf8');
     assert.match(source, /makeFinderHints\(this\.theme, \{compact: true\}\)/);

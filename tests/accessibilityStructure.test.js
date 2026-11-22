@@ -70,6 +70,16 @@ test('shared stylesheet draws focus and selected-result indicators', () => {
     assert.match(css, /box-shadow:[^;]*-st-accent-color/);
 });
 
+test('focus and selection rings use the active Matugen primary color', () => {
+    const dialog = read('../lib/launcherDialog.js');
+    assert.match(dialog, /_applyThemeFocusStyles\(\)/);
+    assert.match(dialog, /this\._layout\?\.theme\?\.primary/);
+    assert.match(dialog, /box-shadow: inset 0 0 0 2px \$\{primary\} !important;/);
+    assert.match(dialog, /box-shadow: inset 0 -2px 0 \$\{primary\} !important;/);
+    assert.match(dialog, /'key-focus-in'/);
+    assert.match(dialog, /'key-focus-out'/);
+});
+
 test('arrows navigate rest-card favorites when the initial panel is visible', () => {
     const dialog = read('../lib/launcherDialog.js');
     assert.match(dialog, /_navigateRestCardButtons\(delta\)/);

@@ -53,7 +53,7 @@ test('list moves finder hints into its footer', () => {
 test('split tabs shows finder hints in the left pane on empty apps query', () => {
     const source = readFileSync(new URL('../lib/layouts/splitTabs.js', import.meta.url), 'utf8');
     assert.match(source, /this\.hints = makeFinderHints\(this\.theme, \{compact: true\}\)/);
-    assert.match(source, /this\.hints\.visible = this\.mode === 'apps' && !this\.entry\.get_text\(\)\.trim\(\)/);
+    assert.match(source, /this\.hints\.visible = this\.mode === 'apps' &&[\s\S]*?this\.theme\.showInitialPanel !== false/);
     assert.match(source, /variant: 'full', showFinderHints: false/);
 });
 

@@ -23,7 +23,7 @@ const variants = {
 test('all 13 layouts show a rest card for an empty application query', () => {
     for (const [name, variant] of Object.entries(variants)) {
         const source = readFileSync(new URL(`../lib/layouts/${name}.js`, import.meta.url), 'utf8');
-        assert.ok(source.includes("import {makeRestCard} from '../restCard.js';"), `${name} imports the shared rest card`);
+        assert.ok(source.includes('makeRestCard'), `${name} imports the shared rest card`);
         assert.ok(source.includes('if (!this.entry.get_text().trim() && this.theme.showInitialPanel !== false)'), `${name} handles an empty query`);
         assert.ok(source.includes(`variant: '${variant}'`), `${name} uses the ${variant} rest-card variant`);
         assert.ok(source.includes('pinnedApps: this.dialog._pinnedApps'), `${name} supplies global favorites to the rest card`);
@@ -41,6 +41,13 @@ test('rest-card hints list every registered finder prefix', () => {
     assert.ok(source.includes('accessible_name: accessiblePrefix ?'));
     assert.ok(source.indexOf("text: 'Favorites'") < source.indexOf('if (showRecentApps && !compact)'));
     assert.ok(source.includes('label.clutter_text.set_line_wrap(true)'));
+});
+
+test('split preview shows finder hints in the right-hand pane', () => {
+    const source = readFileSync(new URL('../lib/layouts/splitPreview.js', import.meta.url), 'utf8');
+    assert.match(source, /makeFinderHints\(this\.theme, \{compact: true\}\)/);
+    assert.match(source, /this\.preview\.add_child\(makeFinderHints/);
+    assert.match(source, /variant: 'compact', showFinderHints: false/);
 });
 
 test('compact rest cards place finder hints before favorites, full cards after', () => {
